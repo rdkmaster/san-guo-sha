@@ -234,6 +234,17 @@ function renderPlayConfirm() {
     b.onclick = () => submitMove(m);
     box.appendChild(b);
   }
+  // 装备区来源的转化动作（武圣红装备当杀/响应）：不在手牌面板，平铺常驻按钮
+  const handIds = new Set((state.ownHand || []).map(c => c.id));
+  for (const m of ((curAsk && curAsk.options) || [])) {
+    if ((m.kind === 'play' || m.kind === 'respond') && m.cardId != null && !handIds.has(m.cardId)) {
+      const b = document.createElement('button');
+      b.textContent = m.uiLabel || '确认出牌';
+      b.classList.add('confirm');
+      b.onclick = () => submitMove(m);
+      box.appendChild(b);
+    }
+  }
 }
 function renderPromptMulti() {
   if (!curAsk) return;

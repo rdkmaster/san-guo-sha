@@ -15,7 +15,7 @@ const GENERALS = {
 };
 
 const SKILL_TEXTS = {
-  '武圣': '你可以将一张红色牌当【杀】使用或打出。',
+  '武圣': '你可以将一张红色牌当【杀】使用或打出。注意：牌包括手牌和装备区里的牌（如红色坐骑、红色武器都可转化），使用后该牌离开装备区。',
   '咆哮': '锁定技。你使用【杀】无次数限制。',
   '龙胆': '你可以将【杀】当【闪】、【闪】当【杀】使用或打出。',
   '无双': '锁定技。你使用【杀】指定目标后，目标需连续使用两张【闪】抵消；与你决斗的角色每次需先打出两张【杀】。',
@@ -158,6 +158,15 @@ class Game {
     this.discardPile.push(...cards);
   }
   inHand(p, cardId) { return p.hand.find(c => c.id === cardId) || null; }
+  // 取牌离位：手牌或装备区（武圣等技能可转化装备区的牌）
+  takeCard(p, cardId) {
+    const h = this.inHand(p, cardId);
+    if (h) { p.hand = p.hand.filter(c => c !== h); return h; }
+    for (const [k, v] of Object.entries(p.equips)) {
+      if (v && v.id === cardId) { p.equips[k] = null; return v; }
+    }
+    return null;
+  }
   hasCards(p) {
     return p.hand.length > 0 || Object.values(p.equips).some(Boolean) || p.judge.length > 0;
   }
@@ -388,9 +397,10 @@ class Game {
         }
       }
     }
-    // 转化技
+    // 转化技（武圣：牌=手牌+装备区，红色装备也能当杀）
     if (shaOk && p.skills.includes('武圣')) {
       for (const c of p.hand) if (isRed(c) && c.name !== '杀') playable.push({ kind: 'play', cardId: c.id, useAs: '杀', targets: [opp.idx] });
+      for (const c of Object.values(p.equips)) if (c && isRed(c)) playable.push({ kind: 'play', cardId: c.id, useAs: '杀', targets: [opp.idx] });
     }
     if (shaOk && p.skills.includes('龙胆')) {
       for (const c of p.hand) if (c.name === '闪') playable.push({ kind: 'play', cardId: c.id, useAs: '杀', targets: [opp.idx] });
@@ -438,9 +448,8 @@ class Game {
       await this.resolveSha(p, opp, combo.primary, combo.extras);
       return;
     }
-    const card = this.inHand(p, move.cardId);
-    if (!card) { this.log('无效动作：找不到该手牌'); return; }
-    p.hand = p.hand.filter(c => c !== card);
+    const card = this.takeCard(p, move.cardId);
+    if (!card) { this.log('无效动作：找不到该牌（手牌/装备区）'); return; }
     const useAs = move.useAs || card.name;
     this.cardTaken = false;
 
@@ -835,10 +844,13 @@ class Game {
       case '借刀杀人': {
         const weapon = opp.equips.weapon;
         if (!weapon) break;
-        // 可打出的杀：本杀 + 武圣(红牌)/龙胆(闪)按技能转化打出
+        // 可打出的杀：手牌本杀/龙胆闪 + 武圣红色牌（含装备区）
         const shaSources = opp.hand.filter(c => c.name === '杀'
           || (opp.skills.includes('武圣') && isRed(c) && c.name !== '杀')
-          || (opp.skills.includes('龙胆') && c.name === '闪'));
+          || (opp.skills.includes('龙胆') && c.name === '闪'))
+          .concat(opp.skills.includes('武圣')
+            ? Object.values(opp.equips).filter(c => c && isRed(c))
+            : []);
         if (shaSources.length === 0) {
           // 官方规则：目标无【杀】可打出，必须将武器交给借刀人（引擎强制结算）
           opp.equips.weapon = null;
@@ -853,14 +865,20 @@ class Game {
           context: { question: `借刀杀人：打出【杀】（对${p.general}），或将${horseName(weapon)}交给对方？` },
         };
         const m = await this.askPlayer(opp, decision);
-        if (m && m.kind === 'daodao_sha' && this.inHand(opp, m.cardId)) {
-          const sha = this.inHand(opp, m.cardId);
-          opp.hand = opp.hand.filter(c => c !== sha);
-          const conv = sha.name === '杀' ? '' : `（【${sha.name}${sha.suit}${sha.rank}】转化）`;
-          this.log(`${opp.general} 出【杀】${conv}→ ${p.general}（借刀杀人）`);
-          const ok = await this.askDodge(opp, p, 0, 1, '杀');
-          if (!ok) await this.dealDamage(p, 1, { source: opp, card: sha });
-          this.toDiscard(sha);
+        if (m && m.kind === 'daodao_sha') {
+          const sha = this.takeCard(opp, m.cardId); // 手牌或装备区（武圣转化）
+          if (sha) {
+            const conv = sha.name === '杀' ? '' : `（【${sha.name}${sha.suit}${sha.rank}】${sha.equip ? '装备区' : ''}转化）`;
+            this.log(`${opp.general} 出【杀】${conv}→ ${p.general}（借刀杀人）`);
+            const ok = await this.askDodge(opp, p, 0, 1, '杀');
+            if (!ok) await this.dealDamage(p, 1, { source: opp, card: sha });
+            this.toDiscard(sha);
+          } else {
+            // 来源牌异常：回退为交武器
+            opp.equips.weapon = null;
+            p.hand.push(weapon);
+            this.log(`${opp.general} 将${horseName(weapon)}交给${p.general}`);
+          }
         } else {
           opp.equips.weapon = null;
           p.hand.push(weapon);
@@ -911,7 +929,11 @@ class Game {
 
   async askPlaySha(responder, user, reason) {
     const shas = responder.hand.filter(c => c.name === '杀');
-    const wusheng = responder.skills.includes('武圣') ? responder.hand.filter(c => isRed(c) && c.name !== '杀') : [];
+    // 武圣：红色牌含装备区
+    const wusheng = responder.skills.includes('武圣')
+      ? responder.hand.filter(c => isRed(c) && c.name !== '杀')
+        .concat(Object.values(responder.equips).filter(c => c && isRed(c)))
+      : [];
     const longdan = responder.skills.includes('龙胆') ? responder.hand.filter(c => c.name === '闪') : [];
     const playable = shas.map(c => ({ kind: 'respond', cardId: c.id }))
       .concat(wusheng.map(c => ({ kind: 'respond', cardId: c.id, useAs: '杀' })))
@@ -920,11 +942,10 @@ class Game {
     const decision = { playerIdx: responder.idx, type: 'respond_nanman', playable, context: { reason, attacker: user.general } };
     const move = await this.askPlayer(responder, decision);
     if (move && move.kind === 'respond') {
-      const card = this.inHand(responder, move.cardId);
+      const card = this.takeCard(responder, move.cardId);
       if (card) {
-        responder.hand = responder.hand.filter(c => c !== card);
         this.toDiscard(card);
-        this.log(`${responder.general} 打出【杀】${move.useAs && card.name !== '杀' ? `（${cardName(card)}转化）` : ''}响应${reason}`);
+        this.log(`${responder.general} 打出【杀】${move.useAs && card.name !== '杀' ? `（${cardName(card)}${card.equip ? '（装备区）' : ''}转化）` : ''}响应${reason}`);
         return true;
       }
     }

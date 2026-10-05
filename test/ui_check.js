@@ -143,6 +143,28 @@ renderHand1();
   const respBtns = [...doc.querySelectorAll('#playconfirm button')];
   ok(`点闪后打出按钮: [${respBtns.map(b => b.textContent)}]`, respBtns.length === 1 && respBtns[0].textContent === '用 【闪♥2】响应');
 
+  // 武圣装备区来源：动作的cardId不在手牌 → 平铺常驻按钮（出牌与响应两种询问）
+  w.renderAsk({
+    type: 'ask', askId: 5, playerIdx: 0, decisionType: 'play', skill: null,
+    question: '你的出牌阶段：请选择要执行的动作',
+    options: [
+      { kind: 'end', uiLabel: '结束出牌阶段' },
+      { kind: 'play', cardId: 99, useAs: '杀', targets: [1], uiLabel: '使用 【赤兔♥5】 当【杀】' },
+    ],
+  });
+  const eqBtns = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`装备区转化动作平铺按钮: [${eqBtns.map(b => b.textContent)}]`, eqBtns.length === 1 && eqBtns[0].textContent === '使用 【赤兔♥5】 当【杀】');
+  w.renderAsk({
+    type: 'ask', askId: 6, playerIdx: 0, decisionType: 'respond_sha', skill: null,
+    question: '需要响应【杀】',
+    options: [
+      { kind: 'respond', cardId: 99, useAs: '杀', uiLabel: '用 【赤兔♥5】 当【杀】响应' },
+      { kind: 'refuse', uiLabel: '不响应' },
+    ],
+  });
+  const eqBtns2 = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`响应询问的装备区来源按钮: [${eqBtns2.map(b => b.textContent)}]`, eqBtns2.length === 1 && eqBtns2[0].textContent === '用 【赤兔♥5】 当【杀】响应');
+
   // 制衡多选不受影响
   w.renderAsk({
     type: 'ask', askId: 3, playerIdx: 0, decisionType: 'play', skill: '制衡',
