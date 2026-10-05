@@ -418,9 +418,9 @@ class Game {
     if (p.skills.includes('制衡') && !p.zhihengUsed && p.hand.length >= 1) {
       playable.push({ kind: 'skill_zhiheng' });
     }
-    // 丈八蛇矛：任意两张手牌当【杀】
+    // 丈八蛇矛：任意两张手牌当【杀】（合法池由引擎计算下发，UI/AI不得自行推断）
     if (shaOk && p.hand.length >= 2 && p.equips.weapon && p.equips.weapon.name === '丈八蛇矛') {
-      playable.push({ kind: 'sha_combo' });
+      playable.push({ kind: 'sha_combo', cardIds: p.hand.map(c => c.id) });
     }
     return { playerIdx: p.idx, type: 'play', playable, context: {} };
   }
@@ -1057,7 +1057,13 @@ class Game {
       if (!m) return null;
       if (m.kind === 'discard') return { kind: 'discard', cardIds: (action.cardIds || []).slice() };
       if (m.kind === 'skill_zhiheng') return { kind: 'skill_zhiheng', cardIds: (action.cardIds || []).slice() };
-      if (m.kind === 'sha_combo') return { kind: 'sha_combo', cardIds: (action.cardIds || []).slice() };
+      // 丈八组合：两手牌必须都在引擎计算的合法池内且互不相同（兜底校验）
+      if (m.kind === 'sha_combo') {
+        const ids = (action.cardIds || []).map(Number);
+        const pool = m.cardIds || [];
+        return (ids.length === 2 && ids[0] !== ids[1] && ids.every(id => pool.includes(id)))
+          ? { kind: 'sha_combo', cardIds: ids } : null;
+      }
       return m;
     }
     // AI的JSON动作
@@ -1118,9 +1124,12 @@ class Game {
       }
       case 'daodao_give': return playable.find(m => m.kind === 'daodao_give') || null;
       case 'sha_combo': {
-        if (!playable.some(m => m.kind === 'sha_combo')) return null;
+        const combo = playable.find(m => m.kind === 'sha_combo');
+        if (!combo) return null;
         const ids = (action.cards || []).map(byLabel).filter(x => x != null);
-        return { kind: 'sha_combo', cardIds: ids };
+        const pool = combo.cardIds || [];
+        return (ids.length === 2 && ids[0] !== ids[1] && ids.every(id => pool.includes(id)))
+          ? { kind: 'sha_combo', cardIds: ids } : null;
       }
       default: return null;
     }
@@ -1142,11 +1151,20 @@ class Game {
     L.push(`- 判定区: ${p.judge.map(cardName).join('、') || '无'}`);
     L.push(`- 手牌 ${p.hand.length}张:`);
     decision.labelMap = {};
-    const table = ['| 编号 | 牌名 | 花色点数 | 类型 |', '|---|---|---|---|'];
+    // 引擎计算的逐牌可出性：牌出现在合法动作的cardId/组合池中=可出（唯一事实来源）
+    const usableIds = new Set();
+    if (decision.type === 'play' || decision.type === 'respond_sha' || decision.type === 'respond_nanman' || decision.type === 'daodao') {
+      for (const m of decision.playable) {
+        if (m.cardId != null) usableIds.add(m.cardId);
+        if (m.kind === 'sha_combo' && m.cardIds) for (const id of m.cardIds) usableIds.add(id);
+      }
+    }
+    const mark = (c) => usableIds.size === 0 ? '' : (usableIds.has(c.id) ? '✓' : '—');
+    const table = ['| 编号 | 牌名 | 花色点数 | 类型 | 可出 |', '|---|---|---|---|---|'];
     p.hand.slice().sort((a, b) => a.id - b.id).forEach((c, i) => {
       const label = `#${i + 1}`;
       decision.labelMap[label] = c.id;
-      table.push(`| ${label} | ${c.name}${c.subtype && c.subtype !== '普通杀' ? '(' + c.subtype + ')' : ''} | ${c.suit}${c.rank} | ${c.category}${c.equip ? '(' + c.equip + ')' : ''} |`);
+      table.push(`| ${label} | ${c.name}${c.subtype && c.subtype !== '普通杀' ? '(' + c.subtype + ')' : ''} | ${c.suit}${c.rank} | ${c.category}${c.equip ? '(' + c.equip + ')' : ''} | ${mark(c)} |`);
     });
     L.push(...table);
     // 额外候选牌（五谷展示/装备选择等）

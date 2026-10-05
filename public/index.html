@@ -176,9 +176,11 @@ function playMovesFor(ids) {
   const opts = (curAsk && curAsk.options) || [];
   if (ids.length === 1) return opts.filter(m => (m.kind === 'play' || m.kind === 'respond') && m.cardId === ids[0]);
   if (ids.length === 2) {
-    // 丈八蛇矛：服务器的sha_combo动作不带cardIds（任意两手牌），由前端补上
+    // 丈八蛇矛：引擎下发的sha_combo带合法池（cardIds），所选两手牌必须都在池内
     const combo = opts.find(m => m.kind === 'sha_combo');
-    return combo ? [{ ...combo, cardIds: [...ids] }] : [];
+    if (!combo || !combo.cardIds) return [];
+    const ok = ids[0] !== ids[1] && ids.every(id => combo.cardIds.includes(id));
+    return ok ? [{ ...combo, cardIds: [...ids] }] : [];
   }
   return [];
 }
@@ -189,7 +191,8 @@ function renderHand() {
   const isMulti = curAsk && (curAsk.decisionType==='discard' || (curAsk.decisionType==='play' && curAsk.skill==='制衡') || (curAsk.options||[]).some(o=>o.kind==='skill_zhiheng'));
   const isPlay = isPlayAsk();
   const isRespond = isRespondAsk();
-  const comboMove = isPlay && (curAsk.options||[]).some(m => m.kind === 'sha_combo');
+  const comboMove = isPlay ? ((curAsk.options||[]).find(m => m.kind === 'sha_combo') || null) : null;
+  const comboPool = (comboMove && comboMove.cardIds) || [];
   const playableIds = new Set();
   if (isPlay) for (const m of (curAsk.options||[])) {
     if (m.kind === 'play' && m.cardId != null) playableIds.add(m.cardId);
@@ -199,8 +202,8 @@ function renderHand() {
     if (m.kind === 'respond' && m.cardId != null) respondIds.add(m.cardId);
   }
   $('hand0').innerHTML = hand.map(c => {
-    // 出牌阶段：丈八在场全手牌可点（官方规则任意两手牌当杀）；响应阶段：仅可响应的牌
-    const pickable = isPlay ? (comboMove || playableIds.has(c.id)) : isRespond ? respondIds.has(c.id) : isMulti;
+    // 可点性完全来自引擎计算结果：单牌动作cardId + 丈八组合池（前端不做规则推断）
+    const pickable = isPlay ? (playableIds.has(c.id) || comboPool.includes(c.id)) : isRespond ? respondIds.has(c.id) : isMulti;
     const sel = (isMulti || isPlay || isRespond) && selected.has(c.id);
     return cardHtml(c, pickable, sel, fresh.includes(c.id), (isPlay || isRespond) && !pickable);
   }).join('');

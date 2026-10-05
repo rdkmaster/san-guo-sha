@@ -108,22 +108,39 @@ renderHand1();
   confirmBtns[0].click();
   ok('确认后提交（已提交状态）', doc.querySelector('#promptbar .waiting') !== null);
 
-  // 丈八蛇矛双选流程（真实形状：服务器sha_combo动作不带cardIds）
+  // 丈八蛇矛双选流程（新形状：引擎下发sha_combo带合法池cardIds）
   w.renderAsk({
     type: 'ask', askId: 2, playerIdx: 0, decisionType: 'play', skill: null,
     question: '你的出牌阶段：请选择要执行的动作',
     options: [
       { kind: 'play', cardId: 1, targets: [1], uiLabel: '使用 【杀♦7】' },
-      { kind: 'sha_combo', uiLabel: '丈八蛇矛：两手牌当杀' },
+      { kind: 'sha_combo', cardIds: [1, 2, 3, 4], uiLabel: '丈八蛇矛：两手牌当杀' },
       { kind: 'end', uiLabel: '结束出牌阶段' },
     ],
   });
-  ok('丈八模式下全手牌可点选（组合候选）', [...doc.querySelectorAll('#hand0 .card')].every(c => c.classList.contains('selectable')));
+  ok('丈八池内牌可点、池外不可点（引擎计算唯一事实）',
+    [1, 2, 3, 4].every(id => doc.querySelector(`#hand0 .card[data-id="${id}"]`).classList.contains('selectable'))
+    && [5, 6].every(id => !doc.querySelector(`#hand0 .card[data-id="${id}"]`).classList.contains('selectable')));
   doc.querySelector('#hand0 .card[data-id="2"]').click();
   ok('丈八只选第一张时无确认按钮', doc.querySelectorAll('#playconfirm button').length === 0);
   doc.querySelector('#hand0 .card[data-id="3"]').click();
   let comboBtns = [...doc.querySelectorAll('#playconfirm button')];
   ok(`两张选齐出现丈八确认: [${comboBtns.map(b => b.textContent)}]`, comboBtns.length === 1 && comboBtns[0].textContent === '丈八蛇矛：两手牌当杀');
+
+  // 池外牌：引擎未纳入合法池 → 不可点、选不齐不出确认（前端不再自行推断）
+  w.renderAsk({
+    type: 'ask', askId: 3, playerIdx: 0, decisionType: 'play', skill: null,
+    question: '你的出牌阶段：请选择要执行的动作',
+    options: [
+      { kind: 'sha_combo', cardIds: [1, 2], uiLabel: '丈八蛇矛：两手牌当杀' },
+      { kind: 'end', uiLabel: '结束出牌阶段' },
+    ],
+  });
+  ok('池外牌不可点', !doc.querySelector('#hand0 .card[data-id="3"]').classList.contains('selectable')
+    && doc.querySelector('#hand0 .card[data-id="1"]').classList.contains('selectable'));
+  doc.querySelector('#hand0 .card[data-id="1"]').click();
+  doc.querySelector('#hand0 .card[data-id="3"]').click();
+  ok('选含池外牌无确认按钮', doc.querySelectorAll('#playconfirm button').length === 0);
 
   // 响应类询问：点选手牌打出（问闪为例）
   w.renderAsk({
