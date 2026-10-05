@@ -72,6 +72,65 @@ renderHand1();
   ok('武器/防具标签', bar0.includes('武器贯石斧♦5') && bar0.includes('防具仁王盾♣2'));
   ok('+1马/-1马区分显示', bar0.includes('+1马大宛♠K') && bar0.includes('-1马赤兔♥5'));
 
+  // ---------- 点选式出牌 ----------
+  const w = dom.window;
+  w.renderAsk({
+    type: 'ask', askId: 1, playerIdx: 0, decisionType: 'play', skill: null,
+    question: '你的出牌阶段：请选择要执行的动作',
+    options: [
+      { kind: 'play', cardId: 1, targets: [1], uiLabel: '使用 【杀♦7】' },
+      { kind: 'play', cardId: 5, useAs: '过河拆桥', targets: [1], uiLabel: '使用 【过河拆桥】' },
+      { kind: 'end', uiLabel: '结束出牌阶段' },
+    ],
+  });
+  const optsChildren = doc.querySelectorAll('#promptbar .opts > *');
+  ok(`备选按钮已隐藏（仅提示+确认容器+结束，实际${optsChildren.length}个元素）`, optsChildren.length === 3);
+  ok('结束出牌阶段按钮存在', [...doc.querySelectorAll('#promptbar button')].some(b => b.textContent === '结束出牌阶段'));
+  const dimmed = doc.querySelectorAll('#hand0 .card.dimmed');
+  ok(`不可出的牌灰化3张 (实际${dimmed.length})`, dimmed.length === 3 && [...dimmed].every(c => ['2','3','4'].includes(c.dataset.id)));
+  const pickable = doc.querySelectorAll('#hand0 .card.selectable');
+  ok(`可出的牌可点选2张 (实际${pickable.length})`, pickable.length === 2 && [...pickable].every(c => ['1','5'].includes(c.dataset.id)));
+
+  // 点选杀 → 确认按钮出现
+  doc.querySelector('#hand0 .card[data-id="1"]').click();
+  let confirmBtns = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`点杀后确认按钮: [${confirmBtns.map(b => b.textContent)}]`, confirmBtns.length === 1 && confirmBtns[0].textContent === '使用 【杀♦7】');
+
+  // 换选拆桥（无组合→单选替换）
+  doc.querySelector('#hand0 .card[data-id="5"]').click();
+  confirmBtns = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`点拆桥后确认按钮替换: [${confirmBtns.map(b => b.textContent)}]`, confirmBtns.length === 1 && confirmBtns[0].textContent === '使用 【过河拆桥】');
+
+  // 确认提交 → promptbar进入已提交状态
+  confirmBtns[0].click();
+  ok('确认后提交（已提交状态）', doc.querySelector('#promptbar .waiting') !== null);
+
+  // 丈八蛇矛双选流程
+  w.renderAsk({
+    type: 'ask', askId: 2, playerIdx: 0, decisionType: 'play', skill: null,
+    question: '你的出牌阶段：请选择要执行的动作',
+    options: [
+      { kind: 'play', cardId: 1, targets: [1], uiLabel: '使用 【杀♦7】' },
+      { kind: 'sha_combo', cardIds: [2, 3], uiLabel: '丈八蛇矛：两手牌当杀' },
+      { kind: 'end', uiLabel: '结束出牌阶段' },
+    ],
+  });
+  ok('丈八模式下无中生有/贯石斧可点选（组合候选）', doc.querySelector('#hand0 .card[data-id="2"]').classList.contains('selectable') && doc.querySelector('#hand0 .card[data-id="3"]').classList.contains('selectable'));
+  doc.querySelector('#hand0 .card[data-id="2"]').click();
+  ok('丈八只选第一张时无确认按钮', doc.querySelectorAll('#playconfirm button').length === 0);
+  doc.querySelector('#hand0 .card[data-id="3"]').click();
+  confirmBtns = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`两张选齐出现丈八确认: [${confirmBtns.map(b => b.textContent)}]`, confirmBtns.length === 1 && confirmBtns[0].textContent === '丈八蛇矛：两手牌当杀');
+
+  // 制衡多选不受影响
+  w.renderAsk({
+    type: 'ask', askId: 3, playerIdx: 0, decisionType: 'play', skill: '制衡',
+    question: '是否发动【制衡】？', count: 2,
+    options: [{ kind: 'skill_zhiheng', uiLabel: '发动【制衡】' }],
+  });
+  const zhihengPickable = doc.querySelectorAll('#hand0 .card.selectable');
+  ok(`制衡仍是全手牌多选 (实际${zhihengPickable.length}张)`, zhihengPickable.length === 5);
+
   console.log(failed ? `${failed}项失败` : 'UI结构验证全部通过');
   process.exit(failed ? 1 : 0);
 })();

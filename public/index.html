@@ -39,8 +39,10 @@
   .hlabel { font-size: 11px; color: #789; align-self: center; margin-right: 4px; }
   .card.selectable { cursor: pointer; border-color: var(--gold); }
   .card.selected { outline: 3px solid var(--gold); }
+  .card.dimmed { opacity: .35; filter: grayscale(.7); }
   .card.newdraw { border-color: #ffd700; box-shadow: 0 0 10px 2px rgba(255,215,0,.7); animation: newdraw-pulse 1s ease-in-out 3; }
   @keyframes newdraw-pulse { 50% { box-shadow: 0 0 20px 6px rgba(255,215,0,.95); } }
+  #playconfirm button.confirm { background: #7a5a1a; border-color: var(--gold); }
   .card .tagnote { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,.55); color: #ffd; font-size: 9px; text-align: center; }
   .mid { flex: 1; display: flex; gap: 12px; overflow: hidden; }
   .logbox { flex: 1; background: #151515; border: 1px solid #333; border-radius: 6px; padding: 6px 10px; overflow-y: auto; font-size: 12px; line-height: 1.7; }
@@ -156,31 +158,70 @@ function renderPlayer(idx, p, active) {
     });
   }
 }
-function cardHtml(c, selectable, selectedId, isNew) {
+function cardHtml(c, selectable, selectedId, isNew, dim) {
   const red = suitColor(c.suit)==='#c0392b';
   const inner = c.image
     ? `<img src="/${c.image}" onerror="this.outerHTML='<div class=\\'fallback\\'>${c.name}<br><span class=\\'suit\\' style=\\'color:${red?"#c0392b":"#222"}\\'>${c.suit}${c.rank}</span></div>'"><div class="corner ${red?'cr':'cb'}">${c.suit}${c.rank}</div>`
     : `<div class="fallback">${c.name}<br><span class="suit" style="color:${red?'#c0392b':'#222'}">${c.suit}${c.rank}</span></div>`;
   const note = c.subtype && c.subtype!=='普通杀' ? `<div class="tagnote">${c.subtype}</div>` : '';
-  return `<div class="card ${selectable?'selectable':''} ${selectedId?'selected':''} ${isNew?'newdraw':''}" data-id="${c.id}">${inner}${note}</div>`;
+  return `<div class="card ${selectable?'selectable':''} ${selectedId?'selected':''} ${isNew?'newdraw':''} ${dim?'dimmed':''}" data-id="${c.id}">${inner}${note}</div>`;
 }
 let prevHandIds = null; // 上一state的手牌id集合：识别新摸的牌做高亮
+function isPlayAsk() { return curAsk && curAsk.decisionType==='play' && !curAsk.skill; }
+function playMovesFor(ids) {
+  const opts = (curAsk && curAsk.options) || [];
+  if (ids.length === 1) return opts.filter(m => m.kind === 'play' && m.cardId === ids[0]);
+  if (ids.length === 2) return opts.filter(m => m.kind === 'sha_combo' && (m.cardIds||[]).every(id => ids.includes(id)));
+  return [];
+}
 function renderHand() {
   const hand = state.ownHand || [];
   const fresh = prevHandIds ? hand.filter(c => !prevHandIds.has(c.id)).map(c => c.id) : [];
   prevHandIds = new Set(hand.map(c => c.id));
   const isMulti = curAsk && (curAsk.decisionType==='discard' || (curAsk.decisionType==='play' && curAsk.skill==='制衡') || (curAsk.options||[]).some(o=>o.kind==='skill_zhiheng'));
+  const isPlay = isPlayAsk();
+  const playableIds = new Set();
+  if (isPlay) for (const m of (curAsk.options||[])) {
+    if (m.kind === 'play' && m.cardId != null) playableIds.add(m.cardId);
+    if (m.kind === 'sha_combo') (m.cardIds||[]).forEach(id => playableIds.add(id));
+  }
   $('hand0').innerHTML = hand.map(c => {
-    const sel = isMulti && selected.has(c.id);
-    return cardHtml(c, isMulti, sel, fresh.includes(c.id));
+    const sel = (isMulti || isPlay) && selected.has(c.id);
+    const canPick = isMulti || (isPlay && playableIds.has(c.id));
+    return cardHtml(c, canPick, sel, fresh.includes(c.id), isPlay && !playableIds.has(c.id));
   }).join('');
   document.querySelectorAll('#hand0 .card.selectable').forEach(el => {
     el.onclick = () => {
       const id = +el.dataset.id;
+      if (isPlay) {
+        // 点选式出牌：单选；两张可组成丈八蛇矛时进入双选
+        if (selected.has(id)) { selected.delete(id); }
+        else if (selected.size === 1) {
+          const a = [...selected][0];
+          const combo = (curAsk.options||[]).some(m => m.kind==='sha_combo' && (m.cardIds||[]).includes(a) && (m.cardIds||[]).includes(id));
+          if (combo) selected.add(id); else { selected.clear(); selected.add(id); }
+        } else { selected.clear(); selected.add(id); }
+        renderHand(); renderPlayConfirm();
+        return;
+      }
       if (selected.has(id)) selected.delete(id); else selected.add(id);
       renderHand(); renderPromptMulti();
     };
   });
+  if (isPlay) renderPlayConfirm();
+}
+function renderPlayConfirm() {
+  const box = $('playconfirm');
+  if (!box) return;
+  box.innerHTML = '';
+  const moves = playMovesFor([...selected]);
+  for (const m of moves) {
+    const b = document.createElement('button');
+    b.textContent = m.uiLabel || '确认出牌';
+    b.classList.add('confirm');
+    b.onclick = () => submitMove(m);
+    box.appendChild(b);
+  }
 }
 function renderPromptMulti() {
   if (!curAsk) return;
@@ -210,7 +251,21 @@ function renderAsk(a) {
   bar.innerHTML = `<div class="q">${esc(a.question)}</div><div class="opts"></div>`;
   const opts = bar.querySelector('.opts');
   const multi = a.decisionType==='discard' || (a.options||[]).some(o=>o.kind==='skill_zhiheng');
-  if (!multi) {
+  if (isPlayAsk()) {
+    // 点选式出牌：备选列表隐藏，仅作为可出性判定
+    const tip = document.createElement('span');
+    tip.textContent = '点选下方要出的牌，然后确认打出；灰色牌当前不可出';
+    tip.style.cssText = 'color:#999;font-size:12px;align-self:center';
+    opts.appendChild(tip);
+    const cbox = document.createElement('span');
+    cbox.id = 'playconfirm';
+    cbox.style.cssText = 'display:flex;gap:6px;align-self:center';
+    opts.appendChild(cbox);
+    const endBtn = document.createElement('button');
+    endBtn.textContent = '结束出牌阶段';
+    endBtn.onclick = () => submitMove({ kind: 'end' });
+    opts.appendChild(endBtn);
+  } else if (!multi) {
     for (const o of a.options) {
       const b = document.createElement('button');
       b.textContent = o.uiLabel;
