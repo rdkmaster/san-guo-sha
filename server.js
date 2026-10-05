@@ -103,14 +103,8 @@ function fmtTime(d) {
   return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
 }
 
-let gameLogFile = null;
-function appendGameLog(line) {
-  if (gameLogFile) {
-    try { fs.appendFileSync(gameLogFile, line + '\n', 'utf8'); } catch (e) {}
-  }
-}
-
 let gameGen = 0; // 对局代数：重开时旧对局的异步回调自动失效
+let appendGameLog = () => {}; // 当前对局的日志器（startGame时按gen重建）
 function abandonCurrentGame() {
   if (game) game.aborted = true;
   if (pendingHumanAsk) { pendingHumanAsk.resolve(null); pendingHumanAsk = null; }
@@ -121,6 +115,12 @@ function abandonCurrentGame() {
 async function startGame() {
   if (running) abandonCurrentGame();
   const gen = ++gameGen;
+  // 日志器绑定gen：文件名带gen防同秒重置碰撞，旧对局尾巴不漏写进新文件
+  const logFile = path.join(ROOT, '_logs', `对局_${fmtTime(new Date())}_${gen}.log`);
+  appendGameLog = (line) => {
+    if (gen !== gameGen) return;
+    try { fs.appendFileSync(logFile, line + '\n', 'utf8'); } catch (e) {}
+  };
   ai = new AIPlayer({
     model: MODEL, reasoning: REASONING,
     onDetail: (d) => {
@@ -139,6 +139,7 @@ async function startGame() {
       return await askHuman(d);
     },
     onEvent: (e) => {
+      if (gen !== gameGen) return; // 旧对局收尾事件不再广播/入日志
       if (e.type === 'state') broadcast({ type: 'state', state: decorate(e.state) });
       else {
         broadcast(e);
@@ -147,7 +148,6 @@ async function startGame() {
     },
   });
   running = true;
-  gameLogFile = path.join(ROOT, '_logs', `对局_${fmtTime(new Date())}.log`);
   appendGameLog(`对局开始 ${new Date().toLocaleString('zh-CN')} | 模型: ${MODEL} (reasoning: ${REASONING})`);
   broadcast({ type: 'gameStart', model: MODEL });
   game.run().then((w) => {
@@ -161,7 +161,7 @@ async function startGame() {
     appendGameLog(`引擎异常: ${String(err && err.stack || err)}`);
     broadcast({ type: 'error', msg: String(err && err.stack || err) });
   });
-  return { ok: true, logFile: gameLogFile };
+  return { ok: true, logFile: path.join(ROOT, '_logs') };
 }
 
 function serveStatic(req, res, urlPath) {

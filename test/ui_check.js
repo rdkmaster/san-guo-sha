@@ -28,6 +28,7 @@ state.ownHand = [
   {id:3,name:'贯石斧',suit:'♦',rank:'5',subtype:'装备牌',image:'素材/牌/贯石斧.png'},
   {id:4,name:'闪',suit:'♥',rank:'2',subtype:null},
   {id:5,name:'过河拆桥',suit:'♠',rank:'Q',subtype:'锦囊牌',image:'素材/牌/过河拆桥.png'},
+  {id:6,name:'大宛',suit:'♠',rank:'K',subtype:null,category:'装备牌',equip:'坐骑+1'},
 ];
 prevHandIds = null;
 render();
@@ -41,7 +42,7 @@ renderHand1();
   const ok = (name, cond) => { console.log((cond ? '✓' : '✗') + ' ' + name); if (!cond) failed++; };
 
   const cards = doc.querySelectorAll('#hand0 .card');
-  ok(`手牌渲染5张 (实际${cards.length})`, cards.length === 5);
+  ok(`手牌渲染6张 (实际${cards.length})`, cards.length === 6);
   const css = doc.querySelector('style').textContent;
   ok('卡牌尺寸86x120', /\.card \{ width: 86px; height: 120px/.test(css));
   ok('手牌区min-height 128', /min-height: 128px/.test(css));
@@ -55,6 +56,8 @@ renderHand1();
   ok('黑suit角标cb类(♠Q)', !!cbBlack && cbBlack.textContent === '♠Q');
   const fb = doc.querySelector('#hand0 .card[data-id="4"] .fallback');
   ok('无图卡fallback含♥2', !!fb && fb.textContent.includes('♥2'));
+  const horseNote = doc.querySelector('#hand0 .card[data-id="6"] .tagnote');
+  ok('手牌里的马标注+1马', !!horseNote && horseNote.textContent === '+1马');
 
   const backs = doc.querySelectorAll('#hand1 .card.back');
   ok(`非debug: AI手牌显示3张牌背 (实际${backs.length})`, backs.length === 3);
@@ -87,7 +90,7 @@ renderHand1();
   ok(`备选按钮已隐藏（仅提示+确认容器+结束，实际${optsChildren.length}个元素）`, optsChildren.length === 3);
   ok('结束出牌阶段按钮存在', [...doc.querySelectorAll('#promptbar button')].some(b => b.textContent === '结束出牌阶段'));
   const dimmed = doc.querySelectorAll('#hand0 .card.dimmed');
-  ok(`不可出的牌灰化3张 (实际${dimmed.length})`, dimmed.length === 3 && [...dimmed].every(c => ['2','3','4'].includes(c.dataset.id)));
+  ok(`不可出的牌灰化4张 (实际${dimmed.length})`, dimmed.length === 4 && [...dimmed].every(c => ['2','3','4','6'].includes(c.dataset.id)));
   const pickable = doc.querySelectorAll('#hand0 .card.selectable');
   ok(`可出的牌可点选2张 (实际${pickable.length})`, pickable.length === 2 && [...pickable].every(c => ['1','5'].includes(c.dataset.id)));
 
@@ -105,22 +108,40 @@ renderHand1();
   confirmBtns[0].click();
   ok('确认后提交（已提交状态）', doc.querySelector('#promptbar .waiting') !== null);
 
-  // 丈八蛇矛双选流程
+  // 丈八蛇矛双选流程（真实形状：服务器sha_combo动作不带cardIds）
   w.renderAsk({
     type: 'ask', askId: 2, playerIdx: 0, decisionType: 'play', skill: null,
     question: '你的出牌阶段：请选择要执行的动作',
     options: [
       { kind: 'play', cardId: 1, targets: [1], uiLabel: '使用 【杀♦7】' },
-      { kind: 'sha_combo', cardIds: [2, 3], uiLabel: '丈八蛇矛：两手牌当杀' },
+      { kind: 'sha_combo', uiLabel: '丈八蛇矛：两手牌当杀' },
       { kind: 'end', uiLabel: '结束出牌阶段' },
     ],
   });
-  ok('丈八模式下无中生有/贯石斧可点选（组合候选）', doc.querySelector('#hand0 .card[data-id="2"]').classList.contains('selectable') && doc.querySelector('#hand0 .card[data-id="3"]').classList.contains('selectable'));
+  ok('丈八模式下全手牌可点选（组合候选）', [...doc.querySelectorAll('#hand0 .card')].every(c => c.classList.contains('selectable')));
   doc.querySelector('#hand0 .card[data-id="2"]').click();
   ok('丈八只选第一张时无确认按钮', doc.querySelectorAll('#playconfirm button').length === 0);
   doc.querySelector('#hand0 .card[data-id="3"]').click();
-  confirmBtns = [...doc.querySelectorAll('#playconfirm button')];
-  ok(`两张选齐出现丈八确认: [${confirmBtns.map(b => b.textContent)}]`, confirmBtns.length === 1 && confirmBtns[0].textContent === '丈八蛇矛：两手牌当杀');
+  let comboBtns = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`两张选齐出现丈八确认: [${comboBtns.map(b => b.textContent)}]`, comboBtns.length === 1 && comboBtns[0].textContent === '丈八蛇矛：两手牌当杀');
+
+  // 响应类询问：点选手牌打出（问闪为例）
+  w.renderAsk({
+    type: 'ask', askId: 4, playerIdx: 0, decisionType: 'respond_sha', skill: null,
+    question: '需要响应【杀】',
+    options: [
+      { kind: 'respond', cardId: 4, uiLabel: '用 【闪♥2】响应' },
+      { kind: 'refuse', uiLabel: '不响应' },
+    ],
+  });
+  ok('响应询问：备选按钮隐藏（提示+确认容器+不响应）', doc.querySelectorAll('#promptbar .opts > *').length === 3);
+  ok('响应询问：不响应按钮存在', [...doc.querySelectorAll('#promptbar button')].some(b => b.textContent === '不响应'));
+  ok('响应询问：仅可响应的牌可点（闪♥2）', doc.querySelector('#hand0 .card[data-id="4"]').classList.contains('selectable')
+    && !doc.querySelector('#hand0 .card[data-id="1"]').classList.contains('selectable'));
+  ok('响应询问：不可响应的牌灰化', doc.querySelectorAll('#hand0 .card.dimmed').length === 5);
+  doc.querySelector('#hand0 .card[data-id="4"]').click();
+  const respBtns = [...doc.querySelectorAll('#playconfirm button')];
+  ok(`点闪后打出按钮: [${respBtns.map(b => b.textContent)}]`, respBtns.length === 1 && respBtns[0].textContent === '用 【闪♥2】响应');
 
   // 制衡多选不受影响
   w.renderAsk({
@@ -129,7 +150,7 @@ renderHand1();
     options: [{ kind: 'skill_zhiheng', uiLabel: '发动【制衡】' }],
   });
   const zhihengPickable = doc.querySelectorAll('#hand0 .card.selectable');
-  ok(`制衡仍是全手牌多选 (实际${zhihengPickable.length}张)`, zhihengPickable.length === 5);
+  ok(`制衡仍是全手牌多选 (实际${zhihengPickable.length}张)`, zhihengPickable.length === 6);
 
   console.log(failed ? `${failed}项失败` : 'UI结构验证全部通过');
   process.exit(failed ? 1 : 0);
