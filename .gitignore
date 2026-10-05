@@ -17,3 +17,4 @@ _progress.jsonl
 # AI测试跑批产物
 test/aitest/transcripts/
 test/aitest/report.md
+test/aitest/stub_run.txt

@@ -65,17 +65,17 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 
 | 决策类型 | 时机 | 可用动作 |
 |---|---|---|
-| `play` | 出牌阶段（循环询问） | `play`(出牌/转化) / `skill`(制衡) / `end` |
+| `play` | 出牌阶段（循环询问） | `play`(出牌/转化) / `skill`(制衡) / `sha_combo`(丈八蛇矛两牌当杀) / `end` |
 | `respond_sha` | 你被【杀】或【万箭齐发】指定，求【闪】 | `respond`(出闪/龙胆转化) / `refuse`(掉血) |
 | `respond_nanman` | 南蛮入侵/决斗轮到你，求打出【杀】 | `respond`(杀/武圣红牌/龙胆闪转化) / `refuse` |
 | `dying` | 有人濒死，问你是否给桃 | `tao`(出桃；濒死者自己可用酒) / `refuse` |
 | `wuxie` | 锦囊结算前问无懈（MVP只问被影响者一次） | `wuxie`(出无懈) / `refuse` |
 | `discard` | 弃牌阶段超手牌上限 | `discard`(指定弃牌，数量必须精确) |
-| `choose` | 五谷选牌 / 火攻对手展示手牌 / 拆桥·顺牵选区域 | `choose`(card选牌 或 choice选区域hand/equip/judge) |
+| `choose` | 五谷选牌 / 火攻展示手牌 / 拆桥·顺牵选区域 / 雌雄双股剑弃牌 | `choose`(card选牌 或 choice选区域hand/equip/judge) / `skip`(雌雄：让对方摸1) |
 | `skill_ask` | 触发技/装备技询问：奸雄、集智、火攻烧牌、青龙偃月刀、寒冰剑、麒麟弓、贯石斧 | `activate`(发动，可带card) / `skip` |
 | `daodao` | 你是借刀杀人的目标（你有武器且有杀） | `daodao_sha`(出杀) / `daodao_give`(交武器) |
 
-引擎简化项（MVP，AI无需操心）：八卦阵需要闪时自动判定；无懈可击只询问被影响者一次；铁索连环不在牌堆中；雌雄双股剑/方天画戟/朱雀羽扇的特效在1v1中不实现；丈八蛇矛不支持两牌转化。
+引擎简化项（MVP，AI无需操心）：八卦阵需要闪时自动判定；无懈可击只询问被影响者一次；铁索连环不在牌堆中；方天画戟在1v1中无额外目标可指定（仅作为范围4武器生效）。
 
 ## 3. 动作输出契约（AI必须输出的JSON）
 
@@ -94,6 +94,8 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 {"action": "discard", "cards": ["#1", "#2"]}
 {"action": "choose", "card": "#5"}
 {"action": "choose", "choice": "equip"}
+{"action": "skip", "skill": "雌雄双股剑"}
+{"action": "sha_combo", "cards": ["#1", "#3"]}
 {"action": "activate", "skill": "奸雄"}
 {"action": "activate", "skill": "火攻", "card": "#2"}
 {"action": "skip", "skill": "集智"}

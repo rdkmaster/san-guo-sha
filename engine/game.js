@@ -4,14 +4,14 @@
 const { buildDeck, makeRiggedDeck, isRed, isBlack, equipSlot, weaponRange } = require('./cards');
 
 const GENERALS = {
-  '关羽':   { hp: 4, kingdom: '蜀', skills: ['武圣'] },
-  '张飞':   { hp: 4, kingdom: '蜀', skills: ['咆哮'] },
-  '赵云':   { hp: 4, kingdom: '蜀', skills: ['龙胆'] },
-  '吕布':   { hp: 4, kingdom: '群', skills: ['无双'] },
-  '曹操':   { hp: 4, kingdom: '魏', skills: ['奸雄'] },
-  '孙权':   { hp: 4, kingdom: '吴', skills: ['制衡'] },
-  '黄月英': { hp: 3, kingdom: '蜀', skills: ['集智', '奇才'] },
-  '甘宁':   { hp: 4, kingdom: '吴', skills: ['奇袭'] },
+  '关羽':   { hp: 4, kingdom: '蜀', gender: 'm', skills: ['武圣'] },
+  '张飞':   { hp: 4, kingdom: '蜀', gender: 'm', skills: ['咆哮'] },
+  '赵云':   { hp: 4, kingdom: '蜀', gender: 'm', skills: ['龙胆'] },
+  '吕布':   { hp: 4, kingdom: '群', gender: 'm', skills: ['无双'] },
+  '曹操':   { hp: 4, kingdom: '魏', gender: 'm', skills: ['奸雄'] },
+  '孙权':   { hp: 4, kingdom: '吴', gender: 'm', skills: ['制衡'] },
+  '黄月英': { hp: 3, kingdom: '蜀', gender: 'f', skills: ['集智', '奇才'] },
+  '甘宁':   { hp: 4, kingdom: '吴', gender: 'm', skills: ['奇袭'] },
 };
 
 const SKILL_TEXTS = {
@@ -90,7 +90,7 @@ class Game {
     const mk = (idx, name) => {
       const g = GENERALS[name];
       return {
-        idx, general: name, kingdom: g.kingdom, skills: g.skills,
+        idx, general: name, kingdom: g.kingdom, gender: g.gender, skills: g.skills,
         hp: g.hp, maxHp: g.hp,
         hand: [], equips: { weapon: null, armor: null, horsePlus: null, horseMinus: null },
         judge: [], shaUsed: 0, jiuUsed: 0, zhihengUsed: false,
@@ -285,10 +285,10 @@ class Game {
   }
 
   // ---------- 伤害与濒死 ----------
-  async dealDamage(target, amount, { source = null, card = null, nature = '普通' } = {}) {
+  async dealDamage(target, amount, { source = null, card = null, nature = '普通', pierceArmor = false } = {}) {
     if (this.over || amount <= 0) return;
     if (card) this.limbo.add(card); // 结算中的伤害牌暂离（奸雄可取）
-    if (target.equips.armor && target.equips.armor.name === '白银狮子' && amount > 1) {
+    if (!pierceArmor && target.equips.armor && target.equips.armor.name === '白银狮子' && amount > 1) {
       amount = 1; this.log('白银狮子：伤害减为1点');
     }
     target.hp -= amount;
@@ -401,6 +401,10 @@ class Game {
     if (p.skills.includes('制衡') && !p.zhihengUsed && p.hand.length >= 1) {
       playable.push({ kind: 'skill_zhiheng' });
     }
+    // 丈八蛇矛：任意两张手牌当【杀】
+    if (shaOk && p.hand.length >= 2 && p.equips.weapon && p.equips.weapon.name === '丈八蛇矛') {
+      playable.push({ kind: 'sha_combo' });
+    }
     return { playerIdx: p.idx, type: 'play', playable, context: {} };
   }
 
@@ -427,26 +431,82 @@ class Game {
       this.log(`${p.general} 发动【制衡】，弃${cards.length}张摸${n}张`);
       return;
     }
+    // 丈八蛇矛：两张手牌当【杀】（无单卡cardId，必须先于手牌守卫处理）
+    if (move.kind === 'sha_combo') {
+      const combo = this.takeShaComboCards(p, move.cardIds);
+      if (!combo) return;
+      await this.resolveSha(p, opp, combo.primary, combo.extras);
+      return;
+    }
     const card = this.inHand(p, move.cardId);
     if (!card) { this.log('无效动作：找不到该手牌'); return; }
     p.hand = p.hand.filter(c => c !== card);
     const useAs = move.useAs || card.name;
     this.cardTaken = false;
 
-    // —— 杀（含转化） ——
-    if (useAs === '杀') {
-      p.shaUsed++;
-      const jiuBonus = p.drunken ? 1 : 0;
-      p.drunken = false;
-      this.log(`${p.general} 使用【杀】${useAs !== card.name ? `（${cardName(card)}转化）` : ''} → ${opp.general}`);
-      if (opp.equips.armor && opp.equips.armor.name === '仁王盾' && isBlack(card)) {
-        this.log('仁王盾：黑色【杀】无效');
-        this.toDiscard(card); return;
+    if (useAs === '杀') { await this.resolveSha(p, opp, card, null); return; }
+    await this.executeOtherPlay(p, move, card, useAs);
+  }
+
+  // 丈八蛇矛：校验并取出两张不同手牌（离手，结算结束才进弃牌堆）
+  takeShaComboCards(p, cardIds) {
+    const cards = [...new Set((cardIds || []).map(id => this.inHand(p, id)).filter(Boolean))];
+    if (cards.length !== 2) { this.log('丈八蛇矛：需要两张不同的手牌'); return null; }
+    p.hand = p.hand.filter(c => !cards.includes(c));
+    return { primary: cards[0], extras: [cards[1]] };
+  }
+
+  discardSha(card, extras) {
+    if (extras && extras.length) this.toDiscard([card, ...extras]);
+    else this.toDiscard(card);
+  }
+
+  // 雌雄双股剑：异性目标选择弃置一张手牌，或让对方摸一张牌
+  async cixiongAsk(attacker, target) {
+    const playable = target.hand.map(c => ({ kind: 'chooseCard', cardId: c.id }))
+      .concat([{ kind: 'skip', skill: '雌雄双股剑' }]);
+    const m = await this.askPlayer(target, {
+      playerIdx: target.idx, type: 'choose', skill: '雌雄双股剑',
+      playable,
+      context: { question: '雌雄双股剑：弃置一张手牌，或skip让对方摸一张牌？' },
+    });
+    if (m && m.kind === 'chooseCard') {
+      const c = this.inHand(target, m.cardId);
+      if (c) {
+        target.hand = target.hand.filter(x => x !== c);
+        this.toDiscard(c);
+        this.log(`${target.general} 弃置${cardName(c)}（雌雄双股剑）`);
+        return;
       }
-      if (opp.equips.armor && opp.equips.armor.name === '藤甲' && card.subtype !== '火杀' && card.subtype !== '雷杀') {
-        this.log('藤甲：普通【杀】无效');
-        this.toDiscard(card); return;
-      }
+    }
+    const n = this.draw(attacker, 1);
+    this.log(`雌雄双股剑：${attacker.general} 摸${n}张牌`);
+  }
+
+  // 杀结算（card=主牌；丈八蛇矛两手牌时extras=[第二张]）
+  async resolveSha(p, opp, card, extras) {
+    p.shaUsed++;
+    const jiuBonus = p.drunken ? 1 : 0;
+    p.drunken = false;
+    const pierce = !!(p.equips.weapon && p.equips.weapon.name === '青釭剑');
+    const zhuque = !!(p.equips.weapon && p.equips.weapon.name === '朱雀羽扇');
+    const isThunder = !extras && card.subtype === '雷杀';
+    const isFire = (!extras && card.subtype === '火杀') || (zhuque && !isThunder);
+    if (extras) this.log(`${p.general} 使用【杀】（丈八蛇矛：${cardName(card)}、${cardName(extras[0])}转化）→ ${opp.general}`);
+    else this.log(`${p.general} 使用【杀】${card.name !== '杀' ? `（${cardName(card)}转化）` : ''} → ${opp.general}`);
+    if (zhuque && !extras && (!card.subtype || card.subtype === '普通杀')) this.log('朱雀羽扇：普通【杀】视为火【杀】');
+    // 雌雄双股剑：对异性目标生效（官方时机：指定目标后）
+    if (!this.over && p.equips.weapon && p.equips.weapon.name === '雌雄双股剑' && p.gender !== opp.gender) {
+      await this.cixiongAsk(p, opp);
+    }
+    if (opp.equips.armor && opp.equips.armor.name === '仁王盾' && !pierce && isBlack(card)) {
+      this.log('仁王盾：黑色【杀】无效');
+      this.discardSha(card, extras); return;
+    }
+    if (opp.equips.armor && opp.equips.armor.name === '藤甲' && !pierce && !isFire && !isThunder) {
+      this.log('藤甲：普通【杀】无效');
+      this.discardSha(card, extras); return;
+    }
       const need = p.skills.includes('无双') ? 2 : 1;
       let dodged = true; // 目标是否用闪完全抵消
       for (let i = 0; i < need; i++) {
@@ -498,7 +558,7 @@ class Game {
       }
       if (!dodged && !this.over) {
         let dmg = 1 + jiuBonus;
-        if (card.subtype === '火杀' && opp.equips.armor && opp.equips.armor.name === '藤甲') { dmg += 1; this.log('火杀+藤甲：伤害+1'); }
+        if (isFire && !pierce && opp.equips.armor && opp.equips.armor.name === '藤甲') { dmg += 1; this.log('火杀+藤甲：伤害+1'); }
         if (p.equips.weapon && p.equips.weapon.name === '古锭刀' && opp.hand.length === 0) { dmg += 1; this.log('古锭刀：目标无手牌，伤害+1'); }
         // 寒冰剑：防伤害改为弃两张牌
         if (p.equips.weapon && p.equips.weapon.name === '寒冰剑' && this.hasCards(opp)) {
@@ -512,11 +572,11 @@ class Game {
             const cards = this.takeFromOpp(opp, 2);
             this.toDiscard(cards);
             this.log(`${p.general} 发动【寒冰剑】，弃置${opp.general}的${cards.map(cardName).join('、')}`);
-            this.toDiscard(card);
+            this.discardSha(card, extras);
             this.emitState(); return;
           }
         }
-        await this.dealDamage(opp, dmg, { source: p, card });
+        await this.dealDamage(opp, dmg, { source: p, card, pierceArmor: pierce, nature: isFire ? '火' : isThunder ? '雷' : '普通' });
         // 麒麟弓：命中后可弃目标一匹马
         if (!this.over && p.equips.weapon && p.equips.weapon.name === '麒麟弓') {
           const horses = [opp.equips.horsePlus, opp.equips.horseMinus].filter(Boolean);
@@ -536,10 +596,16 @@ class Game {
           }
         }
       }
-      if (!this.cardTaken) this.toDiscard(card);
+      if (this.cardTaken) {
+        // 奸雄拿走主牌，丈八的第二张仍要进弃牌堆
+        if (extras && extras.length) this.toDiscard(extras);
+        this.cardTaken = false;
+      } else this.discardSha(card, extras);
       return;
     }
 
+  // 杀之外的出牌结算（桃/酒/装备/锦囊）
+  async executeOtherPlay(p, move, card, useAs) {
     // —— 桃 / 酒 ——
     if (useAs === '桃') {
       const before = p.hp;
@@ -778,8 +844,9 @@ class Game {
 
   // ---------- 响应类询问 ----------
   async askDodge(user, target, attempt, need, reason) {
-    // 八卦阵（自动判定）
-    if (target.equips.armor && target.equips.armor.name === '八卦阵') {
+    // 八卦阵（自动判定；青釭剑无视防具）
+    const pierce = user && user.equips.weapon && user.equips.weapon.name === '青釭剑';
+    if (!pierce && target.equips.armor && target.equips.armor.name === '八卦阵') {
       const jc = this.drawOne();
       if (jc) {
         this.log(`${target.general} 发动【八卦阵】判定：${cardName(jc)}`);
@@ -929,6 +996,7 @@ class Game {
       if (!m) return null;
       if (m.kind === 'discard') return { kind: 'discard', cardIds: (action.cardIds || []).slice() };
       if (m.kind === 'skill_zhiheng') return { kind: 'skill_zhiheng', cardIds: (action.cardIds || []).slice() };
+      if (m.kind === 'sha_combo') return { kind: 'sha_combo', cardIds: (action.cardIds || []).slice() };
       return m;
     }
     // AI的JSON动作
@@ -982,6 +1050,11 @@ class Game {
       }
       case 'daodao_sha': return playable.find(m => m.kind === 'daodao_sha') || null;
       case 'daodao_give': return playable.find(m => m.kind === 'daodao_give') || null;
+      case 'sha_combo': {
+        if (!playable.some(m => m.kind === 'sha_combo')) return null;
+        const ids = (action.cards || []).map(byLabel).filter(x => x != null);
+        return { kind: 'sha_combo', cardIds: ids };
+      }
       default: return null;
     }
   }
@@ -1104,6 +1177,7 @@ class Game {
       case 'chooseCard': return `\`choose\` 选择 ${this.desc(m.cardId, decision)}`;
       case 'chooseArea': return `\`choose\` 选择区域 ${m.area}（手牌/装备/判定）`;
       case 'skill_zhiheng': return '`skill` 发动【制衡】（JSON: skill=制衡, cards=要弃的编号数组）';
+      case 'sha_combo': return '`sha_combo` 发动【丈八蛇矛】：任意两张手牌当【杀】（JSON: cards=两个编号数组）';
       case 'activate': return `\`activate\` 发动【${m.skill}】${m.cardId != null ? `（card: ${this.desc(m.cardId, decision)}）` : ''}`;
       case 'skip': return `\`skip\` 不发动【${m.skill}】`;
       case 'daodao_sha': return '`daodao_sha` 对借刀者使用【杀】';

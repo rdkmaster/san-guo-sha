@@ -14,6 +14,7 @@ const ROOT = path.join(__dirname, '..', '..');
 const MODE = process.argv.includes('--real') ? 'real' : 'stub';
 const onlyIdx = process.argv.indexOf('--only');
 const ONLY = onlyIdx >= 0 ? process.argv[onlyIdx + 1] : null;
+const STUB_SEED = 20261005; // stub固定种子，dry-run可复现
 
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
@@ -25,14 +26,20 @@ async function runScenario(sc) {
   if (MODE === 'real') ai = new AIPlayer({ model: 'glm-5.3-flash', reasoning: 'high' });
 
   const game = new Game({
-    seed: Math.floor(Math.random() * 1e9),
+    seed: MODE === 'stub' ? STUB_SEED : Math.floor(Math.random() * 1e9),
     generals: sc.generals,
     first: sc.first,
     deck: sc.deck,
     ask: async (d) => {
       if (d.playerIdx === 1) {
         if (++aiDecisions > maxAI) { game.aborted = true; return { kind: 'end' }; }
-        if (MODE === 'stub') return d.playable[Math.floor(Math.random() * d.playable.length)];
+        if (MODE === 'stub') {
+          // 战术类随机；触发/救助/选牌类配合（playable[0]），保证引擎路径被确定性覆盖
+          const tactical = ['play', 'respond_sha', 'respond_nanman', 'discard', 'daodao'];
+          return tactical.includes(d.type)
+            ? d.playable[Math.floor(Math.random() * d.playable.length)]
+            : d.playable[0];
+        }
         return await ai.decide(d.stateMd, () => {});
       }
       return await sc.humanScript(game)(d);
