@@ -547,7 +547,25 @@ class Game {
             };
             const m = await this.askPlayer(p, decision);
             if (m && m.kind === 'activate') {
-              const cards = this.ownCardsForAxe(p);
+              // 官方规则：自己选择弃置两张牌（手牌或装备区）
+              const pool = [...p.hand, ...Object.values(p.equips).filter(Boolean)];
+              let cards;
+              if (pool.length === 2) {
+                cards = pool.slice();
+              } else {
+                const sel = await this.askPlayer(p, {
+                  playerIdx: p.idx, type: 'discard', count: 2,
+                  playable: [{ kind: 'discard', area: 'any' }],
+                  context: { question: '【贯石斧】已发动：请选择弃置两张牌（手牌或装备区，cards填编号）' },
+                });
+                cards = (sel && sel.kind === 'discard' && sel.cardIds)
+                  ? [...new Set(sel.cardIds.map(id => pool.find(c => c.id === id)).filter(Boolean))]
+                  : [];
+                if (cards.length !== 2) {
+                  this.log('弃牌数量不合法，改为自动选择');
+                  cards = this.ownCardsForAxe(p);
+                }
+              }
               this.removeOwnCards(p, cards);
               this.toDiscard(cards);
               this.log(`${p.general} 发动【贯石斧】，弃置${cards.map(cardName).join('、')}，强制造成伤害`);

@@ -97,4 +97,54 @@ const equipMove = (g, d, name) => d.playable.find(m => m.kind === 'play' && !m.u
     console.log('4) 丈八:', comboLogs.length ? `${comboLogs.length}次两手牌当杀✓` : '✗',
       '|', comboLogs[0]?.slice(0, 60), '| 守恒', g.invariant().total);
   }
+  // 5) 贯石斧：发动后玩家自选两张（手牌+装备区），强制伤害
+  {
+    let axeSelectionFired = false;
+    const g = new Game({ seed: 11, generals: ['黄月英', '关羽'], first: 0, deck: [
+      ['贯石斧', '♦', '5'], ['杀', '♦', '7'], ['仁王盾', '♣', '2'], ['闪', '♥', '2'],
+      ['闪', '♦', '8'], ['杀', '♦', '8'], ['桃', '♥', '5'], ['杀', '♠', '8'],
+      ['闪', '♦', '6'], ['闪', '♦', '7'], ['闪', '♦', '4'], ['闪', '♦', '3'],
+      ['杀', '♣', '5'], ['杀', '♣', '6'],
+    ], ask: async d => {
+      if (g.turnNo > 2) { g.aborted = true; return { kind: 'end' }; }
+      const p0 = g.players[0];
+      if (d.playerIdx === 0) {
+        if (d.type === 'play') {
+          const axe = p0.hand.find(c => c.name === '贯石斧');
+          if (axe) return d.playable.find(m => m.kind === 'play' && m.cardId === axe.id);
+          const armor = p0.hand.find(c => c.name === '仁王盾');
+          if (armor) return d.playable.find(m => m.kind === 'play' && m.cardId === armor.id);
+          const sha = p0.hand.find(c => c.name === '杀');
+          if (sha) return d.playable.find(m => m.kind === 'play' && m.cardId === sha.id);
+          return d.playable.find(m => m.kind === 'end');
+        }
+        if (d.type === 'skill_ask' && d.skill === '贯石斧') return d.playable.find(m => m.kind === 'activate');
+        if (d.type === 'discard' && d.playable[0] && d.playable[0].area === 'any') {
+          axeSelectionFired = true;
+          const shan = p0.hand.find(c => c.name === '闪');
+          return { kind: 'discard', cardIds: [shan.id, p0.equips.armor.id] }; // 1手牌+1装备
+        }
+        if (d.type === 'discard') {
+          const n = d.count || 1;
+          return { kind: 'discard', cardIds: p0.hand.slice(0, n).map(c => c.id) };
+        }
+        return d.playable[0];
+      }
+      if (d.type === 'respond_sha') {
+        const shan = g.players[1].hand.find(c => c.name === '闪');
+        if (shan) return d.playable.find(m => m.kind === 'respond' && m.cardId === shan.id);
+        return d.playable.find(m => m.kind === 'refuse');
+      }
+      if (d.type === 'play') return d.playable.find(m => m.kind === 'end');
+      return d.playable[0];
+    } });
+    await g.setup();
+    await g.run();
+    const p0 = g.players[0];
+    const axeLog = g.logLines.find(l => l.includes('贯石斧') && l.includes('强制造成伤害'));
+    const ok = axeSelectionFired && axeLog && axeLog.includes('仁王盾♣2') && axeLog.includes('闪♥2')
+      && g.logLines.some(l => /关羽 受到1点伤害/.test(l))
+      && p0.equips.armor === null && p0.equips.weapon && p0.equips.weapon.name === '贯石斧';
+    console.log('5) 贯石斧自选:', ok ? '选牌询问+弃装备手牌各1+强制伤害✓' : '✗', '|', axeLog?.slice(0, 60), '| 守恒', g.invariant().total);
+  }
 })();
