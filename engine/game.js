@@ -834,17 +834,30 @@ class Game {
       }
       case '借刀杀人': {
         const weapon = opp.equips.weapon;
-        if (!weapon || !opp.hand.some(c => c.name === '杀')) break;
+        if (!weapon) break;
+        // 可打出的杀：本杀 + 武圣(红牌)/龙胆(闪)按技能转化打出
+        const shaSources = opp.hand.filter(c => c.name === '杀'
+          || (opp.skills.includes('武圣') && isRed(c) && c.name !== '杀')
+          || (opp.skills.includes('龙胆') && c.name === '闪'));
+        if (shaSources.length === 0) {
+          // 官方规则：目标无【杀】可打出，必须将武器交给借刀人（引擎强制结算）
+          opp.equips.weapon = null;
+          p.hand.push(weapon);
+          this.log(`${opp.general} 无【杀】可出，将${horseName(weapon)}交给${p.general}`);
+          break;
+        }
         const decision = {
           playerIdx: opp.idx, type: 'daodao',
-          playable: [{ kind: 'daodao_sha' }, { kind: 'daodao_give' }],
-          context: { question: `借刀杀人：对${p.general}使用【杀】，或将${horseName(weapon)}交给对方？` },
+          playable: shaSources.map(c => ({ kind: 'daodao_sha', cardId: c.id, useAs: c.name === '杀' ? null : '杀' }))
+            .concat([{ kind: 'daodao_give' }]),
+          context: { question: `借刀杀人：打出【杀】（对${p.general}），或将${horseName(weapon)}交给对方？` },
         };
         const m = await this.askPlayer(opp, decision);
-        if (m && m.kind === 'daodao_sha') {
-          const sha = opp.hand.find(c => c.name === '杀');
+        if (m && m.kind === 'daodao_sha' && this.inHand(opp, m.cardId)) {
+          const sha = this.inHand(opp, m.cardId);
           opp.hand = opp.hand.filter(c => c !== sha);
-          this.log(`${opp.general} 出【杀】→ ${p.general}（借刀杀人）`);
+          const conv = sha.name === '杀' ? '' : `（【${sha.name}${sha.suit}${sha.rank}】转化）`;
+          this.log(`${opp.general} 出【杀】${conv}→ ${p.general}（借刀杀人）`);
           const ok = await this.askDodge(opp, p, 0, 1, '杀');
           if (!ok) await this.dealDamage(p, 1, { source: opp, card: sha });
           this.toDiscard(sha);
@@ -1067,7 +1080,13 @@ class Game {
         }
         return playable.find(m => m.kind === 'activate' && (!action.skill || !m.skill || m.skill === action.skill)) || null;
       }
-      case 'daodao_sha': return playable.find(m => m.kind === 'daodao_sha') || null;
+      case 'daodao_sha': {
+        if (action.card != null) {
+          const id = byLabel(action.card);
+          return playable.find(m => m.kind === 'daodao_sha' && m.cardId === id) || null;
+        }
+        return playable.find(m => m.kind === 'daodao_sha' && !m.useAs) || playable.find(m => m.kind === 'daodao_sha') || null;
+      }
       case 'daodao_give': return playable.find(m => m.kind === 'daodao_give') || null;
       case 'sha_combo': {
         if (!playable.some(m => m.kind === 'sha_combo')) return null;
@@ -1200,7 +1219,7 @@ class Game {
       case 'sha_combo': return '`sha_combo` 发动【丈八蛇矛】：任意两张手牌当【杀】（JSON: cards=两个编号数组）';
       case 'activate': return `\`activate\` 发动【${m.skill}】${m.cardId != null ? `（card: ${this.desc(m.cardId, decision)}）` : ''}`;
       case 'skip': return `\`skip\` 不发动【${m.skill}】`;
-      case 'daodao_sha': return '`daodao_sha` 对借刀者使用【杀】';
+      case 'daodao_sha': return `\`daodao_sha\` 打出【杀】（card: ${this.desc(m.cardId, decision)}）对借刀者`;
       case 'daodao_give': return '`daodao_give` 将武器交给借刀者';
       default: return '`?` ' + m.kind;
     }

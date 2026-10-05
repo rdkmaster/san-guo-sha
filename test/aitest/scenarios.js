@@ -776,9 +776,9 @@ const SCENARIOS = [
       { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
     ],
   },
-  // 31. 借刀熄灭：目标有武器但无杀，借刀无效果进弃牌堆
+  // 31. 借刀无杀：官方规则——目标无【杀】可打出，武器被强制移交（引擎代码结算）
   {
-    name: '借刀-无杀熄灭',
+    name: '借刀-无杀强制交武器',
     generals: ['甘宁', '吕布'], first: 0, maxAI: 20,
     deck: [
       ['借刀杀人', '♣', 'Q'], ['杀', '♦', '7'], ['桃', '♦', '2'], ['闪', '♥', '2'],
@@ -799,7 +799,7 @@ const SCENARIOS = [
     },
     expect: (g) => [
       { pass: g.logLines.some(l => /使用【借刀杀人】/.test(l)), desc: '借刀打出' },
-      { pass: !g.logLines.some(l => /出【杀】→|交给/.test(l)), desc: '目标无杀：无出杀也无交刀' },
+      { pass: g.logLines.some(l => /吕布 无【杀】可出，将【青釭剑】交给甘宁/.test(l)), desc: '目标无杀：武器强制移交（官方规则，移交日志=代码路径执行）' },
       { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
     ],
   },
