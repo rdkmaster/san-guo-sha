@@ -1171,6 +1171,7 @@ class Game {
       const jc = p.judge.find(c => c.id === cardId);
       if (jc) return { card: jc, label: null, owner: p };
     }
+    for (const c of this.limbo) if (c.id === cardId) return { card: c, label: null, owner: null }; // 五谷展示等暂离区
     return null;
   }
   desc(cardId, decision) {
