@@ -36,7 +36,7 @@ const SCENARIOS = [
       };
     },
     expect: (g) => [
-      { pass: !g.logLines.some(l => ILLEGAL.test(l)), desc: '无双流程AI动作全部合法' },
+      { pass: !g.logLines.some(l => ILLEGAL.test(l)), desc: 'AI全程无非法动作（AI质量信号）' },
       { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
     ],
   },
@@ -155,26 +155,33 @@ const SCENARIOS = [
       { pass: !g.logLines.some(l => /找不到该手牌/.test(l)), desc: '制衡执行无"找不到牌"错误' },
     ],
   },
-  // 7. 闪电全程：AI(黄月英)挂闪电→下回合判定→观察雷伤/濒死/自救
+  // 7. 闪电全程：人类脚本把闪电挂到AI判定区（GLM可能自选弃闪电，故由脚本侧强制）→下回合判定
   {
-    name: '闪电-判定与濒死自救',
+    name: '闪电-判定雷伤',
     generals: ['甘宁', '黄月英'], first: 1, maxAI: 30,
     deck: [
-      ['杀', '♥', '10'], ['闪', '♦', '2'], ['桃', '♦', '2'], ['杀', '♦', '7'],
-      ['闪电', '♠', 'A'], ['杀', '♦', '8'], ['闪', '♦', '5'], ['桃', '♥', '5'],
+      ['闪电', '♠', 'A'], ['闪', '♦', '2'], ['桃', '♦', '2'], ['杀', '♦', '7'],
+      ['杀', '♥', '10'], ['闪', '♦', '5'], ['桃', '♥', '5'], ['杀', '♠', '8'],
       ['杀', '♠', '10'], ['杀', '♥', '10'],
-      ['雷杀', '♠', '6'], ['桃', '♥', '6'],
+      ['杀', '♣', '8'], ['杀', '♠', '9'],
+      ['桃', '♥', '3'],
+      ['雷杀', '♠', '5'],
+      ['闪', '♦', '6'], ['桃', '♥', '4'], ['闪', '♦', '7'],
     ],
     humanScript: (g) => {
       const H = mkHelpers(g);
       return async (d) => {
         if (d.type === 'respond_sha') return H.play(d, '闪') || H.kindOf(d, 'refuse');
-        return H.kindOf(d, 'end') || d.playable[0];
+        if (d.type === 'play') return H.play(d, '闪电') || H.kindOf(d, 'end');
+        return H.kindOf(d, 'refuse') || d.playable[0];
       };
     },
     expect: (g) => [
-      { pass: g.logLines.some(l => /置于黄月英的判定区/.test(l)), desc: 'AI把闪电挂到自己判定区' },
-      { pass: g.logLines.some(l => /判定【闪电】/.test(l)), desc: '下回合进入闪电判定' },
+      { pass: g.logLines.some(l => /置于甘宁的判定区/.test(l)), desc: '闪电挂到使用者自己判定区（官方规则）' },
+      { pass: g.logLines.some(l => /判定【闪电】/.test(l)), desc: '下回合判定阶段进入闪电判定' },
+      { pass: g.logLines.some(l => /黑桃2-9：闪电命中/.test(l)), desc: '雷杀♠5判定命中' },
+      { pass: g.logLines.some(l => /受到3点雷伤害/.test(l)), desc: '3点雷伤害结算' },
+      { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒（闪电进弃牌堆恰一次）' },
     ],
   },
   // 8. 借刀杀人：人类借AI(吕布)的刀，AI有武器有杀，观察其选择
@@ -200,7 +207,7 @@ const SCENARIOS = [
     },
     expect: (g) => [
       { pass: g.logLines.some(l => /借刀杀人/.test(l)) && g.logLines.some(l => /出【杀】→|交给/.test(l)), desc: '借刀流程走通（AI出杀或交刀）' },
-      { pass: !g.logLines.some(l => ILLEGAL.test(l)), desc: 'AI的daodao决策合法' },
+      { pass: !g.logLines.some(l => ILLEGAL.test(l)), desc: 'AI全程无非法动作（AI质量信号）' },
     ],
   },
 ];
