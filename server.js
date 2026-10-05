@@ -67,6 +67,7 @@ function moveUiLabel(d, m) {
     case 'wuxie': return `用 ${desc(m.cardId)} 抵消`;
     case 'discard': return `弃置${d.count || ''}张（点选手牌后确认）`;
     case 'chooseCard': return `选择 ${desc(m.cardId)}`;
+    case 'sha_combo': return '丈八蛇矛：两手牌当杀';
     case 'chooseArea': return { hand: '拿手牌（随机）', equip: '拿装备', judge: '拿判定区牌' }[m.area] || m.area;
     case 'skill_zhiheng': return `发动【制衡】（点选手牌后确认）`;
     case 'activate': return `发动【${m.skill}】${m.cardId != null ? `（用 ${desc(m.cardId)}）` : ''}`;

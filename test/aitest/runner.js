@@ -16,13 +16,23 @@ const onlyIdx = process.argv.indexOf('--only');
 const ONLY = onlyIdx >= 0 ? process.argv[onlyIdx + 1] : null;
 const STUB_SEED = 20261005; // stub固定种子，dry-run可复现
 
-function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+// stub随机源：每场景独立播种（此前用裸Math.random，跨场景流漂移导致断言闪断）
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+let stubRng = Math.random;
 
-async function runScenario(sc) {
+async function runScenario(sc, idx) {
   const t0 = Date.now();
   let aiDecisions = 0;
   const maxAI = sc.maxAI || 25;
   let ai = null;
+  stubRng = mulberry32(STUB_SEED + idx * 7919);
   if (MODE === 'real') ai = new AIPlayer({ model: 'glm-5.3-flash', reasoning: 'high' });
 
   const game = new Game({
@@ -37,7 +47,7 @@ async function runScenario(sc) {
           // 战术类随机；触发/救助/选牌类配合（playable[0]），保证引擎路径被确定性覆盖
           const tactical = ['play', 'respond_sha', 'respond_nanman', 'discard', 'daodao'];
           return tactical.includes(d.type)
-            ? d.playable[Math.floor(Math.random() * d.playable.length)]
+            ? d.playable[Math.floor(stubRng() * d.playable.length)]
             : d.playable[0];
         }
         return await ai.decide(d.stateMd, () => {});
@@ -71,10 +81,11 @@ async function runScenario(sc) {
   const list = ONLY ? SCENARIOS.filter(s => s.name.includes(ONLY)) : SCENARIOS;
   fs.mkdirSync(path.join(__dirname, 'transcripts'), { recursive: true });
   const results = [];
-  for (const sc of list) {
+  for (let i = 0; i < list.length; i++) {
+    const sc = list[i];
     process.stdout.write(`▶ ${sc.name} (${MODE}) ... `);
     try {
-      const r = await runScenario(sc);
+      const r = await runScenario(sc, i);
       results.push(r);
       fs.writeFileSync(path.join(__dirname, 'transcripts', `${sc.name.replace(/[\\/:*?"<>|]/g, '_')}.log`), r.transcript, 'utf8');
       console.log(`${r.ok ? '✓ PASS' : '✗ FAIL'} ${r.durSec}s AI决策${r.aiDecisions} 非法${r.illegal} 兜底${r.fallback}${r.anomalies.length ? ' 异常:' + r.anomalies.length : ''}`);

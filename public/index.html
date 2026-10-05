@@ -163,7 +163,9 @@ function cardHtml(c, selectable, selectedId, isNew, dim) {
   const inner = c.image
     ? `<img src="/${c.image}" onerror="this.outerHTML='<div class=\\'fallback\\'>${c.name}<br><span class=\\'suit\\' style=\\'color:${red?"#c0392b":"#222"}\\'>${c.suit}${c.rank}</span></div>'"><div class="corner ${red?'cr':'cb'}">${c.suit}${c.rank}</div>`
     : `<div class="fallback">${c.name}<br><span class="suit" style="color:${red?'#c0392b':'#222'}">${c.suit}${c.rank}</span></div>`;
-  const note = c.subtype && c.subtype!=='普通杀' ? `<div class="tagnote">${c.subtype}</div>` : '';
+  const eqTag = c.equip === '坐骑+1' ? '+1马' : c.equip === '坐骑-1' ? '-1马' : c.equip;
+  const note = ((c.subtype && c.subtype!=='普通杀') || eqTag)
+    ? `<div class="tagnote">${[c.subtype && c.subtype!=='普通杀' ? c.subtype : null, eqTag].filter(Boolean).join('·')}</div>` : '';
   return `<div class="card ${selectable?'selectable':''} ${selectedId?'selected':''} ${isNew?'newdraw':''} ${dim?'dimmed':''}" data-id="${c.id}">${inner}${note}</div>`;
 }
 let prevHandIds = null; // 上一state的手牌id集合：识别新摸的牌做高亮
@@ -171,7 +173,11 @@ function isPlayAsk() { return curAsk && curAsk.decisionType==='play' && !curAsk.
 function playMovesFor(ids) {
   const opts = (curAsk && curAsk.options) || [];
   if (ids.length === 1) return opts.filter(m => m.kind === 'play' && m.cardId === ids[0]);
-  if (ids.length === 2) return opts.filter(m => m.kind === 'sha_combo' && (m.cardIds||[]).every(id => ids.includes(id)));
+  if (ids.length === 2) {
+    // 丈八蛇矛：服务器的sha_combo动作不带cardIds（任意两手牌），由前端补上
+    const combo = opts.find(m => m.kind === 'sha_combo');
+    return combo ? [{ ...combo, cardIds: [...ids] }] : [];
+  }
   return [];
 }
 function renderHand() {
@@ -180,27 +186,26 @@ function renderHand() {
   prevHandIds = new Set(hand.map(c => c.id));
   const isMulti = curAsk && (curAsk.decisionType==='discard' || (curAsk.decisionType==='play' && curAsk.skill==='制衡') || (curAsk.options||[]).some(o=>o.kind==='skill_zhiheng'));
   const isPlay = isPlayAsk();
+  const comboMove = isPlay && (curAsk.options||[]).some(m => m.kind === 'sha_combo');
   const playableIds = new Set();
   if (isPlay) for (const m of (curAsk.options||[])) {
     if (m.kind === 'play' && m.cardId != null) playableIds.add(m.cardId);
-    if (m.kind === 'sha_combo') (m.cardIds||[]).forEach(id => playableIds.add(id));
   }
   $('hand0').innerHTML = hand.map(c => {
+    // 丈八蛇矛在场：任意手牌都是组合候选（官方规则任意两手牌当杀）
+    const pickable = isPlay ? (comboMove || playableIds.has(c.id)) : isMulti;
     const sel = (isMulti || isPlay) && selected.has(c.id);
-    const canPick = isMulti || (isPlay && playableIds.has(c.id));
-    return cardHtml(c, canPick, sel, fresh.includes(c.id), isPlay && !playableIds.has(c.id));
+    return cardHtml(c, pickable, sel, fresh.includes(c.id), isPlay && !pickable);
   }).join('');
   document.querySelectorAll('#hand0 .card.selectable').forEach(el => {
     el.onclick = () => {
       const id = +el.dataset.id;
       if (isPlay) {
-        // 点选式出牌：单选；两张可组成丈八蛇矛时进入双选
+        // 点选式出牌：单选；丈八在场时第二张不同手牌自动组对
         if (selected.has(id)) { selected.delete(id); }
-        else if (selected.size === 1) {
-          const a = [...selected][0];
-          const combo = (curAsk.options||[]).some(m => m.kind==='sha_combo' && (m.cardIds||[]).includes(a) && (m.cardIds||[]).includes(id));
-          if (combo) selected.add(id); else { selected.clear(); selected.add(id); }
-        } else { selected.clear(); selected.add(id); }
+        else if (selected.size === 1 && comboMove) { selected.add(id); }
+        else if (selected.size === 1) { selected.clear(); selected.add(id); }
+        else { selected.clear(); selected.add(id); }
         renderHand(); renderPlayConfirm();
         return;
       }
