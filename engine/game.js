@@ -297,8 +297,15 @@ class Game {
   async dealDamage(target, amount, { source = null, card = null, nature = '普通', pierceArmor = false } = {}) {
     if (this.over || amount <= 0) return;
     if (card) this.limbo.add(card); // 结算中的伤害牌暂离（奸雄可取）
-    if (!pierceArmor && target.equips.armor && target.equips.armor.name === '白银狮子' && amount > 1) {
-      amount = 1; this.log('白银狮子：伤害减为1点');
+    // 官方规则：白银狮子=受到的伤害-1（1点伤害可减为0）
+    if (!pierceArmor && target.equips.armor && target.equips.armor.name === '白银狮子') {
+      amount -= 1;
+      if (amount <= 0) {
+        this.log(`白银狮子：伤害-1为0，${target.general} 未受到伤害`);
+        if (card) this.limbo.delete(card); // 未造成伤害：牌交还给调用方的正常弃置流程
+        return;
+      }
+      this.log('白银狮子：伤害-1');
     }
     target.hp -= amount;
     this.log(`${target.general} 受到${amount}点${nature === '普通' ? '' : nature}伤害${source ? `（来自${source.general}）` : ''}，体力 ${target.hp + amount}→${target.hp}/${target.maxHp}`);
@@ -811,7 +818,10 @@ class Game {
             const bc = this.inHand(p, m2.cardId);
             p.hand = p.hand.filter(c => c !== bc);
             this.toDiscard(bc);
-            await this.dealDamage(opp, 1, { source: p, card, nature: '火' });
+            // 官方规则：藤甲=受到的火焰伤害+1（对火攻同样生效）
+            const dmg = opp.equips.armor && opp.equips.armor.name === '藤甲' ? 2 : 1;
+            if (dmg === 2) this.log('藤甲：火焰伤害+1');
+            await this.dealDamage(opp, dmg, { source: p, card, nature: '火' });
           }
         } else this.log(`${p.general} 无同花色手牌，无法火攻`);
         break;
@@ -868,11 +878,9 @@ class Game {
         if (m && m.kind === 'daodao_sha') {
           const sha = this.takeCard(opp, m.cardId); // 手牌或装备区（武圣转化）
           if (sha) {
-            const conv = sha.name === '杀' ? '' : `（【${sha.name}${sha.suit}${sha.rank}】${sha.equip ? '装备区' : ''}转化）`;
-            this.log(`${opp.general} 出【杀】${conv}→ ${p.general}（借刀杀人）`);
-            const ok = await this.askDodge(opp, p, 0, 1, '杀');
-            if (!ok) await this.dealDamage(p, 1, { source: opp, card: sha });
-            this.toDiscard(sha);
+            // 官方规则：借刀令目标对借刀人使用【杀】=正常使用，完整结算
+            // （无双两闪、朱雀火杀、仁王盾、藤甲、寒冰/麒麟/古锭/雌雄/贯石斧等全部生效）
+            await this.resolveSha(opp, p, sha);
           } else {
             // 来源牌异常：回退为交武器
             opp.equips.weapon = null;

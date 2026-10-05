@@ -34,6 +34,7 @@ function check(logs) {
       let replaced = false;
       while (j < logs.length) {
         const N = logs[j];
+        if (/^白银狮子.*未受到伤害/.test(N)) { replaced = true; break; } // 白银减为0：本就无伤害行
         if (/^火杀\+藤甲/.test(N) || /^古锭刀/.test(N) || /^白银狮子/.test(N)) { j++; continue; }
         if (/发动【寒冰剑】/.test(N)) { replaced = true; break; }
         break;

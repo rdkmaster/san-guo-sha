@@ -206,7 +206,7 @@ const SCENARIOS = [
       };
     },
     expect: (g) => [
-      { pass: g.logLines.some(l => /借刀杀人/.test(l)) && g.logLines.some(l => /出【杀】→|交给/.test(l)), desc: '借刀流程走通（AI出杀或交刀）' },
+      { pass: g.logLines.some(l => /借刀杀人/.test(l)) && g.logLines.some(l => /使用【杀】.*→|交给/.test(l)), desc: '借刀流程走通（AI出杀或交刀）' },
       { pass: !g.logLines.some(l => ILLEGAL.test(l)), desc: 'AI全程无非法动作（AI质量信号）', realOnly: true },
       { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
     ],
@@ -397,7 +397,7 @@ const SCENARIOS = [
     deck: [
       ['酒', '♠', '3'], ['杀', '♣', '8'], ['桃', '♦', '2'], ['闪', '♥', '2'],
       ['白银狮子', '♣', 'A'], ['杀', '♠', '8'], ['桃', '♥', '5'], ['杀', '♣', '9'],
-      ['杀', '♦', '7'], ['闪', '♦', '5'], ['桃', '♥', '3'], ['闪', '♦', '6'],
+      ['杀', '♦', '7'], ['桃', '♥', '3'], ['杀', '♣', '2'], ['闪', '♦', '6'],
     ],
     preSetup: (g) => {
       const i = g.players[1].hand.findIndex(c => c.name === '白银狮子');
@@ -411,8 +411,9 @@ const SCENARIOS = [
       };
     },
     expect: (g) => [
-      { pass: g.logLines.some(l => /白银狮子：伤害减为1点/.test(l)), desc: '2点伤害（酒+杀）被减为1' },
+      { pass: g.logLines.some(l => /白银狮子：伤害-1/.test(l)), desc: '白银狮子：伤害-1（酒+杀2点→1点）' },
       { pass: g.logLines.some(l => /受到1点伤害/.test(l)), desc: '实际只受到1点' },
+      { pass: g.logLines.some(l => /白银狮子：伤害-1为0，曹操 未受到伤害/.test(l)), desc: '1点伤害减为0（官方规则：任意伤害-1）' },
       { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
     ],
   },
