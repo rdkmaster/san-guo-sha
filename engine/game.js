@@ -925,7 +925,8 @@ class Game {
     const options = [];
     if (opp.hand.length > 0) options.push('hand');
     if (Object.values(opp.equips).some(Boolean)) options.push('equip');
-    if (opp.judge.length > 0) options.push('judge');
+    // 官方规则：只有过河拆桥能处置判定区的牌，顺手牵羊不能拿判定区
+    if (name === '过河拆桥' && opp.judge.length > 0) options.push('judge');
     if (options.length === 1) return options[0];
     const label = { hand: '手牌', equip: '装备', judge: '判定' };
     const decision = {

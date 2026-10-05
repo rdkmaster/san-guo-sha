@@ -713,6 +713,118 @@ const SCENARIOS = [
       { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
     ],
   },
+  // 29. 决斗×无双：与吕布决斗者每轮需两张杀（k=2循环）
+  {
+    name: '决斗-无双两杀',
+    generals: ['吕布', '甘宁'], first: 0, maxAI: 20,
+    deck: [
+      ['决斗', '♦', 'A'], ['杀', '♦', '7'], ['桃', '♦', '2'], ['闪', '♥', '2'],
+      ['杀', '♠', '8'], ['杀', '♣', '8'], ['桃', '♥', '5'], ['杀', '♥', '10'],
+      ['杀', '♣', '9'], ['闪', '♦', '5'], ['桃', '♥', '3'], ['闪', '♦', '6'],
+    ],
+    humanScript: (g) => {
+      const H = mkHelpers(g);
+      return async (d) => {
+        if (d.type === 'play') return H.play(d, '决斗') || H.play(d, '杀') || H.kindOf(d, 'end');
+        if (d.type === 'respond_nanman') return H.play(d, '杀') || H.kindOf(d, 'refuse');
+        return H.kindOf(d, 'refuse') || d.playable[0];
+      };
+    },
+    expect: (g) => [
+      { pass: g.logLines.some(l => /使用【决斗】/.test(l)), desc: '决斗结算' },
+      { pass: g.logLines.some(l => /受到1点伤害/.test(l)), desc: '决斗产生伤害' },
+      { pass: !g.logLines.some(l => /的动作不合法|守恒告警/.test(l)), desc: '无双两杀循环合法且守恒' },
+    ],
+  },
+  // 30. 拆桥选装备区/判定区；顺手牵羊不得选判定区（官方规则）
+  {
+    name: '拆桥-装备区判定区',
+    generals: ['甘宁', '曹操'], first: 0, maxAI: 20,
+    deck: [
+      ['过河拆桥', '♠', '3'], ['过河拆桥', '♣', '3'], ['顺手牵羊', '♠', '4'], ['杀', '♦', '7'],
+      ['藤甲', '♠', '2'], ['乐不思蜀', '♠', '6'], ['桃', '♥', '5'], ['杀', '♣', '9'],
+      ['杀', '♣', '8'], ['闪', '♦', '5'], ['桃', '♥', '3'], ['闪', '♦', '6'],
+    ],
+    preSetup: (g) => {
+      const i = g.players[1].hand.findIndex(c => c.name === '藤甲');
+      if (i >= 0) g.players[1].equips.armor = g.players[1].hand.splice(i, 1)[0];
+      const j = g.players[1].hand.findIndex(c => c.name === '乐不思蜀');
+      if (j >= 0) g.players[1].judge.push(g.players[1].hand.splice(j, 1)[0]);
+      g.__cap = { areas: ['hand', 'equip', 'judge'], judgeSeen: {} }; // 顺手→拿手牌；拆桥1→装备区；拆桥2→判定区
+    },
+    humanScript: (g) => {
+      const H = mkHelpers(g);
+      return async (d) => {
+        if (d.type === 'choose' && d.playable.some(m => m.kind === 'chooseArea')) {
+          const q = d.context.question || '';
+          g.__cap.judgeSeen[q.split('：')[0]] = d.playable.some(m => m.area === 'judge');
+          const want = g.__cap.areas.shift() || 'hand';
+          return d.playable.find(m => m.area === want) || d.playable[0];
+        }
+        if (d.type === 'play') {
+          return H.play(d, '顺手牵羊') || H.play(d, '过河拆桥') || H.play(d, '杀') || H.kindOf(d, 'end');
+        }
+        return H.kindOf(d, 'refuse') || d.playable[0];
+      };
+    },
+    expect: (g) => [
+      { pass: g.__cap.judgeSeen['顺手牵羊'] === false, desc: '顺手牵羊不提供判定区选项（官方规则）' },
+      { pass: g.__cap.judgeSeen['过河拆桥'] === true, desc: '过河拆桥提供判定区选项' },
+      { pass: g.logLines.some(l => /获得曹操的【杀♣9】/.test(l)), desc: '顺手牵羊获得手牌' },
+      { pass: g.logLines.some(l => /弃置曹操的【藤甲♠2】/.test(l)), desc: '拆桥选装备区' },
+      { pass: g.logLines.some(l => /弃置曹操的【乐不思蜀♠6】/.test(l)), desc: '拆桥选判定区' },
+      { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
+    ],
+  },
+  // 31. 借刀熄灭：目标有武器但无杀，借刀无效果进弃牌堆
+  {
+    name: '借刀-无杀熄灭',
+    generals: ['甘宁', '吕布'], first: 0, maxAI: 20,
+    deck: [
+      ['借刀杀人', '♣', 'Q'], ['杀', '♦', '7'], ['桃', '♦', '2'], ['闪', '♥', '2'],
+      ['青釭剑', '♠', '6'], ['闪', '♦', '5'], ['桃', '♥', '5'], ['闪', '♦', '6'],
+      ['杀', '♣', '8'], ['闪', '♦', '7'], ['桃', '♥', '3'], ['闪', '♦', '4'],
+    ],
+    preSetup: (g) => {
+      const i = g.players[1].hand.findIndex(c => c.name === '青釭剑');
+      if (i >= 0) g.players[1].equips.weapon = g.players[1].hand.splice(i, 1)[0];
+    },
+    humanScript: (g) => {
+      const H = mkHelpers(g);
+      return async (d) => {
+        if (d.type === 'play') return H.play(d, '借刀杀人') || H.kindOf(d, 'end');
+        if (d.type === 'respond_sha') return H.play(d, '闪') || H.kindOf(d, 'refuse');
+        return H.kindOf(d, 'refuse') || d.playable[0];
+      };
+    },
+    expect: (g) => [
+      { pass: g.logLines.some(l => /使用【借刀杀人】/.test(l)), desc: '借刀打出' },
+      { pass: !g.logLines.some(l => /出【杀】→|交给/.test(l)), desc: '目标无杀：无出杀也无交刀' },
+      { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
+    ],
+  },
+  // 32. 火攻无同花色：展示♦而攻方无♦牌 → 无法火攻
+  {
+    name: '火攻-无同花色',
+    generals: ['甘宁', '曹操'], first: 0, maxAI: 20,
+    deck: [
+      ['火攻', '♥', '3'], ['杀', '♣', '8'], ['桃', '♥', '4'], ['闪', '♥', '2'],
+      ['闪', '♦', '5'], ['闪', '♦', '6'], ['闪', '♦', '7'], ['桃', '♦', '3'],
+      ['杀', '♣', '2'], ['闪', '♦', '4'], ['桃', '♥', '5'], ['闪', '♦', '8'],
+    ],
+    humanScript: (g) => {
+      const H = mkHelpers(g);
+      return async (d) => {
+        if (d.type === 'play') return H.play(d, '火攻') || H.play(d, '杀') || H.kindOf(d, 'end');
+        return H.kindOf(d, 'refuse') || d.playable[0];
+      };
+    },
+    expect: (g) => [
+      { pass: g.logLines.some(l => /甘宁 无同花色手牌，无法火攻/.test(l)), desc: '无同花色：火攻无伤害' },
+      { pass: (() => { const i = g.logLines.findIndex(l => /使用【火攻】/.test(l)); const j = g.logLines.findIndex(l => /无同花色手牌/.test(l)); const k = g.logLines.findIndex(l => /受到1点火伤害（来自甘宁）/.test(l)); return i >= 0 && j > i && (k < 0 || k > j); })(), desc: '第一次火攻未造成火焰伤害（后续摸到♦牌后另算）' },
+      { pass: !g.logLines.some(l => /守恒告警/.test(l)), desc: '牌数守恒' },
+    ],
+  },
 ];
 
 module.exports = { SCENARIOS, mkHelpers, ILLEGAL };

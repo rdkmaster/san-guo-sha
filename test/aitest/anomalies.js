@@ -27,6 +27,7 @@ module.exports = function detectAnomalies(game) {
       while (j < L.length) {
         const N = L[j];
         if (/^火杀\+藤甲|^古锭刀|^白银狮子/.test(N)) { j++; continue; }
+        if (/的动作不合法|弃牌数量不合法|守恒告警|【兜底】/.test(N)) { j++; continue; } // 引擎噪音行，跳过继续找伤害
         if (/发动【寒冰剑】/.test(N)) { replaced = true; break; }
         break;
       }
