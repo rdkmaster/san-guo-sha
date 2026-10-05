@@ -1,0 +1,7184 @@
+{
+ "source": "libccy-noname character/*/translate.js",
+ "count": 753,
+ "cards": [
+  {
+   "name": "SP于禁",
+   "avatar": "素材/武将/SP于禁-头像.png",
+   "art": "素材/武将/SP于禁-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP关羽",
+   "avatar": "素材/武将/SP关羽-头像.png",
+   "art": "素材/武将/SP关羽-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP司马昭",
+   "avatar": "素材/武将/SP司马昭-头像.png",
+   "art": "素材/武将/SP司马昭-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP太史慈",
+   "avatar": "素材/武将/SP太史慈-头像.png",
+   "art": "素材/武将/SP太史慈-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP姜维",
+   "avatar": "素材/武将/SP姜维-头像.png",
+   "art": "素材/武将/SP姜维-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP孙尚香",
+   "avatar": "素材/武将/SP孙尚香-头像.png",
+   "art": "素材/武将/SP孙尚香-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP孙策",
+   "avatar": "素材/武将/SP孙策-头像.png",
+   "art": "素材/武将/SP孙策-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP庞德",
+   "avatar": "素材/武将/SP庞德-头像.png",
+   "art": "素材/武将/SP庞德-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP庞统",
+   "avatar": "素材/武将/SP庞统-头像.png",
+   "art": "素材/武将/SP庞统-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP徐庶",
+   "avatar": "素材/武将/SP徐庶-头像.png",
+   "art": "素材/武将/SP徐庶-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP曹仁",
+   "avatar": "素材/武将/SP曹仁-头像.png",
+   "art": "素材/武将/SP曹仁-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP曹操",
+   "avatar": "素材/武将/SP曹操-头像.png",
+   "art": "素材/武将/SP曹操-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP甄姬",
+   "avatar": "素材/武将/SP甄姬-头像.png",
+   "art": "素材/武将/SP甄姬-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP蔡文姬",
+   "avatar": "素材/武将/SP蔡文姬-头像.png",
+   "art": "素材/武将/SP蔡文姬-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP貂蝉",
+   "avatar": "素材/武将/SP貂蝉-头像.png",
+   "art": "素材/武将/SP貂蝉-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP贾诩",
+   "avatar": "素材/武将/SP贾诩-头像.png",
+   "art": "素材/武将/SP贾诩-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP赵云",
+   "avatar": null,
+   "art": "素材/武将/SP赵云-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP马超",
+   "avatar": "素材/武将/SP马超-头像.png",
+   "art": "素材/武将/SP马超-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "SP黄月英",
+   "avatar": "素材/武将/SP黄月英-头像.png",
+   "art": "素材/武将/SP黄月英-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "丁原",
+   "avatar": "素材/武将/丁原-头像.png",
+   "art": "素材/武将/丁原-经典形象.jpg",
+   "nonameIds": [
+    "ol_dingyuan"
+   ],
+   "voiceId": "dingyuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "丁夫人",
+   "avatar": "素材/武将/丁夫人-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "丁奉",
+   "avatar": "素材/武将/丁奉-头像.png",
+   "art": "素材/武将/丁奉-经典形象.jpg",
+   "nonameIds": [
+    "ddd_dingfeng",
+    "dingfeng"
+   ],
+   "voiceId": "dingfeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "严畯",
+   "avatar": "素材/武将/严畯-头像.png",
+   "art": "素材/武将/严畯-经典形象.jpg",
+   "nonameIds": [
+    "yanjun"
+   ],
+   "voiceId": "yanjun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "严白虎",
+   "avatar": "素材/武将/严白虎-头像.png",
+   "art": "素材/武将/严白虎-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "严颜",
+   "avatar": "素材/武将/严颜-头像.png",
+   "art": "素材/武将/严颜-经典形象.jpg",
+   "nonameIds": [
+    "yanyan"
+   ],
+   "voiceId": "yanyan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "乐周瑜",
+   "avatar": "素材/武将/乐周瑜-头像.png",
+   "art": "素材/武将/乐周瑜-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "乐就",
+   "avatar": null,
+   "art": "素材/武将/乐就-经典形象.jpg",
+   "nonameIds": [
+    "dc_yuejiu"
+   ],
+   "voiceId": "yuejiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "乐进",
+   "avatar": "素材/武将/乐进-头像.png",
+   "art": "素材/武将/乐进-经典形象.jpg",
+   "nonameIds": [
+    "yuejin"
+   ],
+   "voiceId": "yuejin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "书张芝",
+   "avatar": "素材/武将/书张芝-头像.png",
+   "art": "素材/武将/书张芝-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "于吉",
+   "avatar": "素材/武将/于吉-头像.png",
+   "art": "素材/武将/于吉-经典形象.jpg",
+   "nonameIds": [
+    "diy_yuji",
+    "ns_yuji",
+    "ns_yujisp",
+    "re_yuji"
+   ],
+   "voiceId": "yuji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "于禁",
+   "avatar": "素材/武将/于禁-头像.png",
+   "art": "素材/武将/于禁-经典形象.jpg",
+   "nonameIds": [
+    "ddd_yujin",
+    "yujin"
+   ],
+   "voiceId": "yujin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "云屏青龙",
+   "avatar": "素材/武将/云屏青龙-头像.png",
+   "art": "素材/武将/云屏青龙-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "仲帝袁术",
+   "avatar": "素材/武将/仲帝袁术-头像.png",
+   "art": "素材/武将/仲帝袁术-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "伏完",
+   "avatar": "素材/武将/伏完-头像.png",
+   "art": "素材/武将/伏完-经典形象.jpg",
+   "nonameIds": [
+    "fuwan"
+   ],
+   "voiceId": "fuwan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "伏皇后",
+   "avatar": "素材/武将/伏皇后-头像.png",
+   "art": "素材/武将/伏皇后-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "何太后",
+   "avatar": "素材/武将/何太后-头像.png",
+   "art": "素材/武将/何太后-经典形象.jpg",
+   "nonameIds": [
+    "hetaihou"
+   ],
+   "voiceId": "hetaihou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "何进",
+   "avatar": "素材/武将/何进-头像.png",
+   "art": "素材/武将/何进-经典形象.jpg",
+   "nonameIds": [
+    "hejin"
+   ],
+   "voiceId": "hejin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "佳人子丹",
+   "avatar": "素材/武将/佳人子丹-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "傅佥",
+   "avatar": "素材/武将/傅佥-头像.png",
+   "art": "素材/武将/傅佥-经典形象.jpg",
+   "nonameIds": [
+    "fuqian"
+   ],
+   "voiceId": "fuqian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "傅肜",
+   "avatar": "素材/武将/傅肜-头像.png",
+   "art": "素材/武将/傅肜-经典形象.jpg",
+   "nonameIds": [
+    "ol_furong"
+   ],
+   "voiceId": "furong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兀突骨",
+   "avatar": "素材/武将/兀突骨-头像.png",
+   "art": "素材/武将/兀突骨-经典形象.jpg",
+   "nonameIds": [
+    "wutugu"
+   ],
+   "voiceId": "wutugu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "全琮",
+   "avatar": "素材/武将/全琮-头像.png",
+   "art": "素材/武将/全琮-经典形象.jpg",
+   "nonameIds": [
+    "quancong"
+   ],
+   "voiceId": "quancong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "公孙康",
+   "avatar": "素材/武将/公孙康-头像.png",
+   "art": "素材/武将/公孙康-经典形象.jpg",
+   "nonameIds": [
+    "gongsunkang"
+   ],
+   "voiceId": "gongsunkang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "公孙渊",
+   "avatar": "素材/武将/公孙渊-头像.png",
+   "art": "素材/武将/公孙渊-经典形象.jpg",
+   "nonameIds": [
+    "gongsunyuan"
+   ],
+   "voiceId": "gongsunyuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "公孙瓒",
+   "avatar": "素材/武将/公孙瓒-头像.png",
+   "art": "素材/武将/公孙瓒-经典形象.jpg",
+   "nonameIds": [
+    "gongsunzan"
+   ],
+   "voiceId": "gongsunzan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "关兴张苞",
+   "avatar": "素材/武将/关兴张苞-头像.png",
+   "art": "素材/武将/关兴张苞-经典形象.jpg",
+   "nonameIds": [
+    "guanzhang"
+   ],
+   "voiceId": "guanzhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "关平",
+   "avatar": "素材/武将/关平-头像.png",
+   "art": "素材/武将/关平-经典形象.jpg",
+   "nonameIds": [
+    "guanping"
+   ],
+   "voiceId": "guanping",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "关索",
+   "avatar": "素材/武将/关索-头像.png",
+   "art": "素材/武将/关索-经典形象.jpg",
+   "nonameIds": [
+    "guansuo"
+   ],
+   "voiceId": "guansuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "关羽",
+   "avatar": "素材/武将/关羽-头像.png",
+   "art": "素材/武将/关羽-经典形象.jpg",
+   "nonameIds": [
+    "guanyu"
+   ],
+   "voiceId": "guanyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "关羽兔",
+   "avatar": "素材/武将/关羽兔-头像.png",
+   "art": "素材/武将/关羽兔-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "关银屏",
+   "avatar": "素材/武将/关银屏-头像.png",
+   "art": "素材/武将/关银屏-经典形象.jpg",
+   "nonameIds": [
+    "guanyinping"
+   ],
+   "voiceId": "guanyinping",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兴文鸯",
+   "avatar": "素材/武将/兴文鸯-头像.png",
+   "art": "素材/武将/兴文鸯-经典形象.jpg",
+   "nonameIds": [
+    "jsrg_wenyang"
+   ],
+   "voiceId": "wenyang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兴李密",
+   "avatar": "素材/武将/兴李密-头像.png",
+   "art": "素材/武将/兴李密-经典形象.jpg",
+   "nonameIds": [
+    "jsrg_limi"
+   ],
+   "voiceId": "limi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兴王濬",
+   "avatar": "素材/武将/兴王濬-头像.png",
+   "art": "素材/武将/兴王濬-经典形象.jpg",
+   "nonameIds": [
+    "jsrg_wangjun"
+   ],
+   "voiceId": "wangjun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兴诸葛诞",
+   "avatar": "素材/武将/兴诸葛诞-头像.png",
+   "art": "素材/武将/兴诸葛诞-经典形象.jpg",
+   "nonameIds": [
+    "jsrg_zhugedan"
+   ],
+   "voiceId": "zhugedan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兴贾南风",
+   "avatar": "素材/武将/兴贾南风-头像.png",
+   "art": "素材/武将/兴贾南风-经典形象.jpg",
+   "nonameIds": [
+    "jsrg_jiananfeng"
+   ],
+   "voiceId": "jiananfeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "兴马隆",
+   "avatar": "素材/武将/兴马隆-头像.png",
+   "art": "素材/武将/兴马隆-经典形象.jpg",
+   "nonameIds": [
+    "jsrg_malong"
+   ],
+   "voiceId": "malong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "其他角色",
+   "avatar": "素材/武将/其他角色-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "典韦",
+   "avatar": "素材/武将/典韦-头像.png",
+   "art": "素材/武将/典韦-经典形象.jpg",
+   "nonameIds": [
+    "dianwei"
+   ],
+   "voiceId": "dianwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "凌操",
+   "avatar": "素材/武将/凌操-头像.png",
+   "art": "素材/武将/凌操-经典形象.jpg",
+   "nonameIds": [
+    "lingcao"
+   ],
+   "voiceId": "lingcao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "凌统",
+   "avatar": "素材/武将/凌统-头像.png",
+   "art": "素材/武将/凌统-经典形象.jpg",
+   "nonameIds": [
+    "lingtong"
+   ],
+   "voiceId": "lingtong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘协",
+   "avatar": "素材/武将/刘协-头像.png",
+   "art": "素材/武将/刘协-经典形象.jpg",
+   "nonameIds": [
+    "liuxie"
+   ],
+   "voiceId": "liuxie",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘备",
+   "avatar": "素材/武将/刘备-头像.png",
+   "art": "素材/武将/刘备-经典形象.jpg",
+   "nonameIds": [
+    "liubei"
+   ],
+   "voiceId": "liubei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘封",
+   "avatar": "素材/武将/刘封-头像.png",
+   "art": "素材/武将/刘封-经典形象.jpg",
+   "nonameIds": [
+    "liufeng"
+   ],
+   "voiceId": "liufeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘巴",
+   "avatar": "素材/武将/刘巴-头像.png",
+   "art": "素材/武将/刘巴-经典形象.jpg",
+   "nonameIds": [
+    "dc_liuba",
+    "ddd_liuba"
+   ],
+   "voiceId": "liuba",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘晔",
+   "avatar": "素材/武将/刘晔-头像.png",
+   "art": "素材/武将/刘晔-经典形象.jpg",
+   "nonameIds": [
+    "dc_liuye",
+    "ddd_liuye"
+   ],
+   "voiceId": "liuye",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘焉",
+   "avatar": "素材/武将/刘焉-头像.png",
+   "art": "素材/武将/刘焉-经典形象.jpg",
+   "nonameIds": [
+    "diy_liuyan",
+    "liuyan"
+   ],
+   "voiceId": "liuyan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘琦",
+   "avatar": "素材/武将/刘琦-头像.png",
+   "art": "素材/武将/刘琦-经典形象.jpg",
+   "nonameIds": [
+    "sp_liuqi"
+   ],
+   "voiceId": "liuqi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘璋",
+   "avatar": "素材/武将/刘璋-头像.png",
+   "art": "素材/武将/刘璋-经典形象.jpg",
+   "nonameIds": [
+    "liuzhang",
+    "ns_liuzhang"
+   ],
+   "voiceId": "liuzhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘禅",
+   "avatar": "素材/武将/刘禅-头像.png",
+   "art": "素材/武将/刘禅-经典形象.jpg",
+   "nonameIds": [
+    "liushan"
+   ],
+   "voiceId": "liushan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘禅想学",
+   "avatar": "素材/武将/刘禅想学-头像.png",
+   "art": "素材/武将/刘禅想学-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "刘繇",
+   "avatar": "素材/武将/刘繇-头像.png",
+   "art": "素材/武将/刘繇-经典形象.jpg",
+   "nonameIds": [
+    "liuyao"
+   ],
+   "voiceId": "liuyao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘虞",
+   "avatar": "素材/武将/刘虞-头像.png",
+   "art": "素材/武将/刘虞-经典形象.jpg",
+   "nonameIds": [
+    "liuyu"
+   ],
+   "voiceId": "liuyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘表",
+   "avatar": "素材/武将/刘表-头像.png",
+   "art": "素材/武将/刘表-经典形象.jpg",
+   "nonameIds": [
+    "liubiao"
+   ],
+   "voiceId": "liubiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "刘谌",
+   "avatar": "素材/武将/刘谌-头像.png",
+   "art": "素材/武将/刘谌-经典形象.jpg",
+   "nonameIds": [
+    "liuchen"
+   ],
+   "voiceId": "liuchen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "劫煞星",
+   "avatar": "素材/武将/劫煞星-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势于吉",
+   "avatar": "素材/武将/势于吉-头像.png",
+   "art": "素材/武将/势于吉-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势吕壹",
+   "avatar": "素材/武将/势吕壹-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势周瑜",
+   "avatar": "素材/武将/势周瑜-头像.png",
+   "art": "素材/武将/势周瑜-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势国渊",
+   "avatar": "素材/武将/势国渊-头像.png",
+   "art": "素材/武将/势国渊-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势夏侯尚",
+   "avatar": "素材/武将/势夏侯尚-头像.png",
+   "art": "素材/武将/势夏侯尚-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势夏侯霸",
+   "avatar": "素材/武将/势夏侯霸-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势太史慈",
+   "avatar": "素材/武将/势太史慈-头像.png",
+   "art": "素材/武将/势太史慈-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势娄圭",
+   "avatar": "素材/武将/势娄圭-头像.png",
+   "art": "素材/武将/势娄圭-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势孙峻",
+   "avatar": null,
+   "art": "素材/武将/势孙峻-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势孙綝",
+   "avatar": "素材/武将/势孙綝-头像.png",
+   "art": "素材/武将/势孙綝-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势孙韶",
+   "avatar": "素材/武将/势孙韶-头像.png",
+   "art": "素材/武将/势孙韶-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势小乔",
+   "avatar": "素材/武将/势小乔-头像.png",
+   "art": "素材/武将/势小乔-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势庞羲",
+   "avatar": "素材/武将/势庞羲-头像.png",
+   "art": "素材/武将/势庞羲-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势张任",
+   "avatar": "素材/武将/势张任-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势张燕",
+   "avatar": "素材/武将/势张燕-头像.png",
+   "art": "素材/武将/势张燕-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势文丑",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势曹爽",
+   "avatar": "素材/武将/势曹爽-头像.png",
+   "art": "素材/武将/势曹爽-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势曹真",
+   "avatar": "素材/武将/势曹真-头像.png",
+   "art": "素材/武将/势曹真-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势杨弘",
+   "avatar": "素材/武将/势杨弘-头像.png",
+   "art": "素材/武将/势杨弘-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势桓阶",
+   "avatar": "素材/武将/势桓阶-头像.png",
+   "art": "素材/武将/势桓阶-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势王昶",
+   "avatar": "素材/武将/势王昶-头像.png",
+   "art": "素材/武将/势王昶-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势田丰",
+   "avatar": "素材/武将/势田丰-头像.png",
+   "art": "素材/武将/势田丰-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势程普",
+   "avatar": "素材/武将/势程普-头像.png",
+   "art": "素材/武将/势程普-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势臧洪",
+   "avatar": "素材/武将/势臧洪-头像.png",
+   "art": "素材/武将/势臧洪-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势董昭",
+   "avatar": "素材/武将/势董昭-头像.png",
+   "art": "素材/武将/势董昭-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势贺齐",
+   "avatar": "素材/武将/势贺齐-头像.png",
+   "art": "素材/武将/势贺齐-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势赵云",
+   "avatar": "素材/武将/势赵云-头像.png",
+   "art": "素材/武将/势赵云-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势辛宪英",
+   "avatar": "素材/武将/势辛宪英-头像.png",
+   "art": "素材/武将/势辛宪英-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势邓艾",
+   "avatar": "素材/武将/势邓艾-头像.png",
+   "art": "素材/武将/势邓艾-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势邓艾（峥嵘）",
+   "avatar": "素材/武将/势邓艾（峥嵘）-头像.png",
+   "art": "素材/武将/势邓艾（峥嵘）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势钟会",
+   "avatar": "素材/武将/势钟会-头像.png",
+   "art": "素材/武将/势钟会-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势陆郁生",
+   "avatar": "素材/武将/势陆郁生-头像.png",
+   "art": "素材/武将/势陆郁生-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势陈到",
+   "avatar": "素材/武将/势陈到-头像.png",
+   "art": "素材/武将/势陈到-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势陈矫",
+   "avatar": "素材/武将/势陈矫-头像.png",
+   "art": "素材/武将/势陈矫-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势陈祗",
+   "avatar": "素材/武将/势陈祗-头像.png",
+   "art": "素材/武将/势陈祗-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势陈群",
+   "avatar": "素材/武将/势陈群-头像.png",
+   "art": "素材/武将/势陈群-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势颜良",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势魏延",
+   "avatar": "素材/武将/势魏延-头像.png",
+   "art": "素材/武将/势魏延-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势鲁肃",
+   "avatar": "素材/武将/势鲁肃-头像.png",
+   "art": "素材/武将/势鲁肃-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "势黄祖",
+   "avatar": "素材/武将/势黄祖-头像.png",
+   "art": "素材/武将/势黄祖-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "十常侍",
+   "avatar": "素材/武将/十常侍-头像.png",
+   "art": "素材/武将/十常侍-经典形象.jpg",
+   "nonameIds": [
+    "shichangshi"
+   ],
+   "voiceId": "shichangshi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "华佗",
+   "avatar": "素材/武将/华佗-头像.png",
+   "art": "素材/武将/华佗-经典形象.jpg",
+   "nonameIds": [
+    "huatuo"
+   ],
+   "voiceId": "huatuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "华歆",
+   "avatar": "素材/武将/华歆-头像.png",
+   "art": "素材/武将/华歆-经典形象.jpg",
+   "nonameIds": [
+    "huaxin"
+   ],
+   "voiceId": "huaxin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "华雄",
+   "avatar": "素材/武将/华雄-头像.png",
+   "art": "素材/武将/华雄-经典形象.jpg",
+   "nonameIds": [
+    "huaxiong"
+   ],
+   "voiceId": "huaxiong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "卑弥呼",
+   "avatar": "素材/武将/卑弥呼-头像.png",
+   "art": "素材/武将/卑弥呼-经典形象.jpg",
+   "nonameIds": [
+    "beimihu"
+   ],
+   "voiceId": "beimihu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "南华老仙",
+   "avatar": "素材/武将/南华老仙-头像.png",
+   "art": "素材/武将/南华老仙-经典形象.jpg",
+   "nonameIds": [
+    "ns_xinnanhua",
+    "re_nanhualaoxian"
+   ],
+   "voiceId": "xinnanhua",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "卞夫人",
+   "avatar": "素材/武将/卞夫人-头像.png",
+   "art": "素材/武将/卞夫人-经典形象.jpg",
+   "nonameIds": [
+    "bianfuren",
+    "ol_bianfuren"
+   ],
+   "voiceId": "bianfuren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "卢植",
+   "avatar": "素材/武将/卢植-头像.png",
+   "art": "素材/武将/卢植-经典形象.jpg",
+   "nonameIds": [
+    "yl_luzhi"
+   ],
+   "voiceId": "luzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "卧龙诸葛",
+   "avatar": "素材/武将/卧龙诸葛-头像.png",
+   "art": "素材/武将/卧龙诸葛-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "卫温诸葛直",
+   "avatar": "素材/武将/卫温诸葛直-头像.png",
+   "art": "素材/武将/卫温诸葛直-经典形象.jpg",
+   "nonameIds": [
+    "weiwenzhugezhi"
+   ],
+   "voiceId": "weiwenzhugezhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "友崔钧",
+   "avatar": "素材/武将/友崔钧-头像.png",
+   "art": "素材/武将/友崔钧-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "友庞统",
+   "avatar": "素材/武将/友庞统-头像.png",
+   "art": "素材/武将/友庞统-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "友徐庶",
+   "avatar": "素材/武将/友徐庶-头像.png",
+   "art": "素材/武将/友徐庶-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "友石韬",
+   "avatar": "素材/武将/友石韬-头像.png",
+   "art": "素材/武将/友石韬-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "友诸葛亮",
+   "avatar": "素材/武将/友诸葛亮-头像.png",
+   "art": "素材/武将/友诸葛亮-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "司马伷",
+   "avatar": "素材/武将/司马伷-头像.png",
+   "art": "素材/武将/司马伷-经典形象.png",
+   "nonameIds": [
+    "simazhou"
+   ],
+   "voiceId": "simazhou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "司马孚",
+   "avatar": "素材/武将/司马孚-头像.png",
+   "art": "素材/武将/司马孚-经典形象.jpg",
+   "nonameIds": [
+    "yj_simafu"
+   ],
+   "voiceId": "simafu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "司马孚（勋德）",
+   "avatar": "素材/武将/司马孚（勋德）-头像.png",
+   "art": "素材/武将/司马孚（勋德）-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "司马师",
+   "avatar": "素材/武将/司马师-头像.png",
+   "art": "素材/武将/司马师-经典形象.jpg",
+   "nonameIds": [
+    "gz_jin_simashi",
+    "simashi"
+   ],
+   "voiceId": "simashi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "司马徽",
+   "avatar": "素材/武将/司马徽-头像.png",
+   "art": "素材/武将/司马徽-经典形象.jpg",
+   "nonameIds": [
+    "simahui"
+   ],
+   "voiceId": "simahui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "司马懿",
+   "avatar": "素材/武将/司马懿-头像.png",
+   "art": "素材/武将/司马懿-经典形象.jpg",
+   "nonameIds": [
+    "gz_jin_simayi",
+    "simayi"
+   ],
+   "voiceId": "simayi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "司马昭",
+   "avatar": "素材/武将/司马昭-头像.png",
+   "art": "素材/武将/司马昭-经典形象.jpg",
+   "nonameIds": [
+    "gz_jin_simazhao",
+    "ns_simazhao",
+    "simazhao"
+   ],
+   "voiceId": "simazhao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "司马朗",
+   "avatar": "素材/武将/司马朗-头像.png",
+   "art": "素材/武将/司马朗-经典形象.jpg",
+   "nonameIds": [
+    "simalang"
+   ],
+   "voiceId": "simalang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "向宠",
+   "avatar": "素材/武将/向宠-头像.png",
+   "art": "素材/武将/向宠-经典形象.jpg",
+   "nonameIds": [
+    "xiangchong"
+   ],
+   "voiceId": "xiangchong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "向朗",
+   "avatar": "素材/武将/向朗-头像.png",
+   "art": "素材/武将/向朗-经典形象.png",
+   "nonameIds": [
+    "ddd_xianglang",
+    "xianglang"
+   ],
+   "voiceId": "xianglang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吕凯",
+   "avatar": "素材/武将/吕凯-头像.png",
+   "art": "素材/武将/吕凯-经典形象.jpg",
+   "nonameIds": [
+    "lvkai"
+   ],
+   "voiceId": "lvkai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吕岱",
+   "avatar": "素材/武将/吕岱-头像.png",
+   "art": "素材/武将/吕岱-经典形象.jpg",
+   "nonameIds": [
+    "lvdai"
+   ],
+   "voiceId": "lvdai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吕布",
+   "avatar": "素材/武将/吕布-头像.png",
+   "art": "素材/武将/吕布-经典形象.jpg",
+   "nonameIds": [
+    "lvbu"
+   ],
+   "voiceId": "lvbu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吕范",
+   "avatar": "素材/武将/吕范-头像.png",
+   "art": "素材/武将/吕范-经典形象.jpg",
+   "nonameIds": [
+    "lvfan"
+   ],
+   "voiceId": "lvfan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吕蒙",
+   "avatar": "素材/武将/吕蒙-头像.png",
+   "art": "素材/武将/吕蒙-经典形象.jpg",
+   "nonameIds": [
+    "lvmeng",
+    "ns_lvmeng"
+   ],
+   "voiceId": "lvmeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吕蒙好学",
+   "avatar": "素材/武将/吕蒙好学-头像.png",
+   "art": "素材/武将/吕蒙好学-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "吕虔",
+   "avatar": "素材/武将/吕虔-头像.png",
+   "art": "素材/武将/吕虔-经典形象.jpg",
+   "nonameIds": [
+    "lvqian"
+   ],
+   "voiceId": "lvqian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "君刘备",
+   "avatar": "素材/武将/君刘备-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君刘禅",
+   "avatar": "素材/武将/君刘禅-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君孙权",
+   "avatar": "素材/武将/君孙权-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君孙策",
+   "avatar": "素材/武将/君孙策-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君曹丕",
+   "avatar": "素材/武将/君曹丕-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君曹操",
+   "avatar": "素材/武将/君曹操-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君董卓",
+   "avatar": "素材/武将/君董卓-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "君袁绍",
+   "avatar": "素材/武将/君袁绍-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "吞天螭吻",
+   "avatar": "素材/武将/吞天螭吻-头像.png",
+   "art": "素材/武将/吞天螭吻-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "吴势力武将",
+   "avatar": "素材/武将/吴势力武将-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "吴国太",
+   "avatar": "素材/武将/吴国太-头像.png",
+   "art": "素材/武将/吴国太-经典形象.jpg",
+   "nonameIds": [
+    "wuguotai"
+   ],
+   "voiceId": "wuguotai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吴懿",
+   "avatar": "素材/武将/吴懿-头像.png",
+   "art": "素材/武将/吴懿-经典形象.jpg",
+   "nonameIds": [
+    "wuyi"
+   ],
+   "voiceId": "wuyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吴景",
+   "avatar": "素材/武将/吴景-头像.png",
+   "art": "素材/武将/吴景-经典形象.jpg",
+   "nonameIds": [
+    "wujing"
+   ],
+   "voiceId": "wujing",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吴珂",
+   "avatar": "素材/武将/吴珂-头像.png",
+   "art": "素材/武将/吴珂-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "吴班",
+   "avatar": "素材/武将/吴班-头像.png",
+   "art": "素材/武将/吴班-经典形象.jpg",
+   "nonameIds": [
+    "dc_wuban",
+    "xin_wuban"
+   ],
+   "voiceId": "wuban",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "吴苋",
+   "avatar": "素材/武将/吴苋-头像.png",
+   "art": "素材/武将/吴苋-经典形象.jpg",
+   "nonameIds": [
+    "wuxian"
+   ],
+   "voiceId": "wuxian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周仓",
+   "avatar": "素材/武将/周仓-头像.png",
+   "art": "素材/武将/周仓-经典形象.jpg",
+   "nonameIds": [
+    "zhoucang"
+   ],
+   "voiceId": "zhoucang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周处",
+   "avatar": "素材/武将/周处-头像.png",
+   "art": "素材/武将/周处-经典形象.jpg",
+   "nonameIds": [
+    "ddd_zhouchu",
+    "jin_zhouchu"
+   ],
+   "voiceId": "zhouchu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周妃",
+   "avatar": "素材/武将/周妃-头像.png",
+   "art": "素材/武将/周妃-经典形象.jpg",
+   "nonameIds": [
+    "zhoufei"
+   ],
+   "voiceId": "zhoufei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周泰",
+   "avatar": "素材/武将/周泰-头像.png",
+   "art": "素材/武将/周泰-经典形象.jpg",
+   "nonameIds": [
+    "gz_zhoutai",
+    "old_zhoutai"
+   ],
+   "voiceId": "zhoutai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周瑜",
+   "avatar": "素材/武将/周瑜-头像.png",
+   "art": "素材/武将/周瑜-经典形象.jpg",
+   "nonameIds": [
+    "zhouyu"
+   ],
+   "voiceId": "zhouyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周群",
+   "avatar": "素材/武将/周群-头像.png",
+   "art": "素材/武将/周群-经典形象.jpg",
+   "nonameIds": [
+    "ol_zhouqun",
+    "zhouqun"
+   ],
+   "voiceId": "zhouqun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "周鲂",
+   "avatar": "素材/武将/周鲂-头像.png",
+   "art": "素材/武将/周鲂-经典形象.jpg",
+   "nonameIds": [
+    "zhoufang"
+   ],
+   "voiceId": "zhoufang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "唐咨",
+   "avatar": "素材/武将/唐咨-头像.png",
+   "art": null,
+   "nonameIds": [
+    "xf_tangzi"
+   ],
+   "voiceId": "tangzi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "地咒巫祭",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "士燮",
+   "avatar": "素材/武将/士燮-头像.png",
+   "art": "素材/武将/士燮-经典形象.jpg",
+   "nonameIds": [
+    "shixie"
+   ],
+   "voiceId": "shixie",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏侯徽",
+   "avatar": "素材/武将/夏侯徽-头像.png",
+   "art": null,
+   "nonameIds": [
+    "gz_jin_xiahouhui"
+   ],
+   "voiceId": "xiahouhui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏侯惇",
+   "avatar": "素材/武将/夏侯惇-头像.png",
+   "art": "素材/武将/夏侯惇-经典形象.jpg",
+   "nonameIds": [
+    "xiahoudun"
+   ],
+   "voiceId": "xiahoudun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏侯楙",
+   "avatar": "素材/武将/夏侯楙-头像.png",
+   "art": null,
+   "nonameIds": [
+    "xiahoumao"
+   ],
+   "voiceId": "xiahoumao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏侯氏",
+   "avatar": "素材/武将/夏侯氏-头像.png",
+   "art": "素材/武将/夏侯氏-经典形象.jpg",
+   "nonameIds": [
+    "xiahoushi"
+   ],
+   "voiceId": "xiahoushi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏侯渊",
+   "avatar": "素材/武将/夏侯渊-头像.png",
+   "art": "素材/武将/夏侯渊-经典形象.jpg",
+   "nonameIds": [
+    "gz_xiahouyuan",
+    "re_xiahouyuan"
+   ],
+   "voiceId": "xiahouyuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏侯霸",
+   "avatar": "素材/武将/夏侯霸-头像.png",
+   "art": "素材/武将/夏侯霸-经典形象.jpg",
+   "nonameIds": [
+    "xiahouba"
+   ],
+   "voiceId": "xiahouba",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夏恽",
+   "avatar": "素材/武将/夏恽-头像.png",
+   "art": "素材/武将/夏恽-经典形象.jpg",
+   "nonameIds": [
+    "scs_xiayun"
+   ],
+   "voiceId": "xiayun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "夜叉",
+   "avatar": "素材/武将/夜叉-头像.png",
+   "art": "素材/武将/夜叉-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "大乔",
+   "avatar": "素材/武将/大乔-头像.png",
+   "art": "素材/武将/大乔-经典形象.jpg",
+   "nonameIds": [
+    "daqiao"
+   ],
+   "voiceId": "daqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "大乔小乔",
+   "avatar": "素材/武将/大乔小乔-头像.png",
+   "art": "素材/武将/大乔小乔-经典形象.jpg",
+   "nonameIds": [
+    "daxiaoqiao"
+   ],
+   "voiceId": "daxiaoqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "天候孔明",
+   "avatar": "素材/武将/天候孔明-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "天煞星",
+   "avatar": "素材/武将/天煞星-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "太史慈",
+   "avatar": "素材/武将/太史慈-头像.png",
+   "art": "素材/武将/太史慈-经典形象.jpg",
+   "nonameIds": [
+    "taishici"
+   ],
+   "voiceId": "taishici",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "姜维",
+   "avatar": "素材/武将/姜维-头像.png",
+   "art": "素材/武将/姜维-经典形象.jpg",
+   "nonameIds": [
+    "jiangwei"
+   ],
+   "voiceId": "jiangwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "姜维（守卫剑阁2026）（夙志）",
+   "avatar": "素材/武将/姜维（守卫剑阁2026）（夙志）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "姜维（守卫剑阁2026）（烬略）",
+   "avatar": "素材/武将/姜维（守卫剑阁2026）（烬略）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "姜维（守卫剑阁2026）（焚魂）",
+   "avatar": "素材/武将/姜维（守卫剑阁2026）（焚魂）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "姜维（守卫剑阁2026）（覆策）",
+   "avatar": "素材/武将/姜维（守卫剑阁2026）（覆策）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "孔融",
+   "avatar": "素材/武将/孔融-头像.png",
+   "art": "素材/武将/孔融-经典形象.jpg",
+   "nonameIds": [
+    "dc_kongrong",
+    "gz_kongrong"
+   ],
+   "voiceId": "kongrong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙乾",
+   "avatar": "素材/武将/孙乾-头像.png",
+   "art": "素材/武将/孙乾-经典形象.jpg",
+   "nonameIds": [
+    "sunqian"
+   ],
+   "voiceId": "sunqian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙亮",
+   "avatar": "素材/武将/孙亮-头像.png",
+   "art": "素材/武将/孙亮-经典形象.jpg",
+   "nonameIds": [
+    "ddd_sunliang",
+    "sunliang"
+   ],
+   "voiceId": "sunliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙休",
+   "avatar": "素材/武将/孙休-头像.png",
+   "art": "素材/武将/孙休-经典形象.jpg",
+   "nonameIds": [
+    "sunxiu"
+   ],
+   "voiceId": "sunxiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙坚",
+   "avatar": "素材/武将/孙坚-头像.png",
+   "art": "素材/武将/孙坚-经典形象.jpg",
+   "nonameIds": [
+    "ns_sunjian",
+    "sunjian"
+   ],
+   "voiceId": "sunjian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙寒华",
+   "avatar": "素材/武将/孙寒华-头像.png",
+   "art": "素材/武将/孙寒华-经典形象.jpg",
+   "nonameIds": [
+    "dc_sunhanhua"
+   ],
+   "voiceId": "sunhanhua",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙尚香",
+   "avatar": "素材/武将/孙尚香-头像.png",
+   "art": "素材/武将/孙尚香-经典形象.jpg",
+   "nonameIds": [
+    "sunshangxiang"
+   ],
+   "voiceId": "sunshangxiang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙权",
+   "avatar": "素材/武将/孙权-头像.png",
+   "art": "素材/武将/孙权-经典形象.jpg",
+   "nonameIds": [
+    "sunquan",
+    "xin_sunquan_ab"
+   ],
+   "voiceId": "ab",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙璋",
+   "avatar": "素材/武将/孙璋-头像.png",
+   "art": "素材/武将/孙璋-经典形象.jpg",
+   "nonameIds": [
+    "scs_sunzhang"
+   ],
+   "voiceId": "sunzhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙登",
+   "avatar": "素材/武将/孙登-头像.png",
+   "art": "素材/武将/孙登-经典形象.jpg",
+   "nonameIds": [
+    "ns_sundeng_ab",
+    "sundeng"
+   ],
+   "voiceId": "ab",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙皓",
+   "avatar": "素材/武将/孙皓-头像.png",
+   "art": "素材/武将/孙皓-经典形象.jpg",
+   "nonameIds": [
+    "sunhao"
+   ],
+   "voiceId": "sunhao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙策",
+   "avatar": "素材/武将/孙策-头像.png",
+   "art": "素材/武将/孙策-经典形象.jpg",
+   "nonameIds": [
+    "sunce"
+   ],
+   "voiceId": "sunce",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙綝",
+   "avatar": "素材/武将/孙綝-头像.png",
+   "art": null,
+   "nonameIds": [
+    "dc_sunchen"
+   ],
+   "voiceId": "sunchen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙翊",
+   "avatar": "素材/武将/孙翊-头像.png",
+   "art": "素材/武将/孙翊-经典形象.jpg",
+   "nonameIds": [
+    "ns_sunyi",
+    "re_sunyi"
+   ],
+   "voiceId": "sunyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙茹",
+   "avatar": "素材/武将/孙茹-头像.png",
+   "art": "素材/武将/孙茹-经典形象.jpg",
+   "nonameIds": [
+    "dc_sunru"
+   ],
+   "voiceId": "sunru",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙资刘放",
+   "avatar": "素材/武将/孙资刘放-头像.png",
+   "art": "素材/武将/孙资刘放-经典形象.jpg",
+   "nonameIds": [
+    "sunziliufang"
+   ],
+   "voiceId": "sunziliufang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙邵",
+   "avatar": "素材/武将/孙邵-头像.png",
+   "art": "素材/武将/孙邵-经典形象.jpg",
+   "nonameIds": [
+    "sunshao"
+   ],
+   "voiceId": "sunshao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙邵（罪辞）",
+   "avatar": "素材/武将/孙邵（罪辞）-头像.png",
+   "art": "素材/武将/孙邵（罪辞）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "孙鲁班",
+   "avatar": "素材/武将/孙鲁班-头像.png",
+   "art": "素材/武将/孙鲁班-经典形象.jpg",
+   "nonameIds": [
+    "sunluban"
+   ],
+   "voiceId": "sunluban",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孙鲁育",
+   "avatar": "素材/武将/孙鲁育-头像.png",
+   "art": "素材/武将/孙鲁育-经典形象.jpg",
+   "nonameIds": [
+    "re_sunluyu"
+   ],
+   "voiceId": "sunluyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孟获",
+   "avatar": "素材/武将/孟获-头像.png",
+   "art": "素材/武将/孟获-经典形象.jpg",
+   "nonameIds": [
+    "diy_menghuo",
+    "menghuo"
+   ],
+   "voiceId": "menghuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "孟达",
+   "avatar": "素材/武将/孟达-头像.png",
+   "art": "素材/武将/孟达-经典形象.png",
+   "nonameIds": [
+    "dc_mengda"
+   ],
+   "voiceId": "mengda",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "宗预",
+   "avatar": "素材/武将/宗预-头像.png",
+   "art": "素材/武将/宗预-经典形象.jpg",
+   "nonameIds": [
+    "zongyu"
+   ],
+   "voiceId": "zongyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "审配",
+   "avatar": "素材/武将/审配-头像.png",
+   "art": "素材/武将/审配-经典形象.jpg",
+   "nonameIds": [
+    "ns_shenpei",
+    "shenpei"
+   ],
+   "voiceId": "shenpei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "寒渊水羌",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "射曹性",
+   "avatar": "素材/武将/射曹性-头像.png",
+   "art": "素材/武将/射曹性-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "小乔",
+   "avatar": "素材/武将/小乔-头像.png",
+   "art": "素材/武将/小乔-经典形象.jpg",
+   "nonameIds": [
+    "xiaoqiao"
+   ],
+   "voiceId": "xiaoqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "少年张辽",
+   "avatar": "素材/武将/少年张辽-头像.png",
+   "art": "素材/武将/少年张辽-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "岑昏",
+   "avatar": "素材/武将/岑昏-头像.png",
+   "art": "素材/武将/岑昏-经典形象.jpg",
+   "nonameIds": [
+    "cenhun"
+   ],
+   "voiceId": "cenhun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "崔琰",
+   "avatar": "素材/武将/崔琰-头像.png",
+   "art": "素材/武将/崔琰-经典形象.jpg",
+   "nonameIds": [
+    "cuiyan"
+   ],
+   "voiceId": "cuiyan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "崔琰毛玠",
+   "avatar": "素材/武将/崔琰毛玠-头像.png",
+   "art": "素材/武将/崔琰毛玠-经典形象.jpg",
+   "nonameIds": [
+    "cuimao"
+   ],
+   "voiceId": "cuimao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "崔芙",
+   "avatar": "素材/武将/崔芙-头像.png",
+   "art": "素材/武将/崔芙-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "嵇康",
+   "avatar": "素材/武将/嵇康-头像.png",
+   "art": "素材/武将/嵇康-经典形象.jpg",
+   "nonameIds": [
+    "jikang"
+   ],
+   "voiceId": "jikang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "工神月英",
+   "avatar": "素材/武将/工神月英-头像.png",
+   "art": "素材/武将/工神月英-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "左慈",
+   "avatar": "素材/武将/左慈-头像.png",
+   "art": "素材/武将/左慈-经典形象.jpg",
+   "nonameIds": [
+    "ns_zuoci",
+    "zuoci"
+   ],
+   "voiceId": "zuoci",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "巧魁儁义",
+   "avatar": "素材/武将/巧魁儁义-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "庞德",
+   "avatar": "素材/武将/庞德-头像.png",
+   "art": "素材/武将/庞德-经典形象.jpg",
+   "nonameIds": [
+    "gz_pangde",
+    "re_pangde"
+   ],
+   "voiceId": "pangde",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "庞德公",
+   "avatar": "素材/武将/庞德公-头像.png",
+   "art": "素材/武将/庞德公-经典形象.jpg",
+   "nonameIds": [
+    "re_pangdegong"
+   ],
+   "voiceId": "pangdegong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "庞统",
+   "avatar": "素材/武将/庞统-头像.png",
+   "art": "素材/武将/庞统-经典形象.jpg",
+   "nonameIds": [
+    "pangtong"
+   ],
+   "voiceId": "pangtong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "廖化",
+   "avatar": "素材/武将/廖化-头像.png",
+   "art": "素材/武将/廖化-经典形象.jpg",
+   "nonameIds": [
+    "liaohua"
+   ],
+   "voiceId": "liaohua",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张仲景",
+   "avatar": "素材/武将/张仲景-头像.png",
+   "art": "素材/武将/张仲景-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "张任",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [
+    "zhangren"
+   ],
+   "voiceId": "zhangren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张奋",
+   "avatar": "素材/武将/张奋-头像.png",
+   "art": "素材/武将/张奋-经典形象.png",
+   "nonameIds": [
+    "zhangfen"
+   ],
+   "voiceId": "zhangfen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张宝",
+   "avatar": "素材/武将/张宝-头像.png",
+   "art": "素材/武将/张宝-经典形象.jpg",
+   "nonameIds": [
+    "ns_zhangbao",
+    "zhangbao"
+   ],
+   "voiceId": "zhangbao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张嶷",
+   "avatar": "素材/武将/张嶷-头像.png",
+   "art": "素材/武将/张嶷-经典形象.jpg",
+   "nonameIds": [
+    "zhangyi"
+   ],
+   "voiceId": "zhangyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张布",
+   "avatar": "素材/武将/张布-头像.png",
+   "art": "素材/武将/张布-经典形象.png",
+   "nonameIds": [
+    "zhangbu"
+   ],
+   "voiceId": "zhangbu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张恭",
+   "avatar": "素材/武将/张恭-头像.png",
+   "art": "素材/武将/张恭-经典形象.jpg",
+   "nonameIds": [
+    "zhanggong"
+   ],
+   "voiceId": "zhanggong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张既",
+   "avatar": "素材/武将/张既-头像.png",
+   "art": "素材/武将/张既-经典形象.jpg",
+   "nonameIds": [
+    "ol_tw_zhangji"
+   ],
+   "voiceId": "zhangji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张昌蒲",
+   "avatar": "素材/武将/张昌蒲-头像.png",
+   "art": "素材/武将/张昌蒲-经典形象.jpg",
+   "nonameIds": [
+    "zhangchangpu"
+   ],
+   "voiceId": "zhangchangpu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张星彩",
+   "avatar": "素材/武将/张星彩-头像.png",
+   "art": "素材/武将/张星彩-经典形象.jpg",
+   "nonameIds": [
+    "zhangxingcai"
+   ],
+   "voiceId": "zhangxingcai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张春华",
+   "avatar": "素材/武将/张春华-头像.png",
+   "art": "素材/武将/张春华-经典形象.jpg",
+   "nonameIds": [
+    "gz_jin_zhangchunhua",
+    "zhangchunhua"
+   ],
+   "voiceId": "zhangchunhua",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张昭张纮",
+   "avatar": "素材/武将/张昭张纮-头像.png",
+   "art": "素材/武将/张昭张纮-经典形象.jpg",
+   "nonameIds": [
+    "zhangzhang"
+   ],
+   "voiceId": "zhangzhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张松",
+   "avatar": "素材/武将/张松-头像.png",
+   "art": "素材/武将/张松-经典形象.jpg",
+   "nonameIds": [
+    "zhangsong"
+   ],
+   "voiceId": "zhangsong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张梁",
+   "avatar": "素材/武将/张梁-头像.png",
+   "art": "素材/武将/张梁-经典形象.jpg",
+   "nonameIds": [
+    "re_zhangliang"
+   ],
+   "voiceId": "zhangliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张济",
+   "avatar": "素材/武将/张济-头像.png",
+   "art": "素材/武将/张济-经典形象.jpg",
+   "nonameIds": [
+    "zhangji"
+   ],
+   "voiceId": "zhangji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张温",
+   "avatar": "素材/武将/张温-头像.png",
+   "art": "素材/武将/张温-经典形象.jpg",
+   "nonameIds": [
+    "zhangwen"
+   ],
+   "voiceId": "zhangwen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张琪瑛",
+   "avatar": "素材/武将/张琪瑛-头像.png",
+   "art": "素材/武将/张琪瑛-经典形象.jpg",
+   "nonameIds": [
+    "zhangqiying"
+   ],
+   "voiceId": "zhangqiying",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张绣",
+   "avatar": "素材/武将/张绣-头像.png",
+   "art": "素材/武将/张绣-经典形象.jpg",
+   "nonameIds": [
+    "ns_zhangxiu",
+    "zhangxiu"
+   ],
+   "voiceId": "zhangxiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张翼",
+   "avatar": "素材/武将/张翼-头像.png",
+   "art": "素材/武将/张翼-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "张角",
+   "avatar": "素材/武将/张角-头像.png",
+   "art": "素材/武将/张角-经典形象.jpg",
+   "nonameIds": [
+    "gz_zhangjiao",
+    "sp_zhangjiao"
+   ],
+   "voiceId": "zhangjiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张让",
+   "avatar": "素材/武将/张让-头像.png",
+   "art": "素材/武将/张让-经典形象.jpg",
+   "nonameIds": [
+    "scs_zhangrang",
+    "zhangrang"
+   ],
+   "voiceId": "zhangrang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张让（十常侍）",
+   "avatar": "素材/武将/张让（十常侍）-头像.png",
+   "art": "素材/武将/张让（十常侍）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "张辽",
+   "avatar": "素材/武将/张辽-头像.png",
+   "art": "素材/武将/张辽-经典形象.jpg",
+   "nonameIds": [
+    "zhangliao"
+   ],
+   "voiceId": "zhangliao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张郃",
+   "avatar": "素材/武将/张郃-头像.png",
+   "art": "素材/武将/张郃-经典形象.jpg",
+   "nonameIds": [
+    "zhanghe"
+   ],
+   "voiceId": "zhanghe",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张飞",
+   "avatar": "素材/武将/张飞-头像.png",
+   "art": "素材/武将/张飞-经典形象.jpg",
+   "nonameIds": [
+    "zhangfei"
+   ],
+   "voiceId": "zhangfei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "张鲁",
+   "avatar": "素材/武将/张鲁-头像.png",
+   "art": "素材/武将/张鲁-经典形象.jpg",
+   "nonameIds": [
+    "zhanglu"
+   ],
+   "voiceId": "zhanglu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "彭羕",
+   "avatar": "素材/武将/彭羕-头像.png",
+   "art": "素材/武将/彭羕-经典形象.jpg",
+   "nonameIds": [
+    "ol_pengyang"
+   ],
+   "voiceId": "pengyang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "彻里吉",
+   "avatar": "素材/武将/彻里吉-头像.png",
+   "art": "素材/武将/彻里吉-经典形象.jpg",
+   "nonameIds": [
+    "cheliji"
+   ],
+   "voiceId": "cheliji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "徐庶",
+   "avatar": "素材/武将/徐庶-头像.png",
+   "art": "素材/武将/徐庶-经典形象.jpg",
+   "nonameIds": [
+    "gz_re_xushu",
+    "xin_xushu"
+   ],
+   "voiceId": "xushu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "徐晃",
+   "avatar": "素材/武将/徐晃-头像.png",
+   "art": "素材/武将/徐晃-经典形象.jpg",
+   "nonameIds": [
+    "gz_xuhuang",
+    "re_xuhuang"
+   ],
+   "voiceId": "xuhuang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "徐氏",
+   "avatar": "素材/武将/徐氏-头像.png",
+   "art": "素材/武将/徐氏-经典形象.jpg",
+   "nonameIds": [
+    "xushi"
+   ],
+   "voiceId": "xushi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "徐盛",
+   "avatar": "素材/武将/徐盛-头像.png",
+   "art": "素材/武将/徐盛-经典形象.jpg",
+   "nonameIds": [
+    "xusheng"
+   ],
+   "voiceId": "xusheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "徐荣",
+   "avatar": "素材/武将/徐荣-头像.png",
+   "art": "素材/武将/徐荣-经典形象.jpg",
+   "nonameIds": [
+    "xurong"
+   ],
+   "voiceId": "xurong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "御曹植",
+   "avatar": "素材/武将/御曹植-头像.png",
+   "art": "素材/武将/御曹植-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "戏志才",
+   "avatar": "素材/武将/戏志才-头像.png",
+   "art": "素材/武将/戏志才-经典形象.jpg",
+   "nonameIds": [
+    "xizhicai"
+   ],
+   "voiceId": "xizhicai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "成济",
+   "avatar": "素材/武将/成济-头像.png",
+   "art": "素材/武将/成济-经典形象.png",
+   "nonameIds": [
+    "chengji"
+   ],
+   "voiceId": "chengji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "数刘徽",
+   "avatar": "素材/武将/数刘徽-头像.png",
+   "art": "素材/武将/数刘徽-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "文聘",
+   "avatar": "素材/武将/文聘-头像.png",
+   "art": "素材/武将/文聘-经典形象.jpg",
+   "nonameIds": [
+    "wenpin"
+   ],
+   "voiceId": "wenpin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "文钦",
+   "avatar": "素材/武将/文钦-头像.png",
+   "art": "素材/武将/文钦-经典形象.png",
+   "nonameIds": [
+    "ol_wenqin"
+   ],
+   "voiceId": "wenqin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "文鸯",
+   "avatar": "素材/武将/文鸯-头像.png",
+   "art": "素材/武将/文鸯-经典形象.jpg",
+   "nonameIds": [
+    "diy_wenyang",
+    "wenyang"
+   ],
+   "voiceId": "wenyang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "断狱仲达",
+   "avatar": "素材/武将/断狱仲达-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星周不疑",
+   "avatar": "素材/武将/星周不疑-头像.png",
+   "art": "素材/武将/星周不疑-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星张辽",
+   "avatar": "素材/武将/星张辽-头像.png",
+   "art": "素材/武将/星张辽-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星张郃",
+   "avatar": "素材/武将/星张郃-头像.png",
+   "art": "素材/武将/星张郃-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星徐晃",
+   "avatar": "素材/武将/星徐晃-头像.png",
+   "art": "素材/武将/星徐晃-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星法正",
+   "avatar": "素材/武将/星法正-头像.png",
+   "art": "素材/武将/星法正-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星王朗",
+   "avatar": "素材/武将/星王朗-头像.png",
+   "art": "素材/武将/星王朗-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星甘宁",
+   "avatar": "素材/武将/星甘宁-头像.png",
+   "art": "素材/武将/星甘宁-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星董卓",
+   "avatar": "素材/武将/星董卓-头像.png",
+   "art": "素材/武将/星董卓-经典形象.png",
+   "nonameIds": [
+    "star_dongzhuo"
+   ],
+   "voiceId": "dongzhuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "星魏延",
+   "avatar": "素材/武将/星魏延-头像.png",
+   "art": "素材/武将/星魏延-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "星黄忠",
+   "avatar": "素材/武将/星黄忠-头像.png",
+   "art": "素材/武将/星黄忠-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "曹丕",
+   "avatar": "素材/武将/曹丕-头像.png",
+   "art": "素材/武将/曹丕-经典形象.jpg",
+   "nonameIds": [
+    "caopi"
+   ],
+   "voiceId": "caopi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹仁",
+   "avatar": "素材/武将/曹仁-头像.png",
+   "art": "素材/武将/曹仁-经典形象.jpg",
+   "nonameIds": [
+    "gz_caoren",
+    "old_caoren"
+   ],
+   "voiceId": "caoren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹休",
+   "avatar": "素材/武将/曹休-头像.png",
+   "art": "素材/武将/曹休-经典形象.jpg",
+   "nonameIds": [
+    "caoxiu"
+   ],
+   "voiceId": "caoxiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹冲",
+   "avatar": "素材/武将/曹冲-头像.png",
+   "art": "素材/武将/曹冲-经典形象.jpg",
+   "nonameIds": [
+    "caochong"
+   ],
+   "voiceId": "caochong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹冲博学",
+   "avatar": "素材/武将/曹冲博学-头像.png",
+   "art": "素材/武将/曹冲博学-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "曹叡",
+   "avatar": "素材/武将/曹叡-头像.png",
+   "art": "素材/武将/曹叡-经典形象.jpg",
+   "nonameIds": [
+    "caorui"
+   ],
+   "voiceId": "caorui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹婴",
+   "avatar": "素材/武将/曹婴-头像.png",
+   "art": "素材/武将/曹婴-经典形象.jpg",
+   "nonameIds": [
+    "caoying"
+   ],
+   "voiceId": "caoying",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹嵩",
+   "avatar": "素材/武将/曹嵩-头像.png",
+   "art": "素材/武将/曹嵩-经典形象.jpg",
+   "nonameIds": [
+    "caosong"
+   ],
+   "voiceId": "caosong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹彰",
+   "avatar": "素材/武将/曹彰-头像.png",
+   "art": "素材/武将/曹彰-经典形象.jpg",
+   "nonameIds": [
+    "caozhang"
+   ],
+   "voiceId": "caozhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹操",
+   "avatar": "素材/武将/曹操-头像.png",
+   "art": "素材/武将/曹操-经典形象.jpg",
+   "nonameIds": [
+    "caocao",
+    "ns_caocao"
+   ],
+   "voiceId": "caocao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹昂",
+   "avatar": "素材/武将/曹昂-头像.png",
+   "art": "素材/武将/曹昂-经典形象.jpg",
+   "nonameIds": [
+    "caoang"
+   ],
+   "voiceId": "caoang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹植",
+   "avatar": "素材/武将/曹植-头像.png",
+   "art": "素材/武将/曹植-经典形象.jpg",
+   "nonameIds": [
+    "caozhi"
+   ],
+   "voiceId": "caozhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹洪",
+   "avatar": "素材/武将/曹洪-头像.png",
+   "art": "素材/武将/曹洪-经典形象.jpg",
+   "nonameIds": [
+    "caohong"
+   ],
+   "voiceId": "caohong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹洪（援护）",
+   "avatar": "素材/武将/曹洪（援护）-头像.png",
+   "art": "素材/武将/曹洪（援护）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "曹真",
+   "avatar": "素材/武将/曹真-头像.png",
+   "art": "素材/武将/曹真-经典形象.png",
+   "nonameIds": [
+    "caozhen"
+   ],
+   "voiceId": "caozhen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹纯",
+   "avatar": "素材/武将/曹纯-头像.png",
+   "art": "素材/武将/曹纯-经典形象.jpg",
+   "nonameIds": [
+    "caochun"
+   ],
+   "voiceId": "caochun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹节",
+   "avatar": "素材/武将/曹节-头像.png",
+   "art": "素材/武将/曹节-经典形象.jpg",
+   "nonameIds": [
+    "caojie"
+   ],
+   "voiceId": "caojie",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "曹髦",
+   "avatar": "素材/武将/曹髦-头像.png",
+   "art": "素材/武将/曹髦-经典形象.png",
+   "nonameIds": [
+    "caomao",
+    "ddd_caomao"
+   ],
+   "voiceId": "caomao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "木牛流马",
+   "avatar": "素材/武将/木牛流马-头像.png",
+   "art": "素材/武将/木牛流马-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "木鹿大王",
+   "avatar": "素材/武将/木鹿大王-头像.png",
+   "art": "素材/武将/木鹿大王-经典形象.jpg",
+   "nonameIds": [
+    "muludawang"
+   ],
+   "voiceId": "muludawang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "朱儁",
+   "avatar": "素材/武将/朱儁-头像.png",
+   "art": "素材/武将/朱儁-经典形象.jpg",
+   "nonameIds": [
+    "zhujun"
+   ],
+   "voiceId": "zhujun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "朱桓",
+   "avatar": "素材/武将/朱桓-头像.png",
+   "art": "素材/武将/朱桓-经典形象.jpg",
+   "nonameIds": [
+    "zhuhuan"
+   ],
+   "voiceId": "zhuhuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "朱治",
+   "avatar": "素材/武将/朱治-头像.png",
+   "art": "素材/武将/朱治-经典形象.jpg",
+   "nonameIds": [
+    "zhuzhi"
+   ],
+   "voiceId": "zhuzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "朱灵",
+   "avatar": "素材/武将/朱灵-头像.png",
+   "art": "素材/武将/朱灵-经典形象.jpg",
+   "nonameIds": [
+    "dc_zhuling",
+    "zhuling"
+   ],
+   "voiceId": "zhuling",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "朱然",
+   "avatar": "素材/武将/朱然-头像.png",
+   "art": "素材/武将/朱然-经典形象.jpg",
+   "nonameIds": [
+    "zhuran"
+   ],
+   "voiceId": "zhuran",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "朱绩",
+   "avatar": "素材/武将/朱绩-头像.png",
+   "art": "素材/武将/朱绩-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "机雷白虎",
+   "avatar": "素材/武将/机雷白虎-头像.png",
+   "art": "素材/武将/机雷白虎-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "李严",
+   "avatar": "素材/武将/李严-头像.png",
+   "art": "素材/武将/李严-经典形象.jpg",
+   "nonameIds": [
+    "liyan"
+   ],
+   "voiceId": "liyan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李丰",
+   "avatar": "素材/武将/李丰-头像.png",
+   "art": "素材/武将/李丰-经典形象.jpg",
+   "nonameIds": [
+    "dc_lifeng",
+    "gz_lifeng"
+   ],
+   "voiceId": "lifeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李傕",
+   "avatar": "素材/武将/李傕-头像.png",
+   "art": "素材/武将/李傕-经典形象.jpg",
+   "nonameIds": [
+    "lijue"
+   ],
+   "voiceId": "lijue",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李傕郭汜",
+   "avatar": "素材/武将/李傕郭汜-头像.png",
+   "art": null,
+   "nonameIds": [
+    "liqueguosi"
+   ],
+   "voiceId": "liqueguosi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李儒",
+   "avatar": "素材/武将/李儒-头像.png",
+   "art": "素材/武将/李儒-经典形象.jpg",
+   "nonameIds": [
+    "xin_liru"
+   ],
+   "voiceId": "liru",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李典",
+   "avatar": "素材/武将/李典-头像.png",
+   "art": "素材/武将/李典-经典形象.jpg",
+   "nonameIds": [
+    "gz_re_lidian",
+    "old_re_lidian"
+   ],
+   "voiceId": "lidian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李昭焦伯",
+   "avatar": "素材/武将/李昭焦伯-头像.png",
+   "art": "素材/武将/李昭焦伯-经典形象.png",
+   "nonameIds": [
+    "lizhaojiaobo"
+   ],
+   "voiceId": "lizhaojiaobo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李通",
+   "avatar": "素材/武将/李通-头像.png",
+   "art": "素材/武将/李通-经典形象.jpg",
+   "nonameIds": [
+    "litong"
+   ],
+   "voiceId": "litong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "李遗",
+   "avatar": "素材/武将/李遗-头像.png",
+   "art": "素材/武将/李遗-经典形象.png",
+   "nonameIds": [
+    "liwei"
+   ],
+   "voiceId": "liwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杜畿",
+   "avatar": "素材/武将/杜畿-头像.png",
+   "art": "素材/武将/杜畿-经典形象.jpg",
+   "nonameIds": [
+    "duji",
+    "ns_duji_ab"
+   ],
+   "voiceId": "ab",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杜预",
+   "avatar": "素材/武将/杜预-头像.png",
+   "art": "素材/武将/杜预-经典形象.jpg",
+   "nonameIds": [
+    "dc_duyu",
+    "gz_duyu"
+   ],
+   "voiceId": "duyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "来敏",
+   "avatar": "素材/武将/来敏-头像.png",
+   "art": "素材/武将/来敏-经典形象.png",
+   "nonameIds": [
+    "laimin"
+   ],
+   "voiceId": "laimin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杨仪",
+   "avatar": "素材/武将/杨仪-头像.png",
+   "art": "素材/武将/杨仪-经典形象.jpg",
+   "nonameIds": [
+    "diy_yangyi",
+    "ns_yangyi",
+    "ol_yangyi"
+   ],
+   "voiceId": "yangyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杨修",
+   "avatar": "素材/武将/杨修-头像.png",
+   "art": "素材/武将/杨修-经典形象.jpg",
+   "nonameIds": [
+    "yangxiou",
+    "yangxiu"
+   ],
+   "voiceId": "yangxiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杨奉",
+   "avatar": "素材/武将/杨奉-头像.png",
+   "art": "素材/武将/杨奉-经典形象.png",
+   "nonameIds": [
+    "yangfeng"
+   ],
+   "voiceId": "yangfeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杨彪",
+   "avatar": "素材/武将/杨彪-头像.png",
+   "art": "素材/武将/杨彪-经典形象.jpg",
+   "nonameIds": [
+    "dc_yangbiao"
+   ],
+   "voiceId": "yangbiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "杨阜",
+   "avatar": "素材/武将/杨阜-头像.png",
+   "art": "素材/武将/杨阜-经典形象.jpg",
+   "nonameIds": [
+    "yangfu"
+   ],
+   "voiceId": "yangfu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "栗嵩",
+   "avatar": "素材/武将/栗嵩-头像.png",
+   "art": "素材/武将/栗嵩-经典形象.jpg",
+   "nonameIds": [
+    "scs_lisong"
+   ],
+   "voiceId": "lisong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "桥公",
+   "avatar": "素材/武将/桥公-头像.png",
+   "art": "素材/武将/桥公-经典形象.jpg",
+   "nonameIds": [
+    "qiaogong"
+   ],
+   "voiceId": "qiaogong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "樊稠",
+   "avatar": "素材/武将/樊稠-头像.png",
+   "art": "素材/武将/樊稠-经典形象.jpg",
+   "nonameIds": [
+    "fanchou"
+   ],
+   "voiceId": "fanchou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "步练师",
+   "avatar": "素材/武将/步练师-头像.png",
+   "art": "素材/武将/步练师-经典形象.jpg",
+   "nonameIds": [
+    "bulianshi"
+   ],
+   "voiceId": "bulianshi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "步骘",
+   "avatar": "素材/武将/步骘-头像.png",
+   "art": "素材/武将/步骘-经典形象.jpg",
+   "nonameIds": [
+    "buzhi"
+   ],
+   "voiceId": "buzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "段珪",
+   "avatar": "素材/武将/段珪-头像.png",
+   "art": "素材/武将/段珪-经典形象.jpg",
+   "nonameIds": [
+    "ns_duangui",
+    "scs_duangui"
+   ],
+   "voiceId": "duangui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "毌丘俭",
+   "avatar": "素材/武将/毌丘俭-头像.png",
+   "art": "素材/武将/毌丘俭-经典形象.jpg",
+   "nonameIds": [
+    "guanqiujian"
+   ],
+   "voiceId": "guanqiujian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "毕岚",
+   "avatar": "素材/武将/毕岚-头像.png",
+   "art": "素材/武将/毕岚-经典形象.jpg",
+   "nonameIds": [
+    "scs_bilan"
+   ],
+   "voiceId": "bilan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "毛玠",
+   "avatar": "素材/武将/毛玠-头像.png",
+   "art": "素材/武将/毛玠-经典形象.jpg",
+   "nonameIds": [
+    "sp_maojie"
+   ],
+   "voiceId": "maojie",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "沙摩柯",
+   "avatar": "素材/武将/沙摩柯-头像.png",
+   "art": "素材/武将/沙摩柯-经典形象.jpg",
+   "nonameIds": [
+    "shamoke"
+   ],
+   "voiceId": "shamoke",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "沮授",
+   "avatar": "素材/武将/沮授-头像.png",
+   "art": "素材/武将/沮授-经典形象.jpg",
+   "nonameIds": [
+    "yj_jushou"
+   ],
+   "voiceId": "jushou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "法正",
+   "avatar": null,
+   "art": "素材/武将/法正-经典形象.png",
+   "nonameIds": [
+    "xin_fazheng"
+   ],
+   "voiceId": "fazheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "浴火士元",
+   "avatar": "素材/武将/浴火士元-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "清河公主",
+   "avatar": "素材/武将/清河公主-头像.png",
+   "art": "素材/武将/清河公主-经典形象.png",
+   "nonameIds": [
+    "qinghegongzhu"
+   ],
+   "voiceId": "qinghegongzhu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "满宠",
+   "avatar": "素材/武将/满宠-头像.png",
+   "art": "素材/武将/满宠-经典形象.jpg",
+   "nonameIds": [
+    "manchong"
+   ],
+   "voiceId": "manchong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "潘凤",
+   "avatar": "素材/武将/潘凤-头像.png",
+   "art": "素材/武将/潘凤-经典形象.jpg",
+   "nonameIds": [
+    "gz_panfeng",
+    "re_panfeng"
+   ],
+   "voiceId": "panfeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "潘濬",
+   "avatar": "素材/武将/潘濬-头像.png",
+   "art": "素材/武将/潘濬-经典形象.jpg",
+   "nonameIds": [
+    "panjun"
+   ],
+   "voiceId": "panjun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "潘璋马忠",
+   "avatar": "素材/武将/潘璋马忠-头像.png",
+   "art": "素材/武将/潘璋马忠-经典形象.jpg",
+   "nonameIds": [
+    "panzhangmazhong"
+   ],
+   "voiceId": "panzhangmazhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "濮阳兴",
+   "avatar": "素材/武将/濮阳兴-头像.png",
+   "art": "素材/武将/濮阳兴-经典形象.jpg",
+   "nonameIds": [
+    "tw_puyangxing"
+   ],
+   "voiceId": "puyangxing",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "灵甲玄武",
+   "avatar": "素材/武将/灵甲玄武-头像.png",
+   "art": "素材/武将/灵甲玄武-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "灵雎",
+   "avatar": "素材/武将/灵雎-头像.png",
+   "art": "素材/武将/灵雎-经典形象.jpg",
+   "nonameIds": [
+    "lingju"
+   ],
+   "voiceId": "lingju",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "灵雎（竭雠）",
+   "avatar": "素材/武将/灵雎（竭雠）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "灾煞星",
+   "avatar": "素材/武将/灾煞星-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "炽羽朱雀",
+   "avatar": "素材/武将/炽羽朱雀-头像.png",
+   "art": "素材/武将/炽羽朱雀-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "烈帝玄德",
+   "avatar": "素材/武将/烈帝玄德-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "牛头",
+   "avatar": "素材/武将/牛头-头像.png",
+   "art": "素材/武将/牛头-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "牛金",
+   "avatar": "素材/武将/牛金-头像.png",
+   "art": "素材/武将/牛金-经典形象.jpg",
+   "nonameIds": [
+    "niujin"
+   ],
+   "voiceId": "niujin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "牵招",
+   "avatar": "素材/武将/牵招-头像.png",
+   "art": "素材/武将/牵招-经典形象.png",
+   "nonameIds": [
+    "ddd_qianzhao",
+    "ol_qianzhao"
+   ],
+   "voiceId": "qianzhao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "玄毌丘俭",
+   "avatar": "素材/武将/玄毌丘俭-头像.png",
+   "art": "素材/武将/玄毌丘俭-经典形象.png",
+   "nonameIds": [
+    "mb_sp_guanqiujian"
+   ],
+   "voiceId": "guanqiujian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王允",
+   "avatar": "素材/武将/王允-头像.png",
+   "art": "素材/武将/王允-经典形象.jpg",
+   "nonameIds": [
+    "ns_wangyun",
+    "wangyun"
+   ],
+   "voiceId": "wangyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王元姬",
+   "avatar": "素材/武将/王元姬-头像.png",
+   "art": "素材/武将/王元姬-经典形象.jpg",
+   "nonameIds": [
+    "gz_jin_wangyuanji",
+    "wangyuanji"
+   ],
+   "voiceId": "wangyuanji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王凌",
+   "avatar": "素材/武将/王凌-头像.png",
+   "art": "素材/武将/王凌-经典形象.jpg",
+   "nonameIds": [
+    "wangling"
+   ],
+   "voiceId": "wangling",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王凌（谋立）",
+   "avatar": "素材/武将/王凌（谋立）-头像.png",
+   "art": "素材/武将/王凌（谋立）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "王双",
+   "avatar": "素材/武将/王双-头像.png",
+   "art": "素材/武将/王双-经典形象.jpg",
+   "nonameIds": [
+    "wangshuang"
+   ],
+   "voiceId": "wangshuang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王基",
+   "avatar": "素材/武将/王基-头像.png",
+   "art": "素材/武将/王基-经典形象.jpg",
+   "nonameIds": [
+    "wangji"
+   ],
+   "voiceId": "wangji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王平",
+   "avatar": "素材/武将/王平-头像.png",
+   "art": "素材/武将/王平-经典形象.jpg",
+   "nonameIds": [
+    "wangping"
+   ],
+   "voiceId": "wangping",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王异",
+   "avatar": "素材/武将/王异-头像.png",
+   "art": "素材/武将/王异-经典形象.jpg",
+   "nonameIds": [
+    "wangyi"
+   ],
+   "voiceId": "wangyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王朗",
+   "avatar": "素材/武将/王朗-头像.png",
+   "art": "素材/武将/王朗-经典形象.png",
+   "nonameIds": [
+    "wanglang"
+   ],
+   "voiceId": "wanglang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王濬",
+   "avatar": "素材/武将/王濬-头像.png",
+   "art": "素材/武将/王濬-经典形象.jpg",
+   "nonameIds": [
+    "dc_wangjun"
+   ],
+   "voiceId": "wangjun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王甫赵累",
+   "avatar": "素材/武将/王甫赵累-头像.png",
+   "art": "素材/武将/王甫赵累-经典形象.jpg",
+   "nonameIds": [
+    "wangfuzhaolei"
+   ],
+   "voiceId": "wangfuzhaolei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王粲",
+   "avatar": "素材/武将/王粲-头像.png",
+   "art": "素材/武将/王粲-经典形象.jpg",
+   "nonameIds": [
+    "wangcan"
+   ],
+   "voiceId": "wangcan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "王经",
+   "avatar": "素材/武将/王经-头像.png",
+   "art": "素材/武将/王经-经典形象.png",
+   "nonameIds": [
+    "mb_wangjing"
+   ],
+   "voiceId": "wangjing",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "甄姬",
+   "avatar": "素材/武将/甄姬-头像.png",
+   "art": "素材/武将/甄姬-经典形象.jpg",
+   "nonameIds": [
+    "ddd_zhenji"
+   ],
+   "voiceId": "zhenji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "甘夫人",
+   "avatar": "素材/武将/甘夫人-头像.png",
+   "art": "素材/武将/甘夫人-经典形象.png",
+   "nonameIds": [
+    "dc_ganfuren"
+   ],
+   "voiceId": "ganfuren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "甘宁",
+   "avatar": "素材/武将/甘宁-头像.png",
+   "art": "素材/武将/甘宁-经典形象.jpg",
+   "nonameIds": [
+    "ganning"
+   ],
+   "voiceId": "ganning",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "田丰",
+   "avatar": "素材/武将/田丰-头像.png",
+   "art": "素材/武将/田丰-经典形象.png",
+   "nonameIds": [
+    "gz_tianfeng"
+   ],
+   "voiceId": "tianfeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界严颜",
+   "avatar": "素材/武将/界严颜-头像.png",
+   "art": "素材/武将/界严颜-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界于吉",
+   "avatar": "素材/武将/界于吉-头像.png",
+   "art": "素材/武将/界于吉-经典形象.jpg",
+   "nonameIds": [
+    "xin_yuji"
+   ],
+   "voiceId": "yuji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界于禁",
+   "avatar": "素材/武将/界于禁-头像.png",
+   "art": "素材/武将/界于禁-经典形象.jpg",
+   "nonameIds": [
+    "yujin_yujin"
+   ],
+   "voiceId": "yujin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界伊籍",
+   "avatar": "素材/武将/界伊籍-头像.png",
+   "art": "素材/武将/界伊籍-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界伏皇后",
+   "avatar": "素材/武将/界伏皇后-头像.png",
+   "art": "素材/武将/界伏皇后-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界全琮",
+   "avatar": "素材/武将/界全琮-头像.png",
+   "art": "素材/武将/界全琮-经典形象.jpg",
+   "nonameIds": [
+    "re_quancong"
+   ],
+   "voiceId": "quancong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界公孙瓒",
+   "avatar": "素材/武将/界公孙瓒-头像.png",
+   "art": "素材/武将/界公孙瓒-经典形象.jpg",
+   "nonameIds": [
+    "re_gongsunzan"
+   ],
+   "voiceId": "gongsunzan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界关兴张苞",
+   "avatar": "素材/武将/界关兴张苞-头像.png",
+   "art": "素材/武将/界关兴张苞-经典形象.jpg",
+   "nonameIds": [
+    "re_guanzhang"
+   ],
+   "voiceId": "guanzhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界关羽",
+   "avatar": "素材/武将/界关羽-头像.png",
+   "art": "素材/武将/界关羽-经典形象.jpg",
+   "nonameIds": [
+    "re_guanyu"
+   ],
+   "voiceId": "guanyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界典韦",
+   "avatar": "素材/武将/界典韦-头像.png",
+   "art": "素材/武将/界典韦-经典形象.jpg",
+   "nonameIds": [
+    "ol_dianwei"
+   ],
+   "voiceId": "dianwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界凌统",
+   "avatar": "素材/武将/界凌统-头像.png",
+   "art": "素材/武将/界凌统-经典形象.jpg",
+   "nonameIds": [
+    "xin_lingtong"
+   ],
+   "voiceId": "lingtong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界刘备",
+   "avatar": "素材/武将/界刘备-头像.png",
+   "art": "素材/武将/界刘备-经典形象.jpg",
+   "nonameIds": [
+    "re_liubei"
+   ],
+   "voiceId": "liubei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界刘禅",
+   "avatar": "素材/武将/界刘禅-头像.png",
+   "art": "素材/武将/界刘禅-经典形象.jpg",
+   "nonameIds": [
+    "ol_liushan"
+   ],
+   "voiceId": "liushan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界刘表",
+   "avatar": "素材/武将/界刘表-头像.png",
+   "art": "素材/武将/界刘表-经典形象.jpg",
+   "nonameIds": [
+    "xin_liubiao"
+   ],
+   "voiceId": "liubiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界华佗",
+   "avatar": "素材/武将/界华佗-头像.png",
+   "art": "素材/武将/界华佗-经典形象.jpg",
+   "nonameIds": [
+    "re_huatuo"
+   ],
+   "voiceId": "huatuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界华雄",
+   "avatar": "素材/武将/界华雄-头像.png",
+   "art": "素材/武将/界华雄-经典形象.jpg",
+   "nonameIds": [
+    "re_huaxiong"
+   ],
+   "voiceId": "huaxiong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界卧龙诸葛",
+   "avatar": "素材/武将/界卧龙诸葛-头像.png",
+   "art": "素材/武将/界卧龙诸葛-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界司马懿",
+   "avatar": "素材/武将/界司马懿-头像.png",
+   "art": "素材/武将/界司马懿-经典形象.jpg",
+   "nonameIds": [
+    "re_simayi"
+   ],
+   "voiceId": "simayi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界吕布",
+   "avatar": "素材/武将/界吕布-头像.png",
+   "art": "素材/武将/界吕布-经典形象.jpg",
+   "nonameIds": [
+    "re_lvbu"
+   ],
+   "voiceId": "lvbu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界吕蒙",
+   "avatar": "素材/武将/界吕蒙-头像.png",
+   "art": "素材/武将/界吕蒙-经典形象.jpg",
+   "nonameIds": [
+    "re_lvmeng"
+   ],
+   "voiceId": "lvmeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界吴国太",
+   "avatar": "素材/武将/界吴国太-头像.png",
+   "art": "素材/武将/界吴国太-经典形象.jpg",
+   "nonameIds": [
+    "xin_wuguotai"
+   ],
+   "voiceId": "wuguotai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界吴懿",
+   "avatar": "素材/武将/界吴懿-头像.png",
+   "art": "素材/武将/界吴懿-经典形象.jpg",
+   "nonameIds": [
+    "re_wuyi"
+   ],
+   "voiceId": "wuyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界周仓",
+   "avatar": "素材/武将/界周仓-头像.png",
+   "art": "素材/武将/界周仓-经典形象.jpg",
+   "nonameIds": [
+    "re_zhoucang"
+   ],
+   "voiceId": "zhoucang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界周妃",
+   "avatar": "素材/武将/界周妃-头像.png",
+   "art": "素材/武将/界周妃-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界周泰",
+   "avatar": "素材/武将/界周泰-头像.png",
+   "art": "素材/武将/界周泰-经典形象.jpg",
+   "nonameIds": [
+    "zhoutai"
+   ],
+   "voiceId": "zhoutai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界周瑜",
+   "avatar": "素材/武将/界周瑜-头像.png",
+   "art": "素材/武将/界周瑜-经典形象.jpg",
+   "nonameIds": [
+    "re_zhouyu"
+   ],
+   "voiceId": "zhouyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界夏侯惇",
+   "avatar": "素材/武将/界夏侯惇-头像.png",
+   "art": "素材/武将/界夏侯惇-经典形象.jpg",
+   "nonameIds": [
+    "re_xiahoudun"
+   ],
+   "voiceId": "xiahoudun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界夏侯渊",
+   "avatar": "素材/武将/界夏侯渊-头像.png",
+   "art": "素材/武将/界夏侯渊-经典形象.jpg",
+   "nonameIds": [
+    "ol_xiahouyuan"
+   ],
+   "voiceId": "xiahouyuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界大乔",
+   "avatar": "素材/武将/界大乔-头像.png",
+   "art": "素材/武将/界大乔-经典形象.jpg",
+   "nonameIds": [
+    "re_daqiao"
+   ],
+   "voiceId": "daqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界姜维",
+   "avatar": "素材/武将/界姜维-头像.png",
+   "art": "素材/武将/界姜维-经典形象.jpg",
+   "nonameIds": [
+    "ol_jiangwei"
+   ],
+   "voiceId": "jiangwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孙休",
+   "avatar": "素材/武将/界孙休-头像.png",
+   "art": "素材/武将/界孙休-经典形象.jpg",
+   "nonameIds": [
+    "re_sunxiu"
+   ],
+   "voiceId": "sunxiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孙坚",
+   "avatar": "素材/武将/界孙坚-头像.png",
+   "art": "素材/武将/界孙坚-经典形象.jpg",
+   "nonameIds": [
+    "ol_sunjian"
+   ],
+   "voiceId": "sunjian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孙尚香",
+   "avatar": "素材/武将/界孙尚香-头像.png",
+   "art": "素材/武将/界孙尚香-经典形象.jpg",
+   "nonameIds": [
+    "re_sunshangxiang"
+   ],
+   "voiceId": "sunshangxiang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孙权",
+   "avatar": "素材/武将/界孙权-头像.png",
+   "art": "素材/武将/界孙权-经典形象.jpg",
+   "nonameIds": [
+    "re_sunquan"
+   ],
+   "voiceId": "sunquan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孙策",
+   "avatar": "素材/武将/界孙策-头像.png",
+   "art": "素材/武将/界孙策-经典形象.jpg",
+   "nonameIds": [
+    "re_sunce"
+   ],
+   "voiceId": "sunce",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孙鲁班",
+   "avatar": "素材/武将/界孙鲁班-头像.png",
+   "art": "素材/武将/界孙鲁班-经典形象.jpg",
+   "nonameIds": [
+    "re_sunluban"
+   ],
+   "voiceId": "sunluban",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界孟获",
+   "avatar": "素材/武将/界孟获-头像.png",
+   "art": "素材/武将/界孟获-经典形象.jpg",
+   "nonameIds": [
+    "re_menghuo"
+   ],
+   "voiceId": "menghuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界小乔",
+   "avatar": "素材/武将/界小乔-头像.png",
+   "art": "素材/武将/界小乔-经典形象.jpg",
+   "nonameIds": [
+    "ol_xiaoqiao"
+   ],
+   "voiceId": "xiaoqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界左慈",
+   "avatar": "素材/武将/界左慈-头像.png",
+   "art": "素材/武将/界左慈-经典形象.jpg",
+   "nonameIds": [
+    "re_zuoci"
+   ],
+   "voiceId": "zuoci",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界庞德",
+   "avatar": "素材/武将/界庞德-头像.png",
+   "art": "素材/武将/界庞德-经典形象.jpg",
+   "nonameIds": [
+    "ol_pangde"
+   ],
+   "voiceId": "pangde",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界庞统",
+   "avatar": "素材/武将/界庞统-头像.png",
+   "art": "素材/武将/界庞统-经典形象.jpg",
+   "nonameIds": [
+    "ol_pangtong"
+   ],
+   "voiceId": "pangtong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界廖化",
+   "avatar": "素材/武将/界廖化-头像.png",
+   "art": "素材/武将/界廖化-经典形象.jpg",
+   "nonameIds": [
+    "re_liaohua"
+   ],
+   "voiceId": "liaohua",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界张嶷",
+   "avatar": "素材/武将/界张嶷-头像.png",
+   "art": "素材/武将/界张嶷-经典形象.png",
+   "nonameIds": [
+    "re_zhangyi"
+   ],
+   "voiceId": "zhangyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界张昭张纮",
+   "avatar": "素材/武将/界张昭张纮-头像.png",
+   "art": "素材/武将/界张昭张纮-经典形象.jpg",
+   "nonameIds": [
+    "ol_zhangzhang"
+   ],
+   "voiceId": "zhangzhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界张角",
+   "avatar": "素材/武将/界张角-头像.png",
+   "art": "素材/武将/界张角-经典形象.jpg",
+   "nonameIds": [
+    "re_zhangjiao"
+   ],
+   "voiceId": "zhangjiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界张辽",
+   "avatar": "素材/武将/界张辽-头像.png",
+   "art": "素材/武将/界张辽-经典形象.jpg",
+   "nonameIds": [
+    "re_zhangliao"
+   ],
+   "voiceId": "zhangliao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界张飞",
+   "avatar": "素材/武将/界张飞-头像.png",
+   "art": "素材/武将/界张飞-经典形象.jpg",
+   "nonameIds": [
+    "re_zhangfei"
+   ],
+   "voiceId": "zhangfei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界徐晃",
+   "avatar": "素材/武将/界徐晃-头像.png",
+   "art": "素材/武将/界徐晃-经典形象.jpg",
+   "nonameIds": [
+    "ol_xuhuang"
+   ],
+   "voiceId": "xuhuang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界徐盛",
+   "avatar": "素材/武将/界徐盛-头像.png",
+   "art": "素材/武将/界徐盛-经典形象.jpg",
+   "nonameIds": [
+    "xin_xusheng"
+   ],
+   "voiceId": "xusheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹丕",
+   "avatar": "素材/武将/界曹丕-头像.png",
+   "art": "素材/武将/界曹丕-经典形象.jpg",
+   "nonameIds": [
+    "re_caopi"
+   ],
+   "voiceId": "caopi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹仁",
+   "avatar": "素材/武将/界曹仁-头像.png",
+   "art": "素材/武将/界曹仁-经典形象.jpg",
+   "nonameIds": [
+    "caoren"
+   ],
+   "voiceId": "caoren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹休",
+   "avatar": "素材/武将/界曹休-头像.png",
+   "art": "素材/武将/界曹休-经典形象.jpg",
+   "nonameIds": [
+    "re_caoxiu"
+   ],
+   "voiceId": "caoxiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹彰",
+   "avatar": "素材/武将/界曹彰-头像.png",
+   "art": "素材/武将/界曹彰-经典形象.jpg",
+   "nonameIds": [
+    "re_caozhang"
+   ],
+   "voiceId": "caozhang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹操",
+   "avatar": "素材/武将/界曹操-头像.png",
+   "art": "素材/武将/界曹操-经典形象.jpg",
+   "nonameIds": [
+    "re_caocao"
+   ],
+   "voiceId": "caocao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹植",
+   "avatar": "素材/武将/界曹植-头像.png",
+   "art": "素材/武将/界曹植-经典形象.jpg",
+   "nonameIds": [
+    "dc_caozhi"
+   ],
+   "voiceId": "caozhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界曹真",
+   "avatar": "素材/武将/界曹真-头像.png",
+   "art": "素材/武将/界曹真-经典形象.jpg",
+   "nonameIds": [
+    "re_caozhen"
+   ],
+   "voiceId": "caozhen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界朱桓",
+   "avatar": "素材/武将/界朱桓-头像.png",
+   "art": "素材/武将/界朱桓-经典形象.jpg",
+   "nonameIds": [
+    "re_zhuhuan"
+   ],
+   "voiceId": "zhuhuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界朱治",
+   "avatar": "素材/武将/界朱治-头像.png",
+   "art": "素材/武将/界朱治-经典形象.jpg",
+   "nonameIds": [
+    "re_zhuzhi"
+   ],
+   "voiceId": "zhuzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界朱然",
+   "avatar": "素材/武将/界朱然-头像.png",
+   "art": "素材/武将/界朱然-经典形象.jpg",
+   "nonameIds": [
+    "re_zhuran"
+   ],
+   "voiceId": "zhuran",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界李儒",
+   "avatar": "素材/武将/界李儒-头像.png",
+   "art": "素材/武将/界李儒-经典形象.jpg",
+   "nonameIds": [
+    "dc_liru"
+   ],
+   "voiceId": "liru",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界步练师",
+   "avatar": "素材/武将/界步练师-头像.png",
+   "art": "素材/武将/界步练师-经典形象.jpg",
+   "nonameIds": [
+    "dc_bulianshi"
+   ],
+   "voiceId": "bulianshi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界沮授",
+   "avatar": "素材/武将/界沮授-头像.png",
+   "art": "素材/武将/界沮授-经典形象.jpg",
+   "nonameIds": [
+    "re_jushou"
+   ],
+   "voiceId": "jushou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界法正",
+   "avatar": null,
+   "art": "素材/武将/界法正-经典形象.jpg",
+   "nonameIds": [
+    "re_fazheng"
+   ],
+   "voiceId": "fazheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界满宠",
+   "avatar": "素材/武将/界满宠-头像.png",
+   "art": "素材/武将/界满宠-经典形象.jpg",
+   "nonameIds": [
+    "re_manchong"
+   ],
+   "voiceId": "manchong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界潘璋马忠",
+   "avatar": "素材/武将/界潘璋马忠-头像.png",
+   "art": "素材/武将/界潘璋马忠-经典形象.jpg",
+   "nonameIds": [
+    "re_panzhangmazhong"
+   ],
+   "voiceId": "panzhangmazhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界王基",
+   "avatar": "素材/武将/界王基-头像.png",
+   "art": "素材/武将/界王基-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界王异",
+   "avatar": "素材/武将/界王异-头像.png",
+   "art": "素材/武将/界王异-经典形象.jpg",
+   "nonameIds": [
+    "re_wangyi"
+   ],
+   "voiceId": "wangyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界甄姬",
+   "avatar": "素材/武将/界甄姬-头像.png",
+   "art": "素材/武将/界甄姬-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界甘宁",
+   "avatar": "素材/武将/界甘宁-头像.png",
+   "art": "素材/武将/界甘宁-经典形象.jpg",
+   "nonameIds": [
+    "re_ganning"
+   ],
+   "voiceId": "ganning",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界祝融",
+   "avatar": "素材/武将/界祝融-头像.png",
+   "art": "素材/武将/界祝融-经典形象.jpg",
+   "nonameIds": [
+    "ol_zhurong"
+   ],
+   "voiceId": "zhurong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界程普",
+   "avatar": "素材/武将/界程普-头像.png",
+   "art": "素材/武将/界程普-经典形象.jpg",
+   "nonameIds": [
+    "re_chengpu"
+   ],
+   "voiceId": "chengpu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界简雍",
+   "avatar": "素材/武将/界简雍-头像.png",
+   "art": "素材/武将/界简雍-经典形象.jpg",
+   "nonameIds": [
+    "re_jianyong"
+   ],
+   "voiceId": "jianyong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界荀彧",
+   "avatar": "素材/武将/界荀彧-头像.png",
+   "art": "素材/武将/界荀彧-经典形象.jpg",
+   "nonameIds": [
+    "ol_xunyu"
+   ],
+   "voiceId": "xunyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界董卓",
+   "avatar": "素材/武将/界董卓-头像.png",
+   "art": "素材/武将/界董卓-经典形象.jpg",
+   "nonameIds": [
+    "ol_dongzhuo"
+   ],
+   "voiceId": "dongzhuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界蔡夫人",
+   "avatar": "素材/武将/界蔡夫人-头像.png",
+   "art": "素材/武将/界蔡夫人-经典形象.jpg",
+   "nonameIds": [
+    "re_caifuren"
+   ],
+   "voiceId": "caifuren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界蔡文姬",
+   "avatar": "素材/武将/界蔡文姬-头像.png",
+   "art": "素材/武将/界蔡文姬-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界虞翻",
+   "avatar": "素材/武将/界虞翻-头像.png",
+   "art": "素材/武将/界虞翻-经典形象.jpg",
+   "nonameIds": [
+    "xin_yufan"
+   ],
+   "voiceId": "yufan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界袁术",
+   "avatar": "素材/武将/界袁术-头像.png",
+   "art": "素材/武将/界袁术-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界袁绍",
+   "avatar": "素材/武将/界袁绍-头像.png",
+   "art": "素材/武将/界袁绍-经典形象.jpg",
+   "nonameIds": [
+    "ol_yuanshao"
+   ],
+   "voiceId": "yuanshao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界许褚",
+   "avatar": "素材/武将/界许褚-头像.png",
+   "art": "素材/武将/界许褚-经典形象.jpg",
+   "nonameIds": [
+    "re_xuzhu"
+   ],
+   "voiceId": "xuzhu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界诸葛亮",
+   "avatar": "素材/武将/界诸葛亮-头像.png",
+   "art": "素材/武将/界诸葛亮-经典形象.jpg",
+   "nonameIds": [
+    "re_zhugeliang"
+   ],
+   "voiceId": "zhugeliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界诸葛瞻",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "界貂蝉",
+   "avatar": "素材/武将/界貂蝉-头像.png",
+   "art": "素材/武将/界貂蝉-经典形象.jpg",
+   "nonameIds": [
+    "re_diaochan"
+   ],
+   "voiceId": "diaochan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界赵云",
+   "avatar": "素材/武将/界赵云-头像.png",
+   "art": "素材/武将/界赵云-经典形象.jpg",
+   "nonameIds": [
+    "re_zhaoyun"
+   ],
+   "voiceId": "zhaoyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界邓艾",
+   "avatar": "素材/武将/界邓艾-头像.png",
+   "art": "素材/武将/界邓艾-经典形象.jpg",
+   "nonameIds": [
+    "ol_dengai"
+   ],
+   "voiceId": "dengai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界郭嘉",
+   "avatar": "素材/武将/界郭嘉-头像.png",
+   "art": "素材/武将/界郭嘉-经典形象.jpg",
+   "nonameIds": [
+    "re_guojia"
+   ],
+   "voiceId": "guojia",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界郭淮",
+   "avatar": "素材/武将/界郭淮-头像.png",
+   "art": "素材/武将/界郭淮-经典形象.jpg",
+   "nonameIds": [
+    "re_guohuai"
+   ],
+   "voiceId": "guohuai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界钟会",
+   "avatar": "素材/武将/界钟会-头像.png",
+   "art": "素材/武将/界钟会-经典形象.jpg",
+   "nonameIds": [
+    "xin_zhonghui"
+   ],
+   "voiceId": "zhonghui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界陆逊",
+   "avatar": "素材/武将/界陆逊-头像.png",
+   "art": "素材/武将/界陆逊-经典形象.jpg",
+   "nonameIds": [
+    "re_luxun"
+   ],
+   "voiceId": "luxun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界陈群",
+   "avatar": "素材/武将/界陈群-头像.png",
+   "art": "素材/武将/界陈群-经典形象.jpg",
+   "nonameIds": [
+    "dc_chenqun"
+   ],
+   "voiceId": "chenqun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界韩当",
+   "avatar": "素材/武将/界韩当-头像.png",
+   "art": "素材/武将/界韩当-经典形象.jpg",
+   "nonameIds": [
+    "xin_handang"
+   ],
+   "voiceId": "handang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界顾雍",
+   "avatar": "素材/武将/界顾雍-头像.png",
+   "art": "素材/武将/界顾雍-经典形象.jpg",
+   "nonameIds": [
+    "re_guyong"
+   ],
+   "voiceId": "guyong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界颜良文丑",
+   "avatar": "素材/武将/界颜良文丑-头像.png",
+   "art": "素材/武将/界颜良文丑-经典形象.jpg",
+   "nonameIds": [
+    "ol_yanwen"
+   ],
+   "voiceId": "yanwen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界马岱",
+   "avatar": "素材/武将/界马岱-头像.png",
+   "art": "素材/武将/界马岱-经典形象.jpg",
+   "nonameIds": [
+    "re_madai"
+   ],
+   "voiceId": "madai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界马超",
+   "avatar": "素材/武将/界马超-头像.png",
+   "art": "素材/武将/界马超-经典形象.jpg",
+   "nonameIds": [
+    "re_machao"
+   ],
+   "voiceId": "machao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界高顺",
+   "avatar": "素材/武将/界高顺-头像.png",
+   "art": "素材/武将/界高顺-经典形象.jpg",
+   "nonameIds": [
+    "xin_gaoshun"
+   ],
+   "voiceId": "gaoshun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界魏延",
+   "avatar": "素材/武将/界魏延-头像.png",
+   "art": "素材/武将/界魏延-经典形象.jpg",
+   "nonameIds": [
+    "ol_weiyan"
+   ],
+   "voiceId": "weiyan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界黄忠",
+   "avatar": "素材/武将/界黄忠-头像.png",
+   "art": "素材/武将/界黄忠-经典形象.jpg",
+   "nonameIds": [
+    "ol_huangzhong"
+   ],
+   "voiceId": "huangzhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界黄月英",
+   "avatar": "素材/武将/界黄月英-头像.png",
+   "art": "素材/武将/界黄月英-经典形象.jpg",
+   "nonameIds": [
+    "re_huangyueying"
+   ],
+   "voiceId": "huangyueying",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "界黄盖",
+   "avatar": "素材/武将/界黄盖-头像.png",
+   "art": "素材/武将/界黄盖-经典形象.jpg",
+   "nonameIds": [
+    "re_huanggai"
+   ],
+   "voiceId": "huanggai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "留赞",
+   "avatar": "素材/武将/留赞-头像.png",
+   "art": "素材/武将/留赞-经典形象.jpg",
+   "nonameIds": [
+    "diy_liuzan",
+    "re_liuzan"
+   ],
+   "voiceId": "liuzan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "疑伏寿",
+   "avatar": "素材/武将/疑伏寿-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "疑刘备",
+   "avatar": "素材/武将/疑刘备-头像.png",
+   "art": "素材/武将/疑刘备-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "疑华佗",
+   "avatar": "素材/武将/疑华佗-头像.png",
+   "art": "素材/武将/疑华佗-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "疑吕伯奢",
+   "avatar": "素材/武将/疑吕伯奢-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "疑荀彧",
+   "avatar": "素材/武将/疑荀彧-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "疑蒋干",
+   "avatar": "素材/武将/疑蒋干-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "白无常",
+   "avatar": "素材/武将/白无常-头像.png",
+   "art": "素材/武将/白无常-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "的卢",
+   "avatar": "素材/武将/的卢-头像.png",
+   "art": "素材/武将/的卢-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "皇甫嵩",
+   "avatar": "素材/武将/皇甫嵩-头像.png",
+   "art": "素材/武将/皇甫嵩-经典形象.jpg",
+   "nonameIds": [
+    "huangfusong"
+   ],
+   "voiceId": "huangfusong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "礼卢毓",
+   "avatar": "素材/武将/礼卢毓-头像.png",
+   "art": "素材/武将/礼卢毓-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "祖茂",
+   "avatar": "素材/武将/祖茂-头像.png",
+   "art": "素材/武将/祖茂-经典形象.jpg",
+   "nonameIds": [
+    "zumao"
+   ],
+   "voiceId": "zumao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "祝融",
+   "avatar": "素材/武将/祝融-头像.png",
+   "art": "素材/武将/祝融-经典形象.jpg",
+   "nonameIds": [
+    "zhurong"
+   ],
+   "voiceId": "zhurong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神关羽",
+   "avatar": "素材/武将/神关羽-头像.png",
+   "art": "素材/武将/神关羽-经典形象.jpg",
+   "nonameIds": [
+    "shen_guanyu"
+   ],
+   "voiceId": "guanyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神刘备",
+   "avatar": "素材/武将/神刘备-头像.png",
+   "art": "素材/武将/神刘备-经典形象.jpg",
+   "nonameIds": [
+    "shen_liubei"
+   ],
+   "voiceId": "liubei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神华佗",
+   "avatar": "素材/武将/神华佗-头像.png",
+   "art": "素材/武将/神华佗-经典形象.png",
+   "nonameIds": [
+    "dc_shen_huatuo"
+   ],
+   "voiceId": "huatuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神司马懿",
+   "avatar": "素材/武将/神司马懿-头像.png",
+   "art": "素材/武将/神司马懿-经典形象.jpg",
+   "nonameIds": [
+    "shen_simayi"
+   ],
+   "voiceId": "simayi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神司马懿（应天）",
+   "avatar": "素材/武将/神司马懿（应天）-头像.png",
+   "art": "素材/武将/神司马懿（应天）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "神吕布",
+   "avatar": "素材/武将/神吕布-头像.png",
+   "art": "素材/武将/神吕布-经典形象.jpg",
+   "nonameIds": [
+    "shen_lvbu"
+   ],
+   "voiceId": "lvbu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神吕蒙",
+   "avatar": "素材/武将/神吕蒙-头像.png",
+   "art": "素材/武将/神吕蒙-经典形象.jpg",
+   "nonameIds": [
+    "shen_lvmeng"
+   ],
+   "voiceId": "lvmeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神周瑜",
+   "avatar": "素材/武将/神周瑜-头像.png",
+   "art": "素材/武将/神周瑜-经典形象.jpg",
+   "nonameIds": [
+    "shen_zhouyu"
+   ],
+   "voiceId": "zhouyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神太史慈",
+   "avatar": "素材/武将/神太史慈-头像.png",
+   "art": "素材/武将/神太史慈-经典形象.jpg",
+   "nonameIds": [
+    "shen_taishici"
+   ],
+   "voiceId": "taishici",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神太史慈（荡魔）",
+   "avatar": "素材/武将/神太史慈（荡魔）-头像.png",
+   "art": "素材/武将/神太史慈（荡魔）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "神姜维",
+   "avatar": "素材/武将/神姜维-头像.png",
+   "art": "素材/武将/神姜维-经典形象.png",
+   "nonameIds": [
+    "shen_jiangwei"
+   ],
+   "voiceId": "jiangwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神孙策",
+   "avatar": "素材/武将/神孙策-头像.png",
+   "art": "素材/武将/神孙策-经典形象.jpg",
+   "nonameIds": [
+    "shen_sunce"
+   ],
+   "voiceId": "sunce",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神张辽",
+   "avatar": "素材/武将/神张辽-头像.png",
+   "art": "素材/武将/神张辽-经典形象.jpg",
+   "nonameIds": [
+    "shen_zhangliao"
+   ],
+   "voiceId": "zhangliao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神曹操",
+   "avatar": "素材/武将/神曹操-头像.png",
+   "art": "素材/武将/神曹操-经典形象.jpg",
+   "nonameIds": [
+    "shen_caocao"
+   ],
+   "voiceId": "caocao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神甘宁",
+   "avatar": "素材/武将/神甘宁-头像.png",
+   "art": "素材/武将/神甘宁-经典形象.jpg",
+   "nonameIds": [
+    "shen_ganning"
+   ],
+   "voiceId": "ganning",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神荀彧",
+   "avatar": "素材/武将/神荀彧-头像.png",
+   "art": "素材/武将/神荀彧-经典形象.jpg",
+   "nonameIds": [
+    "shen_xunyu"
+   ],
+   "voiceId": "xunyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神诸葛亮",
+   "avatar": "素材/武将/神诸葛亮-头像.png",
+   "art": "素材/武将/神诸葛亮-经典形象.jpg",
+   "nonameIds": [
+    "shen_zhugeliang"
+   ],
+   "voiceId": "zhugeliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神赵云",
+   "avatar": "素材/武将/神赵云-头像.png",
+   "art": "素材/武将/神赵云-经典形象.jpg",
+   "nonameIds": [
+    "boss_zhaoyun_ab",
+    "shen_zhaoyun"
+   ],
+   "voiceId": "zhaoyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神邓艾",
+   "avatar": "素材/武将/神邓艾-头像.png",
+   "art": "素材/武将/神邓艾-经典形象.jpg",
+   "nonameIds": [
+    "shen_dengai"
+   ],
+   "voiceId": "dengai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神郭嘉",
+   "avatar": "素材/武将/神郭嘉-头像.png",
+   "art": "素材/武将/神郭嘉-经典形象.jpg",
+   "nonameIds": [
+    "shen_guojia"
+   ],
+   "voiceId": "guojia",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神陆逊",
+   "avatar": "素材/武将/神陆逊-头像.png",
+   "art": "素材/武将/神陆逊-经典形象.jpg",
+   "nonameIds": [
+    "shen_luxun"
+   ],
+   "voiceId": "luxun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神马超",
+   "avatar": "素材/武将/神马超-头像.png",
+   "art": "素材/武将/神马超-经典形象.jpg",
+   "nonameIds": [
+    "shen_machao"
+   ],
+   "voiceId": "machao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "神鲁肃",
+   "avatar": "素材/武将/神鲁肃-头像.png",
+   "art": "素材/武将/神鲁肃-经典形象.png",
+   "nonameIds": [
+    "shen_lusu"
+   ],
+   "voiceId": "lusu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "祢衡",
+   "avatar": "素材/武将/祢衡-头像.png",
+   "art": "素材/武将/祢衡-经典形象.jpg",
+   "nonameIds": [
+    "re_miheng"
+   ],
+   "voiceId": "miheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "秦宓",
+   "avatar": "素材/武将/秦宓-头像.png",
+   "art": "素材/武将/秦宓-经典形象.jpg",
+   "nonameIds": [
+    "qinmi"
+   ],
+   "voiceId": "qinmi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "程昱",
+   "avatar": "素材/武将/程昱-头像.png",
+   "art": "素材/武将/程昱-经典形象.jpg",
+   "nonameIds": [
+    "chengyu"
+   ],
+   "voiceId": "chengyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "程普",
+   "avatar": "素材/武将/程普-头像.png",
+   "art": "素材/武将/程普-经典形象.jpg",
+   "nonameIds": [
+    "chengpu",
+    "ns_chengpu_ab"
+   ],
+   "voiceId": "ab",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "笮融",
+   "avatar": "素材/武将/笮融-头像.png",
+   "art": "素材/武将/笮融-经典形象.png",
+   "nonameIds": [
+    "zerong"
+   ],
+   "voiceId": "zerong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "简雍",
+   "avatar": "素材/武将/简雍-头像.png",
+   "art": "素材/武将/简雍-经典形象.jpg",
+   "nonameIds": [
+    "jianyong"
+   ],
+   "voiceId": "jianyong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "糜夫人",
+   "avatar": "素材/武将/糜夫人-头像.png",
+   "art": "素材/武将/糜夫人-经典形象.jpg",
+   "nonameIds": [
+    "dc_mifuren",
+    "mifuren"
+   ],
+   "voiceId": "mifuren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "糜竺",
+   "avatar": "素材/武将/糜竺-头像.png",
+   "art": "素材/武将/糜竺-经典形象.jpg",
+   "nonameIds": [
+    "mizhu"
+   ],
+   "voiceId": "mizhu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "糜芳傅士仁",
+   "avatar": "素材/武将/糜芳傅士仁-头像.png",
+   "art": null,
+   "nonameIds": [
+    "sp_mifangfushiren"
+   ],
+   "voiceId": "mifangfushiren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "纪灵",
+   "avatar": "素材/武将/纪灵-头像.png",
+   "art": null,
+   "nonameIds": [
+    "dc_jiling",
+    "gz_jiling",
+    "yj_jiling"
+   ],
+   "voiceId": "jiling",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "绝尘妙才",
+   "avatar": "素材/武将/绝尘妙才-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "绝影",
+   "avatar": "素材/武将/绝影-头像.png",
+   "art": "素材/武将/绝影-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘关羽",
+   "avatar": "素材/武将/缘关羽-头像.png",
+   "art": "素材/武将/缘关羽-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘吕布",
+   "avatar": "素材/武将/缘吕布-头像.png",
+   "art": "素材/武将/缘吕布-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘孙权",
+   "avatar": "素材/武将/缘孙权-头像.png",
+   "art": "素材/武将/缘孙权-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘梅成",
+   "avatar": "素材/武将/缘梅成-头像.png",
+   "art": "素材/武将/缘梅成-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘檀石槐",
+   "avatar": "素材/武将/缘檀石槐-头像.png",
+   "art": "素材/武将/缘檀石槐-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘蹋顿",
+   "avatar": "素材/武将/缘蹋顿-头像.png",
+   "art": "素材/武将/缘蹋顿-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘陈兰",
+   "avatar": "素材/武将/缘陈兰-头像.png",
+   "art": "素材/武将/缘陈兰-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缘高顺",
+   "avatar": "素材/武将/缘高顺-头像.png",
+   "art": "素材/武将/缘高顺-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "缚地狴犴",
+   "avatar": "素材/武将/缚地狴犴-头像.png",
+   "art": "素材/武将/缚地狴犴-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "罗刹",
+   "avatar": "素材/武将/罗刹-头像.png",
+   "art": "素材/武将/罗刹-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "羊徽瑜",
+   "avatar": "素材/武将/羊徽瑜-头像.png",
+   "art": "素材/武将/羊徽瑜-经典形象.jpg",
+   "nonameIds": [
+    "gz_jin_yanghuiyu",
+    "yanghuiyu"
+   ],
+   "voiceId": "yanghuiyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "羊祜",
+   "avatar": "素材/武将/羊祜-头像.png",
+   "art": "素材/武将/羊祜-经典形象.jpg",
+   "nonameIds": [
+    "dc_yanghu",
+    "ns_yanghu"
+   ],
+   "voiceId": "yanghu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "群势力武将",
+   "avatar": "素材/武将/群势力武将-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡渊（守卫剑阁2026）（奋进）",
+   "avatar": "素材/武将/胡渊（守卫剑阁2026）（奋进）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡渊（守卫剑阁2026）（怒斩）",
+   "avatar": "素材/武将/胡渊（守卫剑阁2026）（怒斩）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡渊（守卫剑阁2026）（进讨）",
+   "avatar": "素材/武将/胡渊（守卫剑阁2026）（进讨）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡渊（守卫剑阁2026）（锋势）",
+   "avatar": "素材/武将/胡渊（守卫剑阁2026）（锋势）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡烈（守卫剑阁2026）（奋进）",
+   "avatar": "素材/武将/胡烈（守卫剑阁2026）（奋进）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡烈（守卫剑阁2026）（规诫）",
+   "avatar": "素材/武将/胡烈（守卫剑阁2026）（规诫）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡烈（守卫剑阁2026）（进讨）",
+   "avatar": "素材/武将/胡烈（守卫剑阁2026）（进讨）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡烈（守卫剑阁2026）（锋势）",
+   "avatar": "素材/武将/胡烈（守卫剑阁2026）（锋势）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "胡班",
+   "avatar": "素材/武将/胡班-头像.png",
+   "art": "素材/武将/胡班-经典形象.png",
+   "nonameIds": [
+    "dc_huban"
+   ],
+   "voiceId": "huban",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "胡车儿",
+   "avatar": "素材/武将/胡车儿-头像.png",
+   "art": "素材/武将/胡车儿-经典形象.jpg",
+   "nonameIds": [
+    "re_hucheer"
+   ],
+   "voiceId": "hucheer",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "胡金定",
+   "avatar": "素材/武将/胡金定-头像.png",
+   "art": "素材/武将/胡金定-经典形象.jpg",
+   "nonameIds": [
+    "ol_hujinding"
+   ],
+   "voiceId": "hujinding",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "臧霸",
+   "avatar": "素材/武将/臧霸-头像.png",
+   "art": "素材/武将/臧霸-经典形象.png",
+   "nonameIds": [
+    "zangba"
+   ],
+   "voiceId": "zangba",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "花鬘",
+   "avatar": "素材/武将/花鬘-头像.png",
+   "art": "素材/武将/花鬘-经典形象.jpg",
+   "nonameIds": [
+    "huaman"
+   ],
+   "voiceId": "huaman",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "苏飞",
+   "avatar": "素材/武将/苏飞-头像.png",
+   "art": "素材/武将/苏飞-经典形象.jpg",
+   "nonameIds": [
+    "gz_xf_sufei",
+    "yj_sufei"
+   ],
+   "voiceId": "sufei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "荀彧",
+   "avatar": "素材/武将/荀彧-头像.png",
+   "art": "素材/武将/荀彧-经典形象.jpg",
+   "nonameIds": [
+    "xunyu"
+   ],
+   "voiceId": "xunyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "荀攸",
+   "avatar": "素材/武将/荀攸-头像.png",
+   "art": "素材/武将/荀攸-经典形象.jpg",
+   "nonameIds": [
+    "xunyou"
+   ],
+   "voiceId": "xunyou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "荀谌",
+   "avatar": "素材/武将/荀谌-头像.png",
+   "art": "素材/武将/荀谌-经典形象.jpg",
+   "nonameIds": [
+    "re_xunchen"
+   ],
+   "voiceId": "xunchen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "荀谌（谏战）",
+   "avatar": "素材/武将/荀谌（谏战）-头像.png",
+   "art": "素材/武将/荀谌（谏战）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "董允",
+   "avatar": "素材/武将/董允-头像.png",
+   "art": "素材/武将/董允-经典形象.jpg",
+   "nonameIds": [
+    "dongyun"
+   ],
+   "voiceId": "dongyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "董卓",
+   "avatar": "素材/武将/董卓-头像.png",
+   "art": "素材/武将/董卓-经典形象.jpg",
+   "nonameIds": [
+    "dongzhuo",
+    "gz_sp_dongzhuo"
+   ],
+   "voiceId": "dongzhuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "董承",
+   "avatar": "素材/武将/董承-头像.png",
+   "art": "素材/武将/董承-经典形象.jpg",
+   "nonameIds": [
+    "re_dongcheng"
+   ],
+   "voiceId": "dongcheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "董昭",
+   "avatar": "素材/武将/董昭-头像.png",
+   "art": "素材/武将/董昭-经典形象.jpg",
+   "nonameIds": [
+    "dc_dongzhao"
+   ],
+   "voiceId": "dongzhao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "董白",
+   "avatar": "素材/武将/董白-头像.png",
+   "art": "素材/武将/董白-经典形象.jpg",
+   "nonameIds": [
+    "re_dongbai"
+   ],
+   "voiceId": "dongbai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蒋干",
+   "avatar": "素材/武将/蒋干-头像.png",
+   "art": "素材/武将/蒋干-经典形象.jpg",
+   "nonameIds": [
+    "jianggan"
+   ],
+   "voiceId": "jianggan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蒋济",
+   "avatar": "素材/武将/蒋济-头像.png",
+   "art": "素材/武将/蒋济-经典形象.jpg",
+   "nonameIds": [
+    "jiangji"
+   ],
+   "voiceId": "jiangji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蒋琬",
+   "avatar": "素材/武将/蒋琬-头像.png",
+   "art": "素材/武将/蒋琬-经典形象.jpg",
+   "nonameIds": [
+    "ol_jiangwan"
+   ],
+   "voiceId": "jiangwan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蒋琬费祎",
+   "avatar": "素材/武将/蒋琬费祎-头像.png",
+   "art": null,
+   "nonameIds": [
+    "gz_jiangfei",
+    "jiangfei"
+   ],
+   "voiceId": "jiangfei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蒋钦",
+   "avatar": "素材/武将/蒋钦-头像.png",
+   "art": "素材/武将/蒋钦-经典形象.jpg",
+   "nonameIds": [
+    "gz_jiangqing",
+    "sp_jiangqing"
+   ],
+   "voiceId": "jiangqing",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蒯越蒯良",
+   "avatar": "素材/武将/蒯越蒯良-头像.png",
+   "art": "素材/武将/蒯越蒯良-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "蔡夫人",
+   "avatar": "素材/武将/蔡夫人-头像.png",
+   "art": "素材/武将/蔡夫人-经典形象.jpg",
+   "nonameIds": [
+    "caifuren"
+   ],
+   "voiceId": "caifuren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蔡文姬",
+   "avatar": "素材/武将/蔡文姬-头像.png",
+   "art": "素材/武将/蔡文姬-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "蔡贞姬",
+   "avatar": "素材/武将/蔡贞姬-头像.png",
+   "art": "素材/武将/蔡贞姬-经典形象.jpg",
+   "nonameIds": [
+    "caizhenji"
+   ],
+   "voiceId": "caizhenji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蔡邕",
+   "avatar": "素材/武将/蔡邕-头像.png",
+   "art": "素材/武将/蔡邕-经典形象.jpg",
+   "nonameIds": [
+    "caiyong"
+   ],
+   "voiceId": "caiyong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "薛综",
+   "avatar": "素材/武将/薛综-头像.png",
+   "art": "素材/武将/薛综-经典形象.jpg",
+   "nonameIds": [
+    "xuezong"
+   ],
+   "voiceId": "xuezong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "虞翻",
+   "avatar": "素材/武将/虞翻-头像.png",
+   "art": "素材/武将/虞翻-经典形象.jpg",
+   "nonameIds": [
+    "yufan"
+   ],
+   "voiceId": "yufan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蜀势力武将",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "袁术",
+   "avatar": "素材/武将/袁术-头像.png",
+   "art": "素材/武将/袁术-经典形象.jpg",
+   "nonameIds": [
+    "re_yuanshu"
+   ],
+   "voiceId": "yuanshu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "袁涣",
+   "avatar": "素材/武将/袁涣-头像.png",
+   "art": "素材/武将/袁涣-经典形象.jpg",
+   "nonameIds": [
+    "yuanhuan"
+   ],
+   "voiceId": "yuanhuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "袁绍",
+   "avatar": "素材/武将/袁绍-头像.png",
+   "art": "素材/武将/袁绍-经典形象.jpg",
+   "nonameIds": [
+    "re_yuanshao"
+   ],
+   "voiceId": "yuanshao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "裂石睚眦",
+   "avatar": "素材/武将/裂石睚眦-头像.png",
+   "art": "素材/武将/裂石睚眦-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "裴秀",
+   "avatar": "素材/武将/裴秀-头像.png",
+   "art": "素材/武将/裴秀-经典形象.jpg",
+   "nonameIds": [
+    "ol_peixiu"
+   ],
+   "voiceId": "peixiu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "许攸",
+   "avatar": "素材/武将/许攸-头像.png",
+   "art": "素材/武将/许攸-经典形象.jpg",
+   "nonameIds": [
+    "xuyou"
+   ],
+   "voiceId": "xuyou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "许褚",
+   "avatar": "素材/武将/许褚-头像.png",
+   "art": "素材/武将/许褚-经典形象.jpg",
+   "nonameIds": [
+    "xuzhu"
+   ],
+   "voiceId": "xuzhu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "许贡",
+   "avatar": "素材/武将/许贡-头像.png",
+   "art": "素材/武将/许贡-经典形象.jpg",
+   "nonameIds": [
+    "gz_re_xugong",
+    "xugong"
+   ],
+   "voiceId": "xugong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "许靖",
+   "avatar": "素材/武将/许靖-头像.png",
+   "art": "素材/武将/许靖-经典形象.jpg",
+   "nonameIds": [
+    "dc_xujing",
+    "ddd_xujing"
+   ],
+   "voiceId": "xujing",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "诸葛亮",
+   "avatar": "素材/武将/诸葛亮-头像.png",
+   "art": "素材/武将/诸葛亮-经典形象.jpg",
+   "nonameIds": [
+    "ns_zhugeliang",
+    "prp_zhugeliang_ab",
+    "zhugeliang"
+   ],
+   "voiceId": "zhugeliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "诸葛兔",
+   "avatar": "素材/武将/诸葛兔-头像.png",
+   "art": "素材/武将/诸葛兔-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "诸葛恪",
+   "avatar": "素材/武将/诸葛恪-头像.png",
+   "art": "素材/武将/诸葛恪-经典形象.jpg",
+   "nonameIds": [
+    "zhugeke"
+   ],
+   "voiceId": "zhugeke",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "诸葛果",
+   "avatar": "素材/武将/诸葛果-头像.png",
+   "art": "素材/武将/诸葛果-经典形象.jpg",
+   "nonameIds": [
+    "zhugeguo"
+   ],
+   "voiceId": "zhugeguo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "诸葛瑾",
+   "avatar": "素材/武将/诸葛瑾-头像.png",
+   "art": "素材/武将/诸葛瑾-经典形象.jpg",
+   "nonameIds": [
+    "zhugejin"
+   ],
+   "voiceId": "zhugejin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "诸葛瞻",
+   "avatar": "素材/武将/诸葛瞻-头像.png",
+   "art": "素材/武将/诸葛瞻-经典形象.jpg",
+   "nonameIds": [
+    "zhugezhan"
+   ],
+   "voiceId": "zhugezhan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "诸葛诞",
+   "avatar": "素材/武将/诸葛诞-头像.png",
+   "art": "素材/武将/诸葛诞-经典形象.jpg",
+   "nonameIds": [
+    "zhugedan"
+   ],
+   "voiceId": "zhugedan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋于禁",
+   "avatar": "素材/武将/谋于禁-头像.png",
+   "art": "素材/武将/谋于禁-经典形象.jpg",
+   "nonameIds": [
+    "sb_yujin"
+   ],
+   "voiceId": "yujin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋公孙瓒",
+   "avatar": "素材/武将/谋公孙瓒-头像.png",
+   "art": "素材/武将/谋公孙瓒-经典形象.png",
+   "nonameIds": [
+    "sb_gongsunzan"
+   ],
+   "voiceId": "gongsunzan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋关羽",
+   "avatar": "素材/武将/谋关羽-头像.png",
+   "art": "素材/武将/谋关羽-经典形象.jpg",
+   "nonameIds": [
+    "sb_guanyu"
+   ],
+   "voiceId": "guanyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋刘备",
+   "avatar": "素材/武将/谋刘备-头像.png",
+   "art": "素材/武将/谋刘备-经典形象.jpg",
+   "nonameIds": [
+    "sb_liubei"
+   ],
+   "voiceId": "liubei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋刘表",
+   "avatar": "素材/武将/谋刘表-头像.png",
+   "art": "素材/武将/谋刘表-经典形象.jpg",
+   "nonameIds": [
+    "sb_liubiao"
+   ],
+   "voiceId": "liubiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋刘赪",
+   "avatar": "素材/武将/谋刘赪-头像.png",
+   "art": "素材/武将/谋刘赪-经典形象.jpg",
+   "nonameIds": [
+    "liucheng"
+   ],
+   "voiceId": "liucheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋华雄",
+   "avatar": "素材/武将/谋华雄-头像.png",
+   "art": "素材/武将/谋华雄-经典形象.jpg",
+   "nonameIds": [
+    "sb_huaxiong"
+   ],
+   "voiceId": "huaxiong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋卢植",
+   "avatar": "素材/武将/谋卢植-头像.png",
+   "art": "素材/武将/谋卢植-经典形象.png",
+   "nonameIds": [
+    "sb_yl_luzhi"
+   ],
+   "voiceId": "luzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋吕布",
+   "avatar": "素材/武将/谋吕布-头像.png",
+   "art": "素材/武将/谋吕布-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋吕蒙",
+   "avatar": "素材/武将/谋吕蒙-头像.png",
+   "art": "素材/武将/谋吕蒙-经典形象.jpg",
+   "nonameIds": [
+    "sb_lvmeng"
+   ],
+   "voiceId": "lvmeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋周瑜",
+   "avatar": "素材/武将/谋周瑜-头像.png",
+   "art": "素材/武将/谋周瑜-经典形象.jpg",
+   "nonameIds": [
+    "sb_zhouyu"
+   ],
+   "voiceId": "zhouyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋夏侯惇",
+   "avatar": "素材/武将/谋夏侯惇-头像.png",
+   "art": "素材/武将/谋夏侯惇-经典形象.png",
+   "nonameIds": [
+    "sb_xiahoudun"
+   ],
+   "voiceId": "xiahoudun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋夏侯氏",
+   "avatar": "素材/武将/谋夏侯氏-头像.png",
+   "art": "素材/武将/谋夏侯氏-经典形象.jpg",
+   "nonameIds": [
+    "sb_xiahoushi"
+   ],
+   "voiceId": "xiahoushi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋夏侯渊",
+   "avatar": "素材/武将/谋夏侯渊-头像.png",
+   "art": "素材/武将/谋夏侯渊-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋大乔",
+   "avatar": "素材/武将/谋大乔-头像.png",
+   "art": "素材/武将/谋大乔-经典形象.jpg",
+   "nonameIds": [
+    "sb_daqiao"
+   ],
+   "voiceId": "daqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋姜维",
+   "avatar": "素材/武将/谋姜维-头像.png",
+   "art": "素材/武将/谋姜维-经典形象.jpg",
+   "nonameIds": [
+    "sb_jiangwei"
+   ],
+   "voiceId": "jiangwei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋孙尚香",
+   "avatar": "素材/武将/谋孙尚香-头像.png",
+   "art": "素材/武将/谋孙尚香-经典形象.jpg",
+   "nonameIds": [
+    "sb_sunshangxiang"
+   ],
+   "voiceId": "sunshangxiang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋孙权",
+   "avatar": "素材/武将/谋孙权-头像.png",
+   "art": "素材/武将/谋孙权-经典形象.jpg",
+   "nonameIds": [
+    "sb_sunquan"
+   ],
+   "voiceId": "sunquan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋孙权（统业）",
+   "avatar": "素材/武将/谋孙权（统业）-头像.png",
+   "art": "素材/武将/谋孙权（统业）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋孙策",
+   "avatar": "素材/武将/谋孙策-头像.png",
+   "art": "素材/武将/谋孙策-经典形象.png",
+   "nonameIds": [
+    "sb_sunce"
+   ],
+   "voiceId": "sunce",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋孟获",
+   "avatar": "素材/武将/谋孟获-头像.png",
+   "art": "素材/武将/谋孟获-经典形象.png",
+   "nonameIds": [
+    "sb_menghuo"
+   ],
+   "voiceId": "menghuo",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋小乔",
+   "avatar": "素材/武将/谋小乔-头像.png",
+   "art": "素材/武将/谋小乔-经典形象.png",
+   "nonameIds": [
+    "sb_xiaoqiao"
+   ],
+   "voiceId": "xiaoqiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋庞统",
+   "avatar": "素材/武将/谋庞统-头像.png",
+   "art": "素材/武将/谋庞统-经典形象.jpg",
+   "nonameIds": [
+    "sb_pangtong"
+   ],
+   "voiceId": "pangtong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋张角",
+   "avatar": "素材/武将/谋张角-头像.png",
+   "art": "素材/武将/谋张角-经典形象.jpg",
+   "nonameIds": [
+    "sb_zhangjiao"
+   ],
+   "voiceId": "zhangjiao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋张辽",
+   "avatar": "素材/武将/谋张辽-头像.png",
+   "art": "素材/武将/谋张辽-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋张郃",
+   "avatar": "素材/武将/谋张郃-头像.png",
+   "art": "素材/武将/谋张郃-经典形象.png",
+   "nonameIds": [
+    "sb_zhanghe"
+   ],
+   "voiceId": "zhanghe",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋张郃（巧变）",
+   "avatar": "素材/武将/谋张郃（巧变）-头像.png",
+   "art": "素材/武将/谋张郃（巧变）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋张飞",
+   "avatar": "素材/武将/谋张飞-头像.png",
+   "art": "素材/武将/谋张飞-经典形象.jpg",
+   "nonameIds": [
+    "sb_zhangfei"
+   ],
+   "voiceId": "zhangfei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋徐晃",
+   "avatar": "素材/武将/谋徐晃-头像.png",
+   "art": "素材/武将/谋徐晃-经典形象.jpg",
+   "nonameIds": [
+    "sb_xuhuang"
+   ],
+   "voiceId": "xuhuang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋曹丕",
+   "avatar": "素材/武将/谋曹丕-头像.png",
+   "art": "素材/武将/谋曹丕-经典形象.png",
+   "nonameIds": [
+    "sb_caopi"
+   ],
+   "voiceId": "caopi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋曹仁",
+   "avatar": "素材/武将/谋曹仁-头像.png",
+   "art": "素材/武将/谋曹仁-经典形象.jpg",
+   "nonameIds": [
+    "sb_caoren"
+   ],
+   "voiceId": "caoren",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋曹操",
+   "avatar": "素材/武将/谋曹操-头像.png",
+   "art": "素材/武将/谋曹操-经典形象.jpg",
+   "nonameIds": [
+    "sb_caocao"
+   ],
+   "voiceId": "caocao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋朱然",
+   "avatar": "素材/武将/谋朱然-头像.png",
+   "art": "素材/武将/谋朱然-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋杨婉",
+   "avatar": "素材/武将/谋杨婉-头像.png",
+   "art": "素材/武将/谋杨婉-经典形象.jpg",
+   "nonameIds": [
+    "sp_yangwan"
+   ],
+   "voiceId": "yangwan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋法正",
+   "avatar": "素材/武将/谋法正-头像.png",
+   "art": "素材/武将/谋法正-经典形象.jpg",
+   "nonameIds": [
+    "sb_fazheng"
+   ],
+   "voiceId": "fazheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋甄姬",
+   "avatar": "素材/武将/谋甄姬-头像.png",
+   "art": "素材/武将/谋甄姬-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋甘宁",
+   "avatar": "素材/武将/谋甘宁-头像.png",
+   "art": "素材/武将/谋甘宁-经典形象.jpg",
+   "nonameIds": [
+    "sb_ganning"
+   ],
+   "voiceId": "ganning",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋田豫",
+   "avatar": "素材/武将/谋田豫-头像.png",
+   "art": "素材/武将/谋田豫-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋祝融",
+   "avatar": "素材/武将/谋祝融-头像.png",
+   "art": "素材/武将/谋祝融-经典形象.png",
+   "nonameIds": [
+    "sb_zhurong"
+   ],
+   "voiceId": "zhurong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋荀彧",
+   "avatar": "素材/武将/谋荀彧-头像.png",
+   "art": "素材/武将/谋荀彧-经典形象.png",
+   "nonameIds": [
+    "sb_xunyu"
+   ],
+   "voiceId": "xunyu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋袁绍",
+   "avatar": "素材/武将/谋袁绍-头像.png",
+   "art": "素材/武将/谋袁绍-经典形象.jpg",
+   "nonameIds": [
+    "sb_yuanshao"
+   ],
+   "voiceId": "yuanshao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋诸葛亮",
+   "avatar": "素材/武将/谋诸葛亮-头像.png",
+   "art": "素材/武将/谋诸葛亮-经典形象.png",
+   "nonameIds": [
+    "sb_sp_zhugeliang"
+   ],
+   "voiceId": "zhugeliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋诸葛瑾",
+   "avatar": "素材/武将/谋诸葛瑾-头像.png",
+   "art": "素材/武将/谋诸葛瑾-经典形象.png",
+   "nonameIds": [
+    "sb_zhugejin"
+   ],
+   "voiceId": "zhugejin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋貂蝉",
+   "avatar": "素材/武将/谋貂蝉-头像.png",
+   "art": "素材/武将/谋貂蝉-经典形象.jpg",
+   "nonameIds": [
+    "sb_diaochan"
+   ],
+   "voiceId": "diaochan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋贾诩",
+   "avatar": "素材/武将/谋贾诩-头像.png",
+   "art": "素材/武将/谋贾诩-经典形象.png",
+   "nonameIds": [
+    "sb_jiaxu"
+   ],
+   "voiceId": "jiaxu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋赵云",
+   "avatar": "素材/武将/谋赵云-头像.png",
+   "art": "素材/武将/谋赵云-经典形象.jpg",
+   "nonameIds": [
+    "sb_zhaoyun"
+   ],
+   "voiceId": "zhaoyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋郭嘉",
+   "avatar": "素材/武将/谋郭嘉-头像.png",
+   "art": "素材/武将/谋郭嘉-经典形象.png",
+   "nonameIds": [
+    "yj_sb_guojia"
+   ],
+   "voiceId": "guojia",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋郭攸之",
+   "avatar": "素材/武将/谋郭攸之-头像.png",
+   "art": "素材/武将/谋郭攸之-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋郭淮",
+   "avatar": "素材/武将/谋郭淮-头像.png",
+   "art": "素材/武将/谋郭淮-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋陆逊",
+   "avatar": "素材/武将/谋陆逊-头像.png",
+   "art": "素材/武将/谋陆逊-经典形象.png",
+   "nonameIds": [
+    "sb_luxun"
+   ],
+   "voiceId": "luxun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋陈宫",
+   "avatar": "素材/武将/谋陈宫-头像.png",
+   "art": "素材/武将/谋陈宫-经典形象.jpg",
+   "nonameIds": [
+    "sb_chengong"
+   ],
+   "voiceId": "chengong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋陈泰",
+   "avatar": "素材/武将/谋陈泰-头像.png",
+   "art": "素材/武将/谋陈泰-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "谋韩当",
+   "avatar": "素材/武将/谋韩当-头像.png",
+   "art": "素材/武将/谋韩当-经典形象.png",
+   "nonameIds": [
+    "sb_handang"
+   ],
+   "voiceId": "handang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋马超",
+   "avatar": "素材/武将/谋马超-头像.png",
+   "art": "素材/武将/谋马超-经典形象.jpg",
+   "nonameIds": [
+    "sb_machao"
+   ],
+   "voiceId": "machao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋高顺",
+   "avatar": "素材/武将/谋高顺-头像.png",
+   "art": "素材/武将/谋高顺-经典形象.png",
+   "nonameIds": [
+    "sb_gaoshun"
+   ],
+   "voiceId": "gaoshun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋黄忠",
+   "avatar": "素材/武将/谋黄忠-头像.png",
+   "art": "素材/武将/谋黄忠-经典形象.jpg",
+   "nonameIds": [
+    "sb_huangzhong"
+   ],
+   "voiceId": "huangzhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋黄月英",
+   "avatar": "素材/武将/谋黄月英-头像.png",
+   "art": "素材/武将/谋黄月英-经典形象.png",
+   "nonameIds": [
+    "sb_huangyueying"
+   ],
+   "voiceId": "huangyueying",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谋黄盖",
+   "avatar": "素材/武将/谋黄盖-头像.png",
+   "art": "素材/武将/谋黄盖-经典形象.jpg",
+   "nonameIds": [
+    "sb_huanggai"
+   ],
+   "voiceId": "huanggai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "谯周",
+   "avatar": "素材/武将/谯周-头像.png",
+   "art": "素材/武将/谯周-经典形象.jpg",
+   "nonameIds": [
+    "yj_qiaozhou"
+   ],
+   "voiceId": "qiaozhou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "貂蝉",
+   "avatar": "素材/武将/貂蝉-头像.png",
+   "art": "素材/武将/貂蝉-经典形象.jpg",
+   "nonameIds": [
+    "diaochan"
+   ],
+   "voiceId": "diaochan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "费祎",
+   "avatar": "素材/武将/费祎-头像.png",
+   "art": "素材/武将/费祎-经典形象.jpg",
+   "nonameIds": [
+    "ol_feiyi"
+   ],
+   "voiceId": "feiyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "贺齐",
+   "avatar": "素材/武将/贺齐-头像.png",
+   "art": "素材/武将/贺齐-经典形象.jpg",
+   "nonameIds": [
+    "heqi"
+   ],
+   "voiceId": "heqi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "贾充",
+   "avatar": "素材/武将/贾充-头像.png",
+   "art": "素材/武将/贾充-经典形象.png",
+   "nonameIds": [
+    "dc_jiachong"
+   ],
+   "voiceId": "jiachong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "贾诩",
+   "avatar": "素材/武将/贾诩-头像.png",
+   "art": "素材/武将/贾诩-经典形象.jpg",
+   "nonameIds": [
+    "jiaxu"
+   ],
+   "voiceId": "jiaxu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "贾逵",
+   "avatar": "素材/武将/贾逵-头像.png",
+   "art": "素材/武将/贾逵-经典形象.jpg",
+   "nonameIds": [
+    "jiakui"
+   ],
+   "voiceId": "jiakui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "贾逵（忠佐）",
+   "avatar": "素材/武将/贾逵（忠佐）-头像.png",
+   "art": "素材/武将/贾逵（忠佐）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "赤兔",
+   "avatar": "素材/武将/赤兔-头像.png",
+   "art": "素材/武将/赤兔-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "赵云",
+   "avatar": "素材/武将/赵云-头像.png",
+   "art": "素材/武将/赵云-经典形象.jpg",
+   "nonameIds": [
+    "zhaoyun"
+   ],
+   "voiceId": "zhaoyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "赵云兔",
+   "avatar": "素材/武将/赵云兔-头像.png",
+   "art": "素材/武将/赵云兔-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "赵忠",
+   "avatar": "素材/武将/赵忠-头像.png",
+   "art": "素材/武将/赵忠-经典形象.jpg",
+   "nonameIds": [
+    "scs_zhaozhong",
+    "zhaozhong"
+   ],
+   "voiceId": "zhaozhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "赵统赵广",
+   "avatar": "素材/武将/赵统赵广-头像.png",
+   "art": "素材/武将/赵统赵广-经典形象.jpg",
+   "nonameIds": [
+    "dc_zhaotongzhaoguang"
+   ],
+   "voiceId": "zhaotongzhaoguang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "赵襄",
+   "avatar": "素材/武将/赵襄-头像.png",
+   "art": "素材/武将/赵襄-经典形象.jpg",
+   "nonameIds": [
+    "zhaoxiang"
+   ],
+   "voiceId": "zhaoxiang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "起何进",
+   "avatar": "素材/武将/起何进-头像.png",
+   "art": "素材/武将/起何进-经典形象.png",
+   "nonameIds": [
+    "jsrg_hejin"
+   ],
+   "voiceId": "hejin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "起刘备",
+   "avatar": "素材/武将/起刘备-头像.png",
+   "art": "素材/武将/起刘备-经典形象.png",
+   "nonameIds": [
+    "jsrg_liubei"
+   ],
+   "voiceId": "liubei",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "起刘宏",
+   "avatar": "素材/武将/起刘宏-头像.png",
+   "art": "素材/武将/起刘宏-经典形象.png",
+   "nonameIds": [
+    "jsrg_liuhong"
+   ],
+   "voiceId": "liuhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "起孙坚",
+   "avatar": "素材/武将/起孙坚-头像.png",
+   "art": "素材/武将/起孙坚-经典形象.png",
+   "nonameIds": [
+    "jsrg_sunjian"
+   ],
+   "voiceId": "sunjian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "起曹操",
+   "avatar": "素材/武将/起曹操-头像.png",
+   "art": "素材/武将/起曹操-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "起王允",
+   "avatar": "素材/武将/起王允-头像.png",
+   "art": "素材/武将/起王允-经典形象.png",
+   "nonameIds": [
+    "jsrg_wangyun"
+   ],
+   "voiceId": "wangyun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "蹋顿",
+   "avatar": "素材/武将/蹋顿-头像.png",
+   "art": "素材/武将/蹋顿-经典形象.jpg",
+   "nonameIds": [
+    "tadun"
+   ],
+   "voiceId": "tadun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "辛宪英",
+   "avatar": "素材/武将/辛宪英-头像.png",
+   "art": "素材/武将/辛宪英-经典形象.jpg",
+   "nonameIds": [
+    "ddd_xinxianying",
+    "ns_xinxianying",
+    "xinxianying"
+   ],
+   "voiceId": "xinxianying",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "辛毗",
+   "avatar": "素材/武将/辛毗-头像.png",
+   "art": "素材/武将/辛毗-经典形象.jpg",
+   "nonameIds": [
+    "xinpi"
+   ],
+   "voiceId": "xinpi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "邓艾",
+   "avatar": "素材/武将/邓艾-头像.png",
+   "art": "素材/武将/邓艾-经典形象.jpg",
+   "nonameIds": [
+    "dengai"
+   ],
+   "voiceId": "dengai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "邓芝",
+   "avatar": "素材/武将/邓芝-头像.png",
+   "art": "素材/武将/邓芝-经典形象.jpg",
+   "nonameIds": [
+    "re_dengzhi"
+   ],
+   "voiceId": "dengzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "邢道荣",
+   "avatar": "素材/武将/邢道荣-头像.png",
+   "art": "素材/武将/邢道荣-经典形象.png",
+   "nonameIds": [
+    "xingdaorong"
+   ],
+   "voiceId": "xingdaorong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "邴原",
+   "avatar": "素材/武将/邴原-头像.png",
+   "art": "素材/武将/邴原-经典形象.jpg",
+   "nonameIds": [
+    "tw_bingyuan"
+   ],
+   "voiceId": "bingyuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "邹氏",
+   "avatar": "素材/武将/邹氏-头像.png",
+   "art": null,
+   "nonameIds": [
+    "re_zoushi",
+    "zoushi"
+   ],
+   "voiceId": "zoushi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郑玄",
+   "avatar": "素材/武将/郑玄-头像.png",
+   "art": "素材/武将/郑玄-经典形象.jpg",
+   "nonameIds": [
+    "zhengxuan"
+   ],
+   "voiceId": "zhengxuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郝昭",
+   "avatar": "素材/武将/郝昭-头像.png",
+   "art": "素材/武将/郝昭-经典形象.jpg",
+   "nonameIds": [
+    "haozhao"
+   ],
+   "voiceId": "haozhao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郭嘉",
+   "avatar": "素材/武将/郭嘉-头像.png",
+   "art": "素材/武将/郭嘉-经典形象.jpg",
+   "nonameIds": [
+    "guojia"
+   ],
+   "voiceId": "guojia",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郭图逢纪",
+   "avatar": "素材/武将/郭图逢纪-头像.png",
+   "art": "素材/武将/郭图逢纪-经典形象.jpg",
+   "nonameIds": [
+    "guotufengji"
+   ],
+   "voiceId": "guotufengji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郭女王",
+   "avatar": "素材/武将/郭女王-头像.png",
+   "art": "素材/武将/郭女王-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "郭汜",
+   "avatar": "素材/武将/郭汜-头像.png",
+   "art": "素材/武将/郭汜-经典形象.jpg",
+   "nonameIds": [
+    "guosi"
+   ],
+   "voiceId": "guosi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郭淮",
+   "avatar": "素材/武将/郭淮-头像.png",
+   "art": "素材/武将/郭淮-经典形象.jpg",
+   "nonameIds": [
+    "guohuai"
+   ],
+   "voiceId": "guohuai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郭皇后",
+   "avatar": "素材/武将/郭皇后-头像.png",
+   "art": "素材/武将/郭皇后-经典形象.jpg",
+   "nonameIds": [
+    "guohuanghou"
+   ],
+   "voiceId": "guohuanghou",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "郭胜",
+   "avatar": "素材/武将/郭胜-头像.png",
+   "art": "素材/武将/郭胜-经典形象.jpg",
+   "nonameIds": [
+    "scs_guosheng"
+   ],
+   "voiceId": "guosheng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "钟会",
+   "avatar": "素材/武将/钟会-头像.png",
+   "art": "素材/武将/钟会-经典形象.jpg",
+   "nonameIds": [
+    "yj_zhonghui",
+    "zhonghui"
+   ],
+   "voiceId": "zhonghui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "钟会（守卫剑阁2026）（仗势）",
+   "avatar": "素材/武将/钟会（守卫剑阁2026）（仗势）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "钟会（守卫剑阁2026）（胁制）",
+   "avatar": "素材/武将/钟会（守卫剑阁2026）（胁制）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "钟会（守卫剑阁2026）（蚀界）",
+   "avatar": "素材/武将/钟会（守卫剑阁2026）（蚀界）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "钟会（守卫剑阁2026）（逆命）",
+   "avatar": "素材/武将/钟会（守卫剑阁2026）（逆命）-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "钟繇",
+   "avatar": "素材/武将/钟繇-头像.png",
+   "art": "素材/武将/钟繇-经典形象.jpg",
+   "nonameIds": [
+    "zhongyao"
+   ],
+   "voiceId": "zhongyao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "阎圃",
+   "avatar": "素材/武将/阎圃-头像.png",
+   "art": "素材/武将/阎圃-经典形象.jpg",
+   "nonameIds": [
+    "yanpu"
+   ],
+   "voiceId": "yanpu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "阎象",
+   "avatar": "素材/武将/阎象-头像.png",
+   "art": "素材/武将/阎象-经典形象.png",
+   "nonameIds": [
+    "yanxiang"
+   ],
+   "voiceId": "yanxiang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "阚泽",
+   "avatar": "素材/武将/阚泽-头像.png",
+   "art": "素材/武将/阚泽-经典形象.jpg",
+   "nonameIds": [
+    "re_kanze"
+   ],
+   "voiceId": "kanze",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "阮慧",
+   "avatar": "素材/武将/阮慧-头像.png",
+   "art": "素材/武将/阮慧-经典形象.jpg",
+   "nonameIds": [
+    "ruanhui"
+   ],
+   "voiceId": "ruanhui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "阳球",
+   "avatar": "素材/武将/阳球-头像.png",
+   "art": "素材/武将/阳球-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "陆抗",
+   "avatar": "素材/武将/陆抗-头像.png",
+   "art": "素材/武将/陆抗-经典形象.jpg",
+   "nonameIds": [
+    "diy_lukang",
+    "lukang"
+   ],
+   "voiceId": "lukang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陆绩",
+   "avatar": "素材/武将/陆绩-头像.png",
+   "art": "素材/武将/陆绩-经典形象.jpg",
+   "nonameIds": [
+    "luji"
+   ],
+   "voiceId": "luji",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陆逊",
+   "avatar": "素材/武将/陆逊-头像.png",
+   "art": "素材/武将/陆逊-经典形象.jpg",
+   "nonameIds": [
+    "luxun"
+   ],
+   "voiceId": "luxun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈到",
+   "avatar": "素材/武将/陈到-头像.png",
+   "art": "素材/武将/陈到-经典形象.jpg",
+   "nonameIds": [
+    "chendao"
+   ],
+   "voiceId": "chendao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈宫",
+   "avatar": "素材/武将/陈宫-头像.png",
+   "art": "素材/武将/陈宫-经典形象.jpg",
+   "nonameIds": [
+    "chengong"
+   ],
+   "voiceId": "chengong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈武董袭",
+   "avatar": "素材/武将/陈武董袭-头像.png",
+   "art": "素材/武将/陈武董袭-经典形象.jpg",
+   "nonameIds": [
+    "chendong"
+   ],
+   "voiceId": "chendong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈珪",
+   "avatar": "素材/武将/陈珪-头像.png",
+   "art": "素材/武将/陈珪-经典形象.png",
+   "nonameIds": [
+    "chengui"
+   ],
+   "voiceId": "chengui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈琳",
+   "avatar": "素材/武将/陈琳-头像.png",
+   "art": "素材/武将/陈琳-经典形象.jpg",
+   "nonameIds": [
+    "chenlin"
+   ],
+   "voiceId": "chenlin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈登",
+   "avatar": "素材/武将/陈登-头像.png",
+   "art": "素材/武将/陈登-经典形象.jpg",
+   "nonameIds": [
+    "re_chendeng"
+   ],
+   "voiceId": "chendeng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈群",
+   "avatar": "素材/武将/陈群-头像.png",
+   "art": "素材/武将/陈群-经典形象.jpg",
+   "nonameIds": [
+    "chenqun"
+   ],
+   "voiceId": "chenqun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陈震",
+   "avatar": "素材/武将/陈震-头像.png",
+   "art": "素材/武将/陈震-经典形象.jpg",
+   "nonameIds": [
+    "sp_chenzhen"
+   ],
+   "voiceId": "chenzhen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "陶谦",
+   "avatar": "素材/武将/陶谦-头像.png",
+   "art": "素材/武将/陶谦-经典形象.jpg",
+   "nonameIds": [
+    "re_taoqian"
+   ],
+   "voiceId": "taoqian",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "集蜜袁术",
+   "avatar": "素材/武将/集蜜袁术-头像.png",
+   "art": "素材/武将/集蜜袁术-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "霍峻",
+   "avatar": "素材/武将/霍峻-头像.png",
+   "art": "素材/武将/霍峻-经典形象.png",
+   "nonameIds": [
+    "dc_huojun"
+   ],
+   "voiceId": "huojun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "青门羌卫",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "韩当",
+   "avatar": "素材/武将/韩当-头像.png",
+   "art": "素材/武将/韩当-经典形象.jpg",
+   "nonameIds": [
+    "ddd_handang",
+    "handang"
+   ],
+   "voiceId": "handang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "韩悝",
+   "avatar": "素材/武将/韩悝-头像.png",
+   "art": "素材/武将/韩悝-经典形象.jpg",
+   "nonameIds": [
+    "scs_hankui"
+   ],
+   "voiceId": "hankui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "韩浩史涣",
+   "avatar": "素材/武将/韩浩史涣-头像.png",
+   "art": "素材/武将/韩浩史涣-经典形象.jpg",
+   "nonameIds": [
+    "hanhaoshihuan"
+   ],
+   "voiceId": "hanhaoshihuan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "韩玄",
+   "avatar": "素材/武将/韩玄-头像.png",
+   "art": "素材/武将/韩玄-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "韩遂",
+   "avatar": "素材/武将/韩遂-头像.png",
+   "art": "素材/武将/韩遂-经典形象.jpg",
+   "nonameIds": [
+    "hansui"
+   ],
+   "voiceId": "hansui",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "顾雍",
+   "avatar": "素材/武将/顾雍-头像.png",
+   "art": "素材/武将/顾雍-经典形象.jpg",
+   "nonameIds": [
+    "guyong"
+   ],
+   "voiceId": "guyong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "颜良文丑",
+   "avatar": "素材/武将/颜良文丑-头像.png",
+   "art": "素材/武将/颜良文丑-经典形象.jpg",
+   "nonameIds": [
+    "yanwen"
+   ],
+   "voiceId": "yanwen",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "食火狻猊",
+   "avatar": "素材/武将/食火狻猊-头像.png",
+   "art": "素材/武将/食火狻猊-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "马云騄",
+   "avatar": "素材/武将/马云騄-头像.png",
+   "art": "素材/武将/马云騄-经典形象.jpg",
+   "nonameIds": [
+    "mayunlu"
+   ],
+   "voiceId": "mayunlu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马元义",
+   "avatar": "素材/武将/马元义-头像.png",
+   "art": "素材/武将/马元义-经典形象.jpg",
+   "nonameIds": [
+    "mayuanyi"
+   ],
+   "voiceId": "mayuanyi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马岱",
+   "avatar": "素材/武将/马岱-头像.png",
+   "art": "素材/武将/马岱-经典形象.jpg",
+   "nonameIds": [
+    "gz_madai",
+    "old_madai"
+   ],
+   "voiceId": "madai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马忠",
+   "avatar": "素材/武将/马忠-头像.png",
+   "art": "素材/武将/马忠-经典形象.jpg",
+   "nonameIds": [
+    "mazhong"
+   ],
+   "voiceId": "mazhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马日磾",
+   "avatar": "素材/武将/马日磾-头像.png",
+   "art": "素材/武将/马日磾-经典形象.jpg",
+   "nonameIds": [
+    "mamidi"
+   ],
+   "voiceId": "mamidi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马腾",
+   "avatar": "素材/武将/马腾-头像.png",
+   "art": "素材/武将/马腾-经典形象.jpg",
+   "nonameIds": [
+    "gz_mateng"
+   ],
+   "voiceId": "mateng",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马良",
+   "avatar": "素材/武将/马良-头像.png",
+   "art": "素材/武将/马良-经典形象.jpg",
+   "nonameIds": [
+    "maliang"
+   ],
+   "voiceId": "maliang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马谡",
+   "avatar": "素材/武将/马谡-头像.png",
+   "art": "素材/武将/马谡-经典形象.jpg",
+   "nonameIds": [
+    "ns_masu",
+    "xin_masu"
+   ],
+   "voiceId": "masu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马超",
+   "avatar": "素材/武将/马超-头像.png",
+   "art": "素材/武将/马超-经典形象.jpg",
+   "nonameIds": [
+    "machao"
+   ],
+   "voiceId": "machao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马钧",
+   "avatar": "素材/武将/马钧-头像.png",
+   "art": "素材/武将/马钧-经典形象.jpg",
+   "nonameIds": [
+    "yj_majun"
+   ],
+   "voiceId": "majun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "马面",
+   "avatar": "素材/武将/马面-头像.png",
+   "art": "素材/武将/马面-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "骆统",
+   "avatar": "素材/武将/骆统-头像.png",
+   "art": "素材/武将/骆统-经典形象.jpg",
+   "nonameIds": [
+    "dc_luotong"
+   ],
+   "voiceId": "luotong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "骥乐进",
+   "avatar": "素材/武将/骥乐进-头像.png",
+   "art": "素材/武将/骥乐进-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "骥张辽",
+   "avatar": "素材/武将/骥张辽-头像.png",
+   "art": "素材/武将/骥张辽-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "骥李典",
+   "avatar": "素材/武将/骥李典-头像.png",
+   "art": "素材/武将/骥李典-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "高望",
+   "avatar": "素材/武将/高望-头像.png",
+   "art": "素材/武将/高望-经典形象.jpg",
+   "nonameIds": [
+    "scs_gaowang"
+   ],
+   "voiceId": "gaowang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "高翔",
+   "avatar": "素材/武将/高翔-头像.png",
+   "art": null,
+   "nonameIds": [
+    "gaoxiang"
+   ],
+   "voiceId": "gaoxiang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "高览",
+   "avatar": "素材/武将/高览-头像.png",
+   "art": "素材/武将/高览-经典形象.jpg",
+   "nonameIds": [
+    "dc_gaolan"
+   ],
+   "voiceId": "gaolan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "高顺",
+   "avatar": "素材/武将/高顺-头像.png",
+   "art": "素材/武将/高顺-经典形象.jpg",
+   "nonameIds": [
+    "gaoshun"
+   ],
+   "voiceId": "gaoshun",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "魅",
+   "avatar": "素材/武将/魅-头像.png",
+   "art": "素材/武将/魅-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "魉",
+   "avatar": "素材/武将/魉-头像.png",
+   "art": "素材/武将/魉-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "魍",
+   "avatar": "素材/武将/魍-头像.png",
+   "art": "素材/武将/魍-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "魏势力武将",
+   "avatar": "素材/武将/魏势力武将-头像.png",
+   "art": null,
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "魏延",
+   "avatar": "素材/武将/魏延-头像.png",
+   "art": "素材/武将/魏延-经典形象.jpg",
+   "nonameIds": [
+    "gz_weiyan",
+    "re_weiyan"
+   ],
+   "voiceId": "weiyan",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "魑",
+   "avatar": "素材/武将/魑-头像.png",
+   "art": "素材/武将/魑-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "魔曹操",
+   "avatar": "素材/武将/魔曹操-头像.png",
+   "art": "素材/武将/魔曹操-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "鲁肃",
+   "avatar": "素材/武将/鲁肃-头像.png",
+   "art": "素材/武将/鲁肃-经典形象.jpg",
+   "nonameIds": [
+    "re_lusu"
+   ],
+   "voiceId": "lusu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "鲁芝",
+   "avatar": "素材/武将/鲁芝-头像.png",
+   "art": "素材/武将/鲁芝-经典形象.jpg",
+   "nonameIds": [
+    "luzhi"
+   ],
+   "voiceId": "luzhi",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "鲍三娘",
+   "avatar": "素材/武将/鲍三娘-头像.png",
+   "art": "素材/武将/鲍三娘-经典形象.jpg",
+   "nonameIds": [
+    "baosanniang",
+    "ddd_baosanniang"
+   ],
+   "voiceId": "baosanniang",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "鲍三娘（芳许）",
+   "avatar": "素材/武将/鲍三娘（芳许）-头像.png",
+   "art": "素材/武将/鲍三娘（芳许）-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "鲍信",
+   "avatar": "素材/武将/鲍信-头像.png",
+   "art": "素材/武将/鲍信-经典形象.jpg",
+   "nonameIds": [
+    "baoxin"
+   ],
+   "voiceId": "baoxin",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "麹义",
+   "avatar": "素材/武将/麹义-头像.png",
+   "art": "素材/武将/麹义-经典形象.jpg",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  },
+  {
+   "name": "黄忠",
+   "avatar": "素材/武将/黄忠-头像.png",
+   "art": "素材/武将/黄忠-经典形象.jpg",
+   "nonameIds": [
+    "gz_huangzhong",
+    "re_huangzhong"
+   ],
+   "voiceId": "huangzhong",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "黄月英",
+   "avatar": "素材/武将/黄月英-头像.png",
+   "art": "素材/武将/黄月英-经典形象.jpg",
+   "nonameIds": [
+    "huangyueying"
+   ],
+   "voiceId": "huangyueying",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "黄皓",
+   "avatar": "素材/武将/黄皓-头像.png",
+   "art": "素材/武将/黄皓-经典形象.jpg",
+   "nonameIds": [
+    "huanghao"
+   ],
+   "voiceId": "huanghao",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "黄盖",
+   "avatar": "素材/武将/黄盖-头像.png",
+   "art": "素材/武将/黄盖-经典形象.jpg",
+   "nonameIds": [
+    "huanggai"
+   ],
+   "voiceId": "huanggai",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "黄祖",
+   "avatar": null,
+   "art": null,
+   "nonameIds": [
+    "dc_huangzu",
+    "gz_huangzu",
+    "ns_huangzu"
+   ],
+   "voiceId": "huangzu",
+   "voiceDir": "libccy-noname/audio/skill/"
+  },
+  {
+   "name": "黑无常",
+   "avatar": "素材/武将/黑无常-头像.png",
+   "art": "素材/武将/黑无常-经典形象.png",
+   "nonameIds": [],
+   "voiceId": null,
+   "voiceDir": null
+  }
+ ]
+}

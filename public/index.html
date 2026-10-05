@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>三国杀 1v1</title>
+<style>
+  :root { --red:#c0392b; --black:#2c3e50; --bg:#1a1a1a; --panel:#262626; --gold:#d4af37; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: #ddd; font-family: "Microsoft YaHei", sans-serif; height: 100vh; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; gap: 16px; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid #444; }
+  header h1 { font-size: 18px; color: var(--gold); }
+  header .phase { color: #aaa; font-size: 13px; }
+  button { background: #3a5a3a; color: #fff; border: 1px solid #5a7a5a; border-radius: 4px; padding: 6px 14px; cursor: pointer; font-size: 13px; }
+  button:hover { background: #4a6a4a; }
+  button:disabled { opacity: .4; cursor: default; }
+  button.danger { background: #6a2a2a; border-color: #8a4a4a; }
+  main { flex: 1; display: flex; flex-direction: column; padding: 8px 16px; gap: 8px; overflow: hidden; }
+  .playerbar { display: flex; gap: 12px; align-items: center; background: var(--panel); border: 1px solid #3a3a3a; border-radius: 8px; padding: 8px 12px; min-height: 86px; }
+  .playerbar.active { border-color: var(--gold); box-shadow: 0 0 8px rgba(212,175,55,.35); }
+  .avatar { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; border: 2px solid #555; }
+  .pinfo { display: flex; flex-direction: column; gap: 2px; min-width: 130px; }
+  .pname { font-size: 16px; font-weight: bold; color: #fff; }
+  .pskills { font-size: 11px; color: #9ab; max-width: 420px; }
+  .hp { letter-spacing: 2px; font-size: 15px; }
+  .hp .on { color: #e74c3c; } .hp .off { color: #444; }
+  .zones { font-size: 11px; color: #89a; line-height: 1.5; }
+  .zone-chip { background: #333; border-radius: 3px; padding: 1px 5px; margin-right: 4px; display: inline-block; }
+  .hand { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0; min-height: 96px; }
+  .card { width: 66px; height: 92px; border-radius: 6px; background: #f5f0e0; color: #222; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #999; position: relative; cursor: default; overflow: hidden; }
+  .card img { width: 100%; height: 100%; object-fit: cover; }
+  .card .fallback { text-align: center; padding: 4px; font-size: 13px; font-weight: bold; }
+  .card .fallback .suit { font-size: 12px; }
+  .card.selectable { cursor: pointer; border-color: var(--gold); }
+  .card.selected { outline: 3px solid var(--gold); }
+  .card .tagnote { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,.55); color: #ffd; font-size: 9px; text-align: center; }
+  .mid { flex: 1; display: flex; gap: 12px; overflow: hidden; }
+  .logbox { flex: 1; background: #151515; border: 1px solid #333; border-radius: 6px; padding: 6px 10px; overflow-y: auto; font-size: 12px; line-height: 1.7; }
+  .logbox .sys { color: #7ab; } .logbox .hit { color: #e8a; }
+  .pilebox { width: 320px; background: #151515; border: 1px solid #333; border-radius: 6px; padding: 6px 10px; font-size: 12px; }
+  .pilebox .pilecards { color: #ab8; }
+  #promptbar { background: var(--panel); border: 1px solid var(--gold); border-radius: 8px; padding: 8px 12px; min-height: 48px; }
+  #promptbar .q { color: var(--gold); font-size: 14px; margin-bottom: 6px; }
+  #promptbar .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  #promptbar .waiting { color: #888; font-size: 13px; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; z-index: 10; }
+  .overlay h2 { font-size: 28px; color: var(--gold); }
+  .overlay button { font-size: 16px; padding: 10px 24px; }
+  .hidden { display: none !important; }
+  .spin { color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <h1>三国杀 · 1v1人机</h1>
+  <button id="btnStart">开始对局</button>
+  <span class="phase" id="phaseInfo">未开始</span>
+  <span class="phase" id="modelInfo"></span>
+  <label style="font-size:13px;color:#abc;cursor:pointer"><input type="checkbox" id="dbg"> 调试：显示AI手牌</label>
+  <span class="spin hidden" id="aiThinking">AI思考中…</span>
+</header>
+<main>
+  <div class="playerbar" id="bar1"></div>
+  <div class="hand" id="hand1" style="min-height:0"></div>
+  <div class="mid">
+    <div class="logbox" id="log"></div>
+    <div class="pilebox">
+      <div>回合：<span id="turnInfo">-</span></div>
+      <div style="margin:6px 0">牌堆余 <b id="drawN">-</b> ｜ 弃牌堆 <b id="discN">-</b>张</div>
+      <div>弃牌堆（最近8张）：<div class="pilecards" id="discPile"></div></div>
+    </div>
+  </div>
+  <div id="promptbar"><div class="waiting">等待对局开始…</div></div>
+  <div class="playerbar" id="bar0"></div>
+  <div class="hand" id="hand0"></div>
+</main>
+<div class="overlay hidden" id="overOverlay">
+  <h2 id="overText"></h2>
+  <button onclick="document.getElementById('overOverlay').classList.add('hidden')">关闭</button>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let state = null;
+let curAsk = null;
+let selected = new Set();
+
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function suitColor(s){return (s==='♥'||s==='♦')?'#c0392b':'#222';}
+function avatarUrl(name){return '/素材/武将/'+encodeURIComponent(name)+'-头像.png';}
+
+function renderHand1() {
+  const box = $('hand1');
+  if (!$('dbg').checked || !state || !state.aiHand || state.aiHand.length === 0) { box.innerHTML = ''; return; }
+  box.innerHTML = '<div style="font-size:11px;color:#789;align-self:center;margin-right:4px">AI手牌:</div>' +
+    state.aiHand.map(c => cardHtml(c, false, false)).join('');
+}
+function render() {
+  if (!state) return;
+  $('phaseInfo').textContent = state.over ? '对局结束' : `第${state.turnNo}回合 · ${state.phase||''}阶段`;
+  $('turnInfo').textContent = `第${state.turnNo}回合（${state.players[state.turnPlayer??0]?.general||''} 行动）`;
+  $('drawN').textContent = state.drawPileCount;
+  $('discN').textContent = state.discardTotal;
+  $('discPile').textContent = state.discardPile.map(c=>c.name+c.suit+c.rank).join('、') || '空';
+  renderPlayer(1, state.players[1], state.turnPlayer===1);
+  renderPlayer(0, state.players[0], state.turnPlayer===0);
+  renderHand();
+  renderHand1();
+}
+function renderPlayer(idx, p, active) {
+  const bar = $('bar'+idx);
+  bar.classList.toggle('active', active);
+  const hp = Array.from({length:p.maxHp},(_,i)=>`<span class="${i<p.hp?'on':'off'}">●</span>`).join('');
+  const who = idx===0 ? '（你）' : '（AI）';
+  const eq = p.equips;
+  const eqStr = ['weapon','armor','horsePlus','horseMinus'].map(k=>eq[k]?`<span class="zone-chip">${eq[k].name}${eq[k].suit}${eq[k].rank}</span>`:'').join('');
+  const judge = p.judge.map(c=>`<span class="zone-chip" style="color:#e8a">${c.name}${c.suit}${c.rank}</span>`).join('');
+  const skillStr = p.skills.map(s=>`【${s.name}】${s.text}`).join('　');
+  bar.innerHTML = `
+    <img class="avatar" src="${avatarUrl(p.general)}" alt="">
+    <div class="pinfo">
+      <div class="pname">${esc(p.general)}${who} <span style="font-size:11px;color:#889">${p.kingdom}</span></div>
+      <div class="hp">${hp} <span style="font-size:11px;color:#99a">(${p.hp}/${p.maxHp})</span></div>
+      <div class="pskills">${esc(skillStr)}</div>
+    </div>
+    <div class="zones">手牌 ${p.handCount}张<br>${eqStr||'<span style="color:#555">无装备</span>'}${judge?`<br>${judge}`:''}</div>`;
+}
+function cardHtml(c, selectable, selectedId) {
+  const red = suitColor(c.suit)==='#c0392b';
+  const inner = c.image
+    ? `<img src="/${c.image}" onerror="this.outerHTML='<div class=\\'fallback\\'>${c.name}<br><span class=\\'suit\\' style=\\'color:${red?"#c0392b":"#222"}\\'>${c.suit}${c.rank}</span></div>'">`
+    : `<div class="fallback">${c.name}<br><span class="suit" style="color:${red?'#c0392b':'#222'}">${c.suit}${c.rank}</span></div>`;
+  const note = c.subtype && c.subtype!=='普通杀' ? `<div class="tagnote">${c.subtype}</div>` : '';
+  return `<div class="card ${selectable?'selectable':''} ${selectedId?'selected':''}" data-id="${c.id}">${inner}${note}</div>`;
+}
+function renderHand() {
+  const hand = state.ownHand || [];
+  const isMulti = curAsk && (curAsk.decisionType==='discard' || (curAsk.decisionType==='play' && curAsk.skill==='制衡') || (curAsk.options||[]).some(o=>o.kind==='skill_zhiheng'));
+  $('hand0').innerHTML = hand.map(c => {
+    const sel = isMulti && selected.has(c.id);
+    return cardHtml(c, isMulti, sel);
+  }).join('');
+  document.querySelectorAll('#hand0 .card.selectable').forEach(el => {
+    el.onclick = () => {
+      const id = +el.dataset.id;
+      if (selected.has(id)) selected.delete(id); else selected.add(id);
+      renderHand(); renderPromptMulti();
+    };
+  });
+}
+function renderPromptMulti() {
+  if (!curAsk) return;
+  const need = curAsk.count;
+  const kind = curAsk.decisionType;
+  const multi = kind==='discard' ? 'discard' : ((curAsk.options||[]).some(o=>o.kind==='skill_zhiheng') ? 'zhiheng' : null);
+  if (multi) {
+    const btn = document.createElement('button');
+    if (multi==='discard') {
+      btn.textContent = `确认弃置（已选${selected.size}/${need}）`;
+      btn.disabled = selected.size !== need;
+      btn.onclick = () => submitMove({kind:'discard', cardIds:[...selected]});
+    } else {
+      btn.textContent = `发动【制衡】弃${selected.size}张摸${selected.size}张`;
+      btn.disabled = selected.size === 0;
+      btn.onclick = () => submitMove({kind:'skill_zhiheng', cardIds:[...selected]});
+    }
+    const bar = $('promptbar');
+    bar.querySelectorAll('button.multic').forEach(b=>b.remove());
+    bar.querySelector('.opts').appendChild(btn);
+    btn.classList.add('multic');
+  }
+}
+function renderAsk(a) {
+  curAsk = a; selected = new Set();
+  const bar = $('promptbar');
+  bar.innerHTML = `<div class="q">${esc(a.question)}</div><div class="opts"></div>`;
+  const opts = bar.querySelector('.opts');
+  const multi = a.decisionType==='discard' || (a.options||[]).some(o=>o.kind==='skill_zhiheng');
+  if (!multi) {
+    for (const o of a.options) {
+      const b = document.createElement('button');
+      b.textContent = o.uiLabel;
+      b.onclick = () => submitMove(o);
+      opts.appendChild(b);
+    }
+  } else {
+    const tip = document.createElement('span');
+    tip.textContent = '请在下方手牌中点选，然后确认';
+    tip.style.cssText = 'color:#999;font-size:12px;align-self:center';
+    opts.appendChild(tip);
+  }
+  renderHand(); renderPromptMulti();
+}
+async function submitMove(move) {
+  if (!curAsk) return;
+  $('promptbar').innerHTML = '<div class="waiting">已提交，等待结算…</div>';
+  curAsk = null; selected = new Set();
+  await fetch('/api/action', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({move}) });
+}
+
+const es = new EventSource('/api/events');
+es.onmessage = (ev) => {
+  const e = JSON.parse(ev.data);
+  if (e.type==='state') {
+    state = e.state; render();
+    seedLog(state.log, state.logSeq);
+  }
+  else if (e.type==='ask') { if (e.playerIdx===0) renderAsk(e); }
+  else if (e.type==='log') { addLog(e.msg); if (e.seq) lastLogSeq = Math.max(lastLogSeq, e.seq); }
+  else if (e.type==='aiThinking') { $('aiThinking').classList.remove('hidden'); }
+  else if (e.type==='ailog') { addLog('⟦AI⟧ '+e.msg, true); $('aiThinking').classList.add('hidden'); }
+  else if (e.type==='aidetail') {
+    if ($('dbg').checked) {
+      const t = (e.reply||'').replace(/\s+/g,' ').trim();
+      addLog(`⟦AI决策#${e.n} ${e.durSec}s⟧ ${t.length>260 ? t.slice(0,260)+'…' : t}`, true);
+    }
+  }
+  else if (e.type==='askDone') { $('aiThinking').classList.add('hidden'); }
+  else if (e.type==='gameStart') {
+    $('log').innerHTML = ''; lastLogSeq = 0;
+    addLog('=== 对局开始 ===');
+    $('btnStart').disabled = false;
+    $('btnStart').textContent = '重新开局';
+    $('overOverlay').classList.add('hidden');
+    curAsk = null; selected = new Set();
+    $('promptbar').innerHTML = '<div class="waiting">等待对局开始…</div>';
+    $('aiThinking').classList.add('hidden');
+  }
+  else if (e.type==='gameOver') {
+    $('btnStart').disabled = false;
+    $('btnStart').textContent = '开始对局';
+    $('overOverlay').classList.remove('hidden');
+    $('overText').textContent = e.winner===0 ? '🎉 你赢了！' : '💀 AI 获胜';
+    if (state) render();
+  }
+  else if (e.type==='error') addLog('!! '+e.msg, true);
+};
+function addLog(msg, hit) {
+  const box = $('log');
+  const div = document.createElement('div');
+  if (hit) div.className='hit';
+  div.innerHTML = esc(msg);
+  box.appendChild(div);
+  requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
+}
+// 日志框内容一变就吸底
+new MutationObserver(() => {
+  const box = $('log');
+  box.scrollTop = box.scrollHeight;
+}).observe($('log'), { childList: true, subtree: false });
+// 日志去重回放：按序号补齐，重连不重复
+let lastLogSeq = 0;
+function seedLog(logLines, logSeq) {
+  if (!Array.isArray(logLines)) return;
+  const first = logSeq - logLines.length;
+  logLines.forEach((m, i) => { if (first + i >= lastLogSeq) addLog(m); });
+  lastLogSeq = Math.max(lastLogSeq, logSeq || 0);
+}
+$('btnStart').onclick = async () => {
+  $('btnStart').disabled = true;
+  const r = await fetch('/api/start', {method:'POST'});
+  const j = await r.json();
+  if (!j.ok) { alert(j.error); $('btnStart').disabled = false; }
+};
+$('dbg').onchange = () => renderHand1();
+$('modelInfo').textContent = '';
+</script>
+</body>
+</html>
