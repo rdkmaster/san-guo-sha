@@ -18,3 +18,4 @@ _progress.jsonl
 test/aitest/transcripts/
 test/aitest/report.md
 test/aitest/stub_run.txt
+node_modules/

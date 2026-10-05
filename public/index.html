@@ -25,13 +25,18 @@
   .hp .on { color: #e74c3c; } .hp .off { color: #444; }
   .zones { font-size: 11px; color: #89a; line-height: 1.5; }
   .zone-chip { background: #333; border-radius: 3px; padding: 1px 5px; margin-right: 4px; display: inline-block; }
+  .zone-chip .zl { color: #9ab; margin-right: 3px; font-style: normal; font-size: 10px; }
   .zone-chip.eq-sel { cursor: pointer; border: 1px solid var(--gold); }
   .zone-chip.eq-selected { background: var(--gold); color: #222; }
-  .hand { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 0; min-height: 96px; }
-  .card { width: 66px; height: 92px; border-radius: 6px; background: #f5f0e0; color: #222; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #999; position: relative; cursor: default; overflow: hidden; }
+  .hand { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0; min-height: 128px; align-items: center; }
+  .card { width: 86px; height: 120px; border-radius: 6px; background: #f5f0e0; color: #222; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #999; position: relative; cursor: default; overflow: hidden; }
   .card img { width: 100%; height: 100%; object-fit: cover; }
-  .card .fallback { text-align: center; padding: 4px; font-size: 13px; font-weight: bold; }
-  .card .fallback .suit { font-size: 12px; }
+  .card .fallback { text-align: center; padding: 4px; font-size: 15px; font-weight: bold; }
+  .card .fallback .suit { font-size: 14px; }
+  .card .corner { position: absolute; top: 0; left: 0; right: 0; padding: 1px 0; font-size: 13px; font-weight: bold; text-align: center; background: rgba(255,255,255,.85); }
+  .card .corner.cr { color: #c0392b; } .card .corner.cb { color: #222; }
+  .card.back { background: repeating-linear-gradient(45deg, #3a5580 0 9px, #2e4468 9px 18px); border-color: #24344f; }
+  .hlabel { font-size: 11px; color: #789; align-self: center; margin-right: 4px; }
   .card.selectable { cursor: pointer; border-color: var(--gold); }
   .card.selected { outline: 3px solid var(--gold); }
   .card.newdraw { border-color: #ffd700; box-shadow: 0 0 10px 2px rgba(255,215,0,.7); animation: newdraw-pulse 1s ease-in-out 3; }
@@ -93,9 +98,13 @@ function avatarUrl(name){return '/素材/武将/'+encodeURIComponent(name)+'-头
 
 function renderHand1() {
   const box = $('hand1');
-  if (!$('dbg').checked || !state || !state.aiHand || state.aiHand.length === 0) { box.innerHTML = ''; return; }
-  box.innerHTML = '<div style="font-size:11px;color:#789;align-self:center;margin-right:4px">AI手牌:</div>' +
-    state.aiHand.map(c => cardHtml(c, false, false)).join('');
+  if (!state || !state.players[1]) { box.innerHTML = ''; return; }
+  const n = state.players[1].handCount || 0;
+  if ($('dbg').checked && state.aiHand && state.aiHand.length) {
+    box.innerHTML = '<div class="hlabel">AI手牌（调试）:</div>' + state.aiHand.map(c => cardHtml(c, false, false)).join('');
+  } else {
+    box.innerHTML = '<div class="hlabel">AI手牌:</div>' + Array.from({ length: n }, () => '<div class="card back"></div>').join('');
+  }
 }
 function render() {
   if (!state) return;
@@ -116,13 +125,15 @@ function renderPlayer(idx, p, active) {
   const who = idx===0 ? '（你）' : '（AI）';
   const axeSel = idx===0 && curAsk && curAsk.decisionType==='discard' && (curAsk.options||[]).some(o=>o.area==='any');
   const eq = p.equips;
+  const EQ_LABELS = { weapon:'武器', armor:'防具', horsePlus:'+1马', horseMinus:'-1马' };
   const eqStr = ['weapon','armor','horsePlus','horseMinus'].map(k=>{
     const c = eq[k]; if (!c) return '';
+    const label = `<span class="zl">${EQ_LABELS[k]}</span>`;
     if (axeSel) {
       const sel = selected.has(c.id);
-      return `<span class="zone-chip eq-sel ${sel?'eq-selected':''}" data-cid="${c.id}">${c.name}${c.suit}${c.rank}</span>`;
+      return `<span class="zone-chip eq-sel ${sel?'eq-selected':''}" data-cid="${c.id}">${label}${c.name}${c.suit}${c.rank}</span>`;
     }
-    return `<span class="zone-chip">${c.name}${c.suit}${c.rank}</span>`;
+    return `<span class="zone-chip">${label}${c.name}${c.suit}${c.rank}</span>`;
   }).join('');
   const judge = p.judge.map(c=>`<span class="zone-chip" style="color:#e8a">${c.name}${c.suit}${c.rank}</span>`).join('');
   const skillStr = p.skills.map(s=>`【${s.name}】${s.text}`).join('　');
@@ -148,7 +159,7 @@ function renderPlayer(idx, p, active) {
 function cardHtml(c, selectable, selectedId, isNew) {
   const red = suitColor(c.suit)==='#c0392b';
   const inner = c.image
-    ? `<img src="/${c.image}" onerror="this.outerHTML='<div class=\\'fallback\\'>${c.name}<br><span class=\\'suit\\' style=\\'color:${red?"#c0392b":"#222"}\\'>${c.suit}${c.rank}</span></div>'">`
+    ? `<img src="/${c.image}" onerror="this.outerHTML='<div class=\\'fallback\\'>${c.name}<br><span class=\\'suit\\' style=\\'color:${red?"#c0392b":"#222"}\\'>${c.suit}${c.rank}</span></div>'"><div class="corner ${red?'cr':'cb'}">${c.suit}${c.rank}</div>`
     : `<div class="fallback">${c.name}<br><span class="suit" style="color:${red?'#c0392b':'#222'}">${c.suit}${c.rank}</span></div>`;
   const note = c.subtype && c.subtype!=='普通杀' ? `<div class="tagnote">${c.subtype}</div>` : '';
   return `<div class="card ${selectable?'selectable':''} ${selectedId?'selected':''} ${isNew?'newdraw':''}" data-id="${c.id}">${inner}${note}</div>`;
@@ -223,6 +234,7 @@ async function submitMove(move) {
 }
 
 const es = new EventSource('/api/events');
+$('dbg').onchange = () => renderHand1(); // 勾选调试立即生效，不等下次state
 es.onmessage = (ev) => {
   const e = JSON.parse(ev.data);
   if (e.type==='state') {
