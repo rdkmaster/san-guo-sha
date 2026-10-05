@@ -48,6 +48,33 @@ function buildDeck(rng) {
   return cards;
 }
 
+// 定向发牌：按 [名称, 花色, 点数] 序列从真实牌池取牌（前4张=玩家起手，接下来4张=AI起手，之后为摸牌顺序）
+function makeRiggedDeck(spec) {
+  const pool = deckData.cards;
+  const used = new Set();
+  const out = [];
+  const clone = (c, id) => ({
+    id, name: c.name, suit: c.suit, rank: c.rank, subtype: c.subtype || null, tag: c.tag || null,
+    category: c.category, equip: c.equip || null, range: c.range || null, effect: c.effect || '', image: c.image || null,
+  });
+  // 杀按名字映射到子类（'杀'=普通杀，'火杀'/'雷杀'对应子类）
+  const SHA_SUB = { '杀': '普通杀', '火杀': '火杀', '雷杀': '雷杀' };
+  for (const [name0, suit, rank] of spec) {
+    const sub = SHA_SUB[name0] || null;
+    const name = sub ? '杀' : name0;
+    const idx = pool.findIndex((c, i) => !used.has(i) && c.name === name && c.suit === suit && c.rank === rank
+      && (sub ? (c.subtype || '普通杀') === sub : true));
+    if (idx < 0) throw new Error(`定向发牌找不到: ${name0} ${suit}${rank}（或该牌已被用完）`);
+    used.add(idx);
+    out.push(clone(pool[idx], out.length));
+  }
+  for (let i = 0; i < pool.length; i++) {
+    if (used.has(i)) continue;
+    out.push(clone(pool[i], out.length));
+  }
+  return out;
+}
+
 const DECK_STATS = { total: deckData.count };
 
-module.exports = { buildDeck, isRed, isBlack, isShaName, equipSlot, weaponRange, EQUIP_SLOTS, WEAPON_RANGE, DECK_STATS };
+module.exports = { buildDeck, makeRiggedDeck, isRed, isBlack, isShaName, equipSlot, weaponRange, EQUIP_SLOTS, WEAPON_RANGE, DECK_STATS };

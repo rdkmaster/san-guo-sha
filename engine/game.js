@@ -1,7 +1,7 @@
 // 三国杀 1v1 规则引擎：状态机 + 武将技能 + 装备 + 锦囊 + 濒死
 // 决策通过注入的 ask 回调（人类→浏览器UI，AI→droid exec，自测→随机），
 // 引擎只负责计算合法动作与执行效果，所有动作都经合法性校验（非法→重问3次→随机兜底）。
-const { buildDeck, isRed, isBlack, equipSlot, weaponRange } = require('./cards');
+const { buildDeck, makeRiggedDeck, isRed, isBlack, equipSlot, weaponRange } = require('./cards');
 
 const GENERALS = {
   '关羽':   { hp: 4, kingdom: '蜀', skills: ['武圣'] },
@@ -53,6 +53,7 @@ function cardName(c) {
 
 class Game {
   constructor(opts) {
+    this.opts = opts || {};
     this.ask = opts.ask;                       // async ({playerIdx,type,playable,context,skill,stateMd}) => move|action
     this.onEvent = opts.onEvent || (() => {});
     this.rng = opts.seed != null ? mulberry32(opts.seed) : Math.random;
@@ -63,13 +64,29 @@ class Game {
     this.decisionNo = 0;
     this.logLines = [];
     this.cardTaken = false; // 奸雄拿牌标记
+    this.limbo = new Set(); // 结算暂离区（五谷展示中/伤害牌结算中），供守恒校验
+  }
+
+  // 牌数守恒：154张（160 - 6铁索）必须全部分布在场
+  invariant() {
+    let n = this.drawPile.length + this.discardPile.length + this.limbo.size;
+    for (const p of this.players) {
+      n += p.hand.length + p.judge.length + Object.values(p.equips).filter(Boolean).length;
+    }
+    return { ok: n === 154, total: n };
   }
 
   setup() {
-    // 牌堆：铁索连环在1v1中不使用
-    this.drawPile = buildDeck(this.rng).filter(c => c.name !== '铁索连环');
+    // 牌堆：定向发牌（测试）或常规洗牌（铁索连环在1v1中不使用）
+    this.drawPile = this.opts.deck
+      ? makeRiggedDeck(this.opts.deck).filter(c => c.name !== '铁索连环')
+      : buildDeck(this.rng).filter(c => c.name !== '铁索连环');
     this.discardPile = [];
-    const names = shuffle(Object.keys(GENERALS), this.rng);
+    const names = (this.opts.generals && this.opts.generals.length === 2)
+      ? this.opts.generals
+      : shuffle(Object.keys(GENERALS), this.rng);
+    if (this.opts.first != null) this.first = this.opts.first;
+    else this.first = this.rng() < 0.5 ? 0 : 1;
     const mk = (idx, name) => {
       const g = GENERALS[name];
       return {
@@ -81,9 +98,9 @@ class Game {
       };
     };
     this.players = [mk(0, names[0]), mk(1, names[1])];
-    this.first = this.rng() < 0.5 ? 0 : 1;
     this.turnPlayer = this.players[this.first];
     for (const p of this.players) this.draw(p, 4);
+    this.setupDone = true;
     this.log(`对局开始：${this.players[0].general}（玩家） vs ${this.players[1].general}（AI），先手：${this.players[this.first].general}`);
     this.emitState();
   }
@@ -137,6 +154,7 @@ class Game {
   }
   toDiscard(cards) {
     if (!Array.isArray(cards)) cards = [cards];
+    for (const c of cards) this.limbo.delete(c);
     this.discardPile.push(...cards);
   }
   inHand(p, cardId) { return p.hand.find(c => c.id === cardId) || null; }
@@ -154,7 +172,7 @@ class Game {
 
   // ---------- 主循环 ----------
   async run() {
-    this.setup();
+    if (!this.setupDone) this.setup();
     let cur = this.first;
     while (!this.over && !this.aborted) {
       await this.turn(cur);
@@ -231,6 +249,9 @@ class Game {
       this.log(`${p.general} 弃置 ${cards.map(cardName).join('、')}`);
       this.emitState();
     }
+    // 回合边界结算全部落定，守恒校验有意义（结算中途牌在途属正常）
+    const inv = this.invariant();
+    if (!inv.ok) this.log(`【守恒告警】${inv.total}/154`);
     this.emitState();
   }
 
@@ -252,8 +273,9 @@ class Game {
       const r = RANK_ORDER.indexOf(jc.rank) + 1;
       if (jc.suit === '♠' && r >= 2 && r <= 9) {
         this.log('黑桃2-9：闪电命中！');
-        this.toDiscard(card);
         await this.dealDamage(p, 3, { source: null, card, nature: '雷' });
+        if (!this.cardTaken) this.toDiscard(card); // 未被奸雄拿走则进弃牌堆
+        this.cardTaken = false;
       } else {
         this.log('未命中，闪电移至对手判定区');
         this.other(p).judge.push(card);
@@ -265,6 +287,7 @@ class Game {
   // ---------- 伤害与濒死 ----------
   async dealDamage(target, amount, { source = null, card = null, nature = '普通' } = {}) {
     if (this.over || amount <= 0) return;
+    if (card) this.limbo.add(card); // 结算中的伤害牌暂离（奸雄可取）
     if (target.equips.armor && target.equips.armor.name === '白银狮子' && amount > 1) {
       amount = 1; this.log('白银狮子：伤害减为1点');
     }
@@ -281,6 +304,7 @@ class Game {
       const move = await this.askPlayer(target, decision);
       if (move && move.kind === 'activate') {
         this.cardTaken = true;
+        this.limbo.delete(card);
         target.hand.push(card);
         this.log(`${target.general} 发动【奸雄】获得${cardName(card)}`);
       }
@@ -390,6 +414,19 @@ class Game {
 
   async executePlay(p, move) {
     const opp = this.other(p);
+    // —— 主动技：制衡 ——
+    if (move.kind === 'skill_zhiheng') {
+      if (p.zhihengUsed) { this.log('制衡本回合已发动'); return; }
+      let cards = (move.cardIds || []).map(id => this.inHand(p, id)).filter(Boolean);
+      cards = [...new Set(cards)];
+      if (cards.length === 0) { this.log('制衡未指定手牌，跳过'); return; }
+      p.zhihengUsed = true;
+      p.hand = p.hand.filter(c => !cards.includes(c));
+      this.toDiscard(cards);
+      const n = this.draw(p, cards.length);
+      this.log(`${p.general} 发动【制衡】，弃${cards.length}张摸${n}张`);
+      return;
+    }
     const card = this.inHand(p, move.cardId);
     if (!card) { this.log('无效动作：找不到该手牌'); return; }
     p.hand = p.hand.filter(c => c !== card);
@@ -606,9 +643,10 @@ class Game {
       case '五谷丰登': {
         const revealed = [];
         for (let i = 0; i < 2; i++) { const c = this.drawOne(); if (c) revealed.push(c); }
+        revealed.forEach(c => this.limbo.add(c));
         this.log(`五谷丰登展示：${revealed.map(cardName).join('、') || '无'}`);
         if (revealed.length === 0) break;
-        if (revealed.length === 1) { p.hand.push(revealed[0]); this.log(`${p.general} 获得${cardName(revealed[0])}`); break; }
+        if (revealed.length === 1) { this.limbo.delete(revealed[0]); p.hand.push(revealed[0]); this.log(`${p.general} 获得${cardName(revealed[0])}`); break; }
         const chooser = opp;
         const decision = {
           playerIdx: chooser.idx, type: 'choose',
@@ -619,8 +657,10 @@ class Game {
         const m = await this.askPlayer(chooser, decision);
         let picked = (m && m.kind === 'chooseCard' && revealed.find(c => c.id === m.cardId)) || revealed[0];
         revealed.splice(revealed.indexOf(picked), 1);
+        this.limbo.delete(picked);
         chooser.hand.push(picked);
         this.log(`${chooser.general} 获得${cardName(picked)}`);
+        this.limbo.delete(revealed[0]);
         p.hand.push(revealed[0]);
         this.log(`${p.general} 获得${cardName(revealed[0])}`);
         break;
@@ -926,7 +966,11 @@ class Game {
         return null;
       }
       case 'skill': {
-        if (action.skill === '制衡') return playable.find(m => m.kind === 'skill_zhiheng') || null;
+        if (action.skill === '制衡') {
+          const m = playable.find(mv => mv.kind === 'skill_zhiheng');
+          if (!m) return null;
+          return { kind: 'skill_zhiheng', cardIds: (action.cards || []).map(byLabel).filter(x => x != null) };
+        }
         return null;
       }
       case 'activate': {

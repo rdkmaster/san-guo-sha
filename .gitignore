@@ -13,3 +13,7 @@ _logs/
 __pycache__/
 workspace/_game/
 _progress.jsonl
+
+# AI测试跑批产物
+test/aitest/transcripts/
+test/aitest/report.md
