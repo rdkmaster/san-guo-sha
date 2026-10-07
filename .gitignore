@@ -10,9 +10,12 @@ libnoname-noname/
 
 # 运行时产物
 _logs/
+_logs-test/
 __pycache__/
 workspace/_game/
 _progress.jsonl
+saves-test/
+.omc/
 
 # AI测试跑批产物
 test/aitest/transcripts/

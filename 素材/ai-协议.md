@@ -72,7 +72,9 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 | `wuxie` | 锦囊结算前问无懈（MVP只问被影响者一次） | `wuxie`(出无懈) / `refuse` |
 | `discard` | 弃牌阶段超手牌上限 | `discard`(指定弃牌，数量必须精确) |
 | `choose` | 五谷选牌 / 火攻展示手牌 / 拆桥·顺牵选区域 / 雌雄双股剑弃牌 | `choose`(card选牌 或 choice选区域hand/equip/judge) / `skip`(雌雄：让对方摸1) |
-| `skill_ask` | 触发技/装备技询问：奸雄、集智、火攻烧牌、青龙偃月刀、寒冰剑、麒麟弓、贯石斧 | `activate`(发动，可带card) / `skip` |
+| `guanxing` | 观星分配：一次亮出的牌必须逐张指定位置 | `guanxing`(tops=置于牌堆顶的编号数组, bottoms=置于牌堆底的编号数组，两数组恰好分完所有亮出的牌) |
+| `fanjian_suit` | 你是反间目标，选一种花色 | `fanjian_suit`(suit=♥/♠/♣/♦) |
+| `skill_ask` | 触发技/装备技询问：奸雄、集智、火攻烧牌、青龙偃月刀、寒冰剑、麒麟弓、贯石斧、观星 | `activate`(发动，可带card) / `skip` |
 | `daodao` | 你是借刀杀人的目标（你有武器且有杀） | `daodao_sha`(出杀) / `daodao_give`(交武器) |
 
 引擎简化项（MVP，AI无需操心）：八卦阵需要闪时自动判定；无懈可击只询问被影响者一次；铁索连环不在牌堆中；方天画戟在1v1中无额外目标可指定（仅作为范围4武器生效）。
@@ -86,6 +88,8 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 {"action": "play", "card": "#4", "targets": ["自己"]}
 {"action": "play", "card": "#2", "useAs": "杀", "targets": ["对手"]}
 {"action": "skill", "skill": "制衡", "cards": ["#1", "#3"]}
+{"action": "skill", "skill": "反间"}
+{"action": "fanjian_suit", "suit": "♥"}
 {"action": "end"}
 {"action": "respond", "card": "#2", "useAs": "闪"}
 {"action": "refuse"}
@@ -94,6 +98,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 {"action": "discard", "cards": ["#1", "#2"]}
 {"action": "choose", "card": "#5"}
 {"action": "choose", "choice": "equip"}
+{"action": "guanxing", "tops": ["#5"], "bottoms": ["#6"]}
 {"action": "skip", "skill": "雌雄双股剑"}
 {"action": "sha_combo", "cards": ["#1", "#3"]}
 {"action": "activate", "skill": "奸雄"}
@@ -108,6 +113,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 - `useAs`：转化技使用（如武圣红牌当杀、龙胆杀闪互转），引擎校验转化合法性。
 - `skill`：技能名（制衡/奸雄/集智/火攻等）。
 - `choice`：区域选择（hand/equip/judge），仅拆桥·顺牵选区域时使用。
+- `guanxing`：`tops`/`bottoms` 填"候选牌"区的编号数组，两数组必须恰好分完亮出的牌（重复或遗漏→重问，3次失败后全部置于牌堆顶）。
 - `targets`：合法目标名（1v1只有`自己`/`对手`，引擎已按局面列出，通常可省略）。
 - **可出列**：手牌表的"可出"列是引擎根据技能/手牌/装备/距离确定性计算的结果（✓=合法动作已包含，—=当前不可出）。`sha_combo` 组合的两张牌必须互不相同且都在引擎下发的合法池内，引擎校验不通过会重问。
 - 除最后JSON行外，AI可先输出简短思考（≤3行），引擎只解析最后一行。
@@ -121,6 +127,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 5. 装备：武器优先装（扩大射程），八卦阵/仁王盾性价比高；对手装八卦阵时，青釭剑/火杀/雷杀价值上升。
 6. 节奏与斩杀：对手体力1时，保留火杀/酒杀/决斗/古锭刀组合一击必杀。
 7. 判定博弈：自己判定区有乐不思蜀/闪电时留无懈可击自救（锦囊结算前可用无懈抵消）。
+8. 反间博弈：你是反间目标时，选你判断对手最不可能给出的花色（每花色各1/4，但可结合已见弃牌推测）；你是周瑜时，优先交低价值手牌，赌花色命中造成1点伤害。
 
 ## 5. 引擎侧容错
 

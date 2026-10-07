@@ -7,9 +7,15 @@ const { Game } = require('./engine/game');
 const { AIPlayer } = require('./engine/ai');
 
 const ROOT = __dirname;
-const PORT = process.env.PORT || 3000;
+// 环境隔离：NODE_ENV=test 时为测试环境（独立端口/存档/日志，不碰生产数据）
+const IS_TEST = process.env.NODE_ENV === 'test';
+const PORT = process.env.PORT || (IS_TEST ? 3001 : 3000);
+const SAVE_DIR = path.join(ROOT, IS_TEST ? 'saves-test' : 'saves');
+const LOG_DIR = path.join(ROOT, IS_TEST ? '_logs-test' : '_logs');
 const MODEL = process.env.AI_MODEL || 'glm-5.3-flash';
 const REASONING = process.env.AI_REASONING || 'high';
+fs.mkdirSync(SAVE_DIR, { recursive: true });
+fs.mkdirSync(LOG_DIR, { recursive: true });
 
 let game = null;
 let ai = null;
@@ -45,6 +51,7 @@ function defaultQuestion(d) {
     case 'choose': return (d.context && d.context.question) || '请选择';
     case 'skill_ask': return (d.context && d.context.question) || '是否发动技能？';
     case 'daodao': return (d.context && d.context.question) || '借刀杀人';
+    case 'fanjian_suit': return (d.context && d.context.question) || '请选择花色';
     default: return '请决策';
   }
 }
@@ -68,8 +75,10 @@ function moveUiLabel(d, m) {
     case 'discard': return `弃置${d.count || ''}张（点选手牌后确认）`;
     case 'chooseCard': return `选择 ${desc(m.cardId)}`;
     case 'sha_combo': return '丈八蛇矛：两手牌当杀';
-    case 'chooseArea': return { hand: '拿手牌（随机）', equip: '拿装备', judge: '拿判定区牌' }[m.area] || m.area;
+    case 'chooseArea': return { hand: '拿手牌（随机）', equip: '拿装备', judge: '拿判定区牌', top: '置于牌堆顶', bottom: '置于牌堆底' }[m.area] || m.area;
     case 'skill_zhiheng': return `发动【制衡】（点选手牌后确认）`;
+    case 'skill_fanjian': return '发动【反间】';
+    case 'fanjian_suit': return `反间：选择花色 ${m.suit}`;
     case 'activate': return `发动【${m.skill}】${m.cardId != null ? `（用 ${desc(m.cardId)}）` : ''}`;
     case 'skip': return `不发动【${m.skill}】`;
     case 'daodao_sha': return '出【杀】';
@@ -89,6 +98,7 @@ function askHuman(d) {
       skill: d.skill || null,
       question: (d.context && d.context.question) || defaultQuestion(d),
       count: d.count || (d.context && d.context.count) || null,
+      optionCards: d.optionCards || null,
       options: d.playable.map(m => ({ ...m, uiLabel: moveUiLabel(d, m) })),
     };
     // 人类决策也完整入日志（对称于AI决策，局后可完整复盘）
@@ -112,11 +122,11 @@ function abandonCurrentGame() {
   appendGameLog('（该对局被放弃：玩家点了重新开局）');
 }
 
-async function startGame() {
+async function startGame(resumeData = null) {
   if (running) abandonCurrentGame();
   const gen = ++gameGen;
   // 日志器绑定gen：文件名带gen防同秒重置碰撞，旧对局尾巴不漏写进新文件
-  const logFile = path.join(ROOT, '_logs', `对局_${fmtTime(new Date())}_${gen}.log`);
+  const logFile = path.join(LOG_DIR, `对局_${fmtTime(new Date())}_${gen}.log`);
   appendGameLog = (line) => {
     if (gen !== gameGen) return;
     try { fs.appendFileSync(logFile, line + '\n', 'utf8'); } catch (e) {}
@@ -129,7 +139,16 @@ async function startGame() {
       broadcast({ type: 'aidetail', n: d.n, durSec: d.durSec, reply: d.reply });
     },
   });
+  // 固定种子是存档/恢复的根基：牌堆洗牌、随机兜底全部由种子重现
+  const seed = resumeData ? resumeData.seed : Math.floor(Math.random() * 0x7fffffff);
   game = new Game({
+    seed,
+    ...(resumeData ? {
+      generals: resumeData.generals,
+      first: resumeData.first,
+      deck: resumeData.deck || null,
+      replay: resumeData.decisions || [], // 恢复：瞬间重放历史决策到存档点
+    } : {}),
     ask: async (d) => {
       if (d.playerIdx === 1) {
         broadcast({ type: 'aiThinking', phase: d.type });
@@ -148,11 +167,21 @@ async function startGame() {
     },
   });
   running = true;
-  appendGameLog(`对局开始 ${new Date().toLocaleString('zh-CN')} | 模型: ${MODEL} (reasoning: ${REASONING})`);
-  broadcast({ type: 'gameStart', model: MODEL });
+  if (resumeData) {
+    appendGameLog(`—— 恢复对局（原存档 ${resumeData.savedAt}，第${resumeData.turnNo}回合）——`);
+    for (const line of (resumeData.logs || [])) appendGameLog(line); // 历史日志并入本局日志文件
+  } else {
+    appendGameLog(`对局开始 ${new Date().toLocaleString('zh-CN')} | 模型: ${MODEL} (reasoning: ${REASONING})`);
+  }
+  broadcast({ type: 'gameStart', model: MODEL, resumed: !!resumeData });
   game.run().then((w) => {
     if (gen !== gameGen) return; // 已被新对局取代，不再广播
     running = false;
+    if (game.aborted) { // 存档退出/放弃：不广播胜负
+      appendGameLog('（对局已终止）');
+      broadcast({ type: 'gameAbandoned' });
+      return;
+    }
     appendGameLog(`\n对局结束：${game.players[w] ? game.players[w].general + '（侧' + w + '）' : w} 获胜`);
     broadcast({ type: 'gameOver', winner: w, winnerName: game.players[w] ? game.players[w].general : null });
   }).catch(err => {
@@ -161,7 +190,7 @@ async function startGame() {
     appendGameLog(`引擎异常: ${String(err && err.stack || err)}`);
     broadcast({ type: 'error', msg: String(err && err.stack || err) });
   });
-  return { ok: true, logFile: path.join(ROOT, '_logs') };
+  return { ok: true, logFile: LOG_DIR };
 }
 
 function serveStatic(req, res, urlPath) {
@@ -188,11 +217,28 @@ const server = http.createServer((req, res) => {
       'Cache-Control': 'no-cache',
       'Connection': 'keep-alive',
     });
-    res.write(`data: ${JSON.stringify({ type: 'hello', running, model: MODEL })}\n\n`);
+    res.write(`data: ${JSON.stringify({ type: 'hello', running, model: MODEL, env: IS_TEST ? 'test' : 'prod' })}\n\n`);
     sseClients.push(res);
     if (game) res.write(`data: ${JSON.stringify({ type: 'state', state: decorate(game.snapshot()) })}\n\n`);
     if (pendingHumanAsk && lastAskPayload) res.write(`data: ${JSON.stringify(lastAskPayload)}\n\n`);
     req.on('close', () => { sseClients = sseClients.filter(c => c !== res); });
+    return;
+  }
+  if (u.pathname === '/api/saves') {
+    let list = [];
+    try {
+      list = fs.readdirSync(SAVE_DIR).filter(f => f.endsWith('.json')).map(f => {
+        try {
+          const d = JSON.parse(fs.readFileSync(path.join(SAVE_DIR, f), 'utf8'));
+          return {
+            name: f, savedAt: d.savedAt, turnNo: d.turnNo,
+            generals: d.generals || [], hp: d.hp || [], logs: d.logs || [],
+          };
+        } catch (e) { return { name: f, broken: true }; }
+      }).sort((a, b) => String(b.savedAt || '').localeCompare(String(a.savedAt || '')));
+    } catch (e) {}
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ ok: true, saves: list }));
     return;
   }
   if (req.method === 'POST') {
@@ -205,6 +251,44 @@ const server = http.createServer((req, res) => {
         const r = await startGame();
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(r));
+      } else if (u.pathname === '/api/resume') {
+        const name = String(payload.name || '');
+        const fp = path.join(SAVE_DIR, path.basename(name)); // 防路径穿越
+        if (!fs.existsSync(fp)) {
+          res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+          res.end(JSON.stringify({ ok: false, error: '存档不存在' }));
+          return;
+        }
+        const data = JSON.parse(fs.readFileSync(fp, 'utf8'));
+        const r = await startGame(data);
+        fs.unlinkSync(fp); // 已恢复的存档移除，避免重复恢复
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify(r));
+      } else if (u.pathname === '/api/delete_save') {
+        const name = String(payload.name || '');
+        const fp = path.join(SAVE_DIR, path.basename(name)); // 防路径穿越
+        if (!fs.existsSync(fp)) {
+          res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+          res.end(JSON.stringify({ ok: false, error: '存档不存在' }));
+          return;
+        }
+        fs.unlinkSync(fp);
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: true }));
+      } else if (u.pathname === '/api/save') {
+        if (!running || !game) {
+          res.writeHead(409, { 'Content-Type': 'application/json; charset=utf-8' });
+          res.end(JSON.stringify({ ok: false, error: '当前没有进行中的对局' }));
+          return;
+        }
+        const data = game.saveData();
+        const name = `存档_${fmtTime(new Date())}.json`;
+        fs.writeFileSync(path.join(SAVE_DIR, name), JSON.stringify(data, null, 1), 'utf8');
+        abandonCurrentGame(); // 存档并退出：终止当前对局
+        appendGameLog(`（对局已保存：${name}）`);
+        broadcast({ type: 'gameSaved', name });
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: true, name }));
       } else if (u.pathname === '/api/action') {
         if (!pendingHumanAsk) {
           res.writeHead(409, { 'Content-Type': 'application/json; charset=utf-8' });

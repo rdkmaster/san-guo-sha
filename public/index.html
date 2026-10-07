@@ -65,7 +65,9 @@
 <header>
   <h1>三国杀 · 1v1人机</h1>
   <button id="btnStart">开始对局</button>
+  <button id="btnSave" disabled title="保存当前对局进度，之后可继续">存档退出</button>
   <span class="phase" id="phaseInfo">未开始</span>
+  <span class="phase hidden" id="envBadge" style="background:#6a4a1a;border-color:#8a6a3a">测试环境</span>
   <span class="phase" id="modelInfo"></span>
   <label style="font-size:13px;color:#abc;cursor:pointer"><input type="checkbox" id="dbg"> 调试：显示AI手牌</label>
   <span class="spin hidden" id="aiThinking">AI思考中…</span>
@@ -89,10 +91,16 @@
   <h2 id="overText"></h2>
   <button onclick="document.getElementById('overOverlay').classList.add('hidden')">关闭</button>
 </div>
+<div class="overlay hidden" id="resumeOverlay">
+  <h2>发现未完成的对局</h2>
+  <div id="saveList" style="display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;"></div>
+  <button onclick="document.getElementById('resumeOverlay').classList.add('hidden')">关闭</button>
+</div>
 <script>
 const $ = id => document.getElementById(id);
 let state = null;
 let curAsk = null;
+let guanxingAssign = {}; // 观星：cardId -> 'top' | 'bottom'
 let selected = new Set();
 
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
@@ -126,7 +134,9 @@ function renderPlayer(idx, p, active) {
   bar.classList.toggle('active', active);
   const hp = Array.from({length:p.maxHp},(_,i)=>`<span class="${i<p.hp?'on':'off'}">●</span>`).join('');
   const who = idx===0 ? '（你）' : '（AI）';
-  const axeSel = idx===0 && curAsk && curAsk.decisionType==='discard' && (curAsk.options||[]).some(o=>o.area==='any');
+  // 贯石斧弃牌 or 制衡：自己的装备区芯片可点选（弃置装备区的牌）
+  const zhihengSel = idx===0 && curAsk && (curAsk.options||[]).some(o=>o.kind==='skill_zhiheng');
+  const axeSel = idx===0 && ((curAsk && curAsk.decisionType==='discard' && (curAsk.options||[]).some(o=>o.area==='any')) || zhihengSel);
   const eq = p.equips;
   const EQ_LABELS = { weapon:'武器', armor:'防具', horsePlus:'+1马', horseMinus:'-1马' };
   const eqStr = ['weapon','armor','horsePlus','horseMinus'].map(k=>{
@@ -155,6 +165,7 @@ function renderPlayer(idx, p, active) {
         if (selected.has(id)) selected.delete(id); else selected.add(id);
         el.classList.toggle('eq-selected');
         renderPromptMulti();
+        renderPlayConfirm(); // 制衡按钮的计数随装备选择刷新
       };
     });
   }
@@ -190,6 +201,8 @@ function renderHand() {
   prevHandIds = new Set(hand.map(c => c.id));
   const isMulti = curAsk && (curAsk.decisionType==='discard' || (curAsk.decisionType==='play' && curAsk.skill==='制衡') || (curAsk.options||[]).some(o=>o.kind==='skill_zhiheng'));
   const isPlay = isPlayAsk();
+  // 出牌阶段带制衡选项时：点选保持多选（可攒多张一起制衡），单选也能直接出牌
+  const zhihengMode = isPlay && !!(curAsk.options||[]).find(o=>o.kind==='skill_zhiheng');
   const isRespond = isRespondAsk();
   const comboMove = isPlay ? ((curAsk.options||[]).find(m => m.kind === 'sha_combo') || null) : null;
   const comboPool = (comboMove && comboMove.cardIds) || [];
@@ -203,7 +216,7 @@ function renderHand() {
   }
   $('hand0').innerHTML = hand.map(c => {
     // 可点性完全来自引擎计算结果：单牌动作cardId + 丈八组合池（前端不做规则推断）
-    const pickable = isPlay ? (playableIds.has(c.id) || comboPool.includes(c.id)) : isRespond ? respondIds.has(c.id) : isMulti;
+    const pickable = isPlay ? (playableIds.has(c.id) || comboPool.includes(c.id) || zhihengMode) : isRespond ? respondIds.has(c.id) : isMulti;
     const sel = (isMulti || isPlay || isRespond) && selected.has(c.id);
     return cardHtml(c, pickable, sel, fresh.includes(c.id), (isPlay || isRespond) && !pickable);
   }).join('');
@@ -211,11 +224,16 @@ function renderHand() {
     el.onclick = () => {
       const id = +el.dataset.id;
       if (isPlay || isRespond) {
+        // 制衡模式下点选为多选（攒牌一起换）；否则点选式单选
+        if (zhihengMode) {
+          if (selected.has(id)) { selected.delete(id); } else { selected.add(id); }
+        } else if (isPlay || isRespond) {
         // 点选式：单选；出牌阶段丈八在场时第二张不同手牌自动组对
         if (selected.has(id)) { selected.delete(id); }
         else if (selected.size === 1 && isPlay && comboMove) { selected.add(id); }
         else if (selected.size === 1) { selected.clear(); selected.add(id); }
         else { selected.clear(); selected.add(id); }
+        }
         renderHand(); renderPlayConfirm();
         return;
       }
@@ -235,6 +253,15 @@ function renderPlayConfirm() {
     b.textContent = m.uiLabel || '确认出牌';
     b.classList.add('confirm');
     b.onclick = () => submitMove(m);
+    box.appendChild(b);
+  }
+  // 制衡：出牌阶段点选若干手牌后发动（与出牌确认并列，选1张时两种按钮都在）
+  const zh = ((curAsk && curAsk.options) || []).find(m => m.kind === 'skill_zhiheng');
+  if (zh && selected.size > 0) {
+    const b = document.createElement('button');
+    b.textContent = `发动【制衡】弃${selected.size}张摸${selected.size}张`;
+    b.classList.add('confirm');
+    b.onclick = () => submitMove({ kind:'skill_zhiheng', cardIds:[...selected] });
     box.appendChild(b);
   }
   // 装备区来源的转化动作（武圣红装备当杀/响应）：不在手牌面板，平铺常驻按钮
@@ -280,7 +307,9 @@ function renderAsk(a) {
   if (isPlayAsk()) {
     // 点选式出牌：备选列表隐藏，仅作为可出性判定
     const tip = document.createElement('span');
-    tip.textContent = '点选下方要出的牌，然后确认打出；灰色牌当前不可出';
+    const canZhiheng = (a.options||[]).some(o=>o.kind==='skill_zhiheng');
+    tip.textContent = '点选下方要出的牌，然后确认打出；灰色牌当前不可出'
+      + (canZhiheng ? '；发动【制衡】时可点选自己的装备区（金框）' : '');
     tip.style.cssText = 'color:#999;font-size:12px;align-self:center';
     opts.appendChild(tip);
     const cbox = document.createElement('span');
@@ -291,6 +320,13 @@ function renderAsk(a) {
     endBtn.textContent = '结束出牌阶段';
     endBtn.onclick = () => submitMove({ kind: 'end' });
     opts.appendChild(endBtn);
+    const fanjian = (a.options||[]).find(o => o.kind === 'skill_fanjian');
+    if (fanjian) {
+      const fb = document.createElement('button');
+      fb.textContent = '发动【反间】';
+      fb.onclick = () => submitMove(fanjian);
+      opts.appendChild(fb);
+    }
   } else if (isRespondAsk()) {
     // 点选式响应：从手牌点选要打出的牌，确认打出
     const tip = document.createElement('span');
@@ -309,6 +345,27 @@ function renderAsk(a) {
       rb.onclick = () => submitMove(refuse);
       opts.appendChild(rb);
     }
+  } else if (a.decisionType==='guanxing') {
+    // 观星：一次性亮出全部牌，逐张点选 置于牌堆顶/牌堆底，然后确认
+    guanxingAssign = {};
+    (a.optionCards||[]).forEach(c => { guanxingAssign[c.id] = 'top'; });
+    const tip = document.createElement('span');
+    tip.textContent = '【观星】点击卡片切换 置于牌堆顶/牌堆底，然后确认';
+    tip.style.cssText = 'color:#999;font-size:12px;align-self:center';
+    opts.appendChild(tip);
+    const row = document.createElement('div');
+    row.id = 'gxrow';
+    row.style.cssText = 'display:flex;gap:12px;align-self:center;';
+    opts.appendChild(row);
+    const btn = document.createElement('button');
+    btn.textContent = '确认观星';
+    btn.onclick = () => {
+      const tops = [], bottoms = [];
+      for (const c of (a.optionCards||[])) (guanxingAssign[c.id]==='bottom' ? bottoms : tops).push(c.id);
+      submitMove({ kind: 'guanxing', tops, bottoms });
+    };
+    opts.appendChild(btn);
+    renderGuanxingRow();
   } else if (!multi) {
     for (const o of a.options) {
       const b = document.createElement('button');
@@ -325,6 +382,23 @@ function renderAsk(a) {
   }
   render(); renderPromptMulti();
 }
+function renderGuanxingRow() {
+  const row = $('gxrow'); if (!row || !curAsk) return;
+  row.innerHTML = (curAsk.optionCards||[]).map(c => {
+    const bottom = guanxingAssign[c.id]==='bottom';
+    return `<div class="gxcard" data-cid="${c.id}" style="cursor:pointer;text-align:center">`
+      + cardHtml(c, true, bottom ? c.id : null)
+      + `<div style="font-size:12px;margin-top:2px;color:${bottom?'#e6a23c':'#67c23a'}">${bottom?'牌堆底':'牌堆顶'}</div>`
+      + '</div>';
+  }).join('');
+  for (const el of row.querySelectorAll('.gxcard')) {
+    el.onclick = () => {
+      const id = +el.dataset.cid;
+      guanxingAssign[id] = guanxingAssign[id]==='top' ? 'bottom' : 'top';
+      renderGuanxingRow();
+    };
+  }
+}
 async function submitMove(move) {
   if (!curAsk) return;
   $('promptbar').innerHTML = '<div class="waiting">已提交，等待结算…</div>';
@@ -336,7 +410,8 @@ const es = new EventSource('/api/events');
 $('dbg').onchange = () => renderHand1(); // 勾选调试立即生效，不等下次state
 es.onmessage = (ev) => {
   const e = JSON.parse(ev.data);
-  if (e.type==='state') {
+  if (e.type==='hello') { $('btnSave').disabled = !e.running; $('envBadge').classList.toggle('hidden', e.env !== 'test'); }
+  else if (e.type==='state') {
     state = e.state; render();
     seedLog(state.log, state.logSeq);
   }
@@ -353,8 +428,9 @@ es.onmessage = (ev) => {
   else if (e.type==='askDone') { $('aiThinking').classList.add('hidden'); }
   else if (e.type==='gameStart') {
     $('log').innerHTML = ''; lastLogSeq = 0;
-    addLog('=== 对局开始 ===');
+    addLog(e.resumed ? '=== 恢复对局 ===' : '=== 对局开始 ===');
     $('btnStart').disabled = false;
+    $('btnSave').disabled = false;
     $('btnStart').textContent = '重新开局';
     $('overOverlay').classList.add('hidden');
     curAsk = null; selected = new Set();
@@ -364,10 +440,23 @@ es.onmessage = (ev) => {
   }
   else if (e.type==='gameOver') {
     $('btnStart').disabled = false;
+    $('btnSave').disabled = true;
     $('btnStart').textContent = '开始对局';
     $('overOverlay').classList.remove('hidden');
     $('overText').textContent = e.winner===0 ? '🎉 你赢了！' : '💀 AI 获胜';
     if (state) render();
+  }
+  else if (e.type==='gameSaved') {
+    $('btnStart').disabled = false;
+    $('btnSave').disabled = true;
+    $('btnStart').textContent = '开始对局';
+    $('phaseInfo').textContent = '已存档，可下次继续';
+    curAsk = null; $('promptbar').innerHTML = '<div class="waiting">对局已保存，下次可继续</div>';
+    $('aiThinking').classList.add('hidden');
+  }
+  else if (e.type==='gameAbandoned') {
+    $('btnStart').disabled = false;
+    $('btnSave').disabled = true;
   }
   else if (e.type==='error') addLog('!! '+e.msg, true);
 };
@@ -398,6 +487,59 @@ $('btnStart').onclick = async () => {
   const j = await r.json();
   if (!j.ok) { alert(j.error); $('btnStart').disabled = false; }
 };
+$('btnSave').onclick = async () => {
+  if (!confirm('保存当前对局并退出？之后可随时继续。')) return;
+  $('btnSave').disabled = true;
+  const r = await fetch('/api/save', {method:'POST'});
+  const j = await r.json();
+  if (!j.ok) { alert(j.error); $('btnSave').disabled = false; }
+};
+// 页面加载：有存档则弹出继续对局入口
+(async () => {
+  try {
+    const r = await fetch('/api/saves');
+    const j = await r.json();
+    const saves = (j.saves || []).filter(s => !s.broken);
+    if (!saves.length) return;
+    const box = $('saveList');
+    for (const s of saves) {
+      const when = s.savedAt ? new Date(s.savedAt).toLocaleString('zh-CN') : s.name;
+      const desc = (s.generals && s.generals.length === 2)
+        ? `${s.generals[0]}(${s.hp ? s.hp[0] : '?'}血) vs ${s.generals[1]}(${s.hp ? s.hp[1] : '?'}血) · 第${s.turnNo}回合 · ${when}`
+        : when;
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;gap:8px;align-items:center;background:#1c2a1c;border:1px solid #3a5a3a;border-radius:6px;padding:8px 12px;';
+      const info = document.createElement('span');
+      info.textContent = desc;
+      info.style.cssText = 'color:#cde;font-size:13px;flex:1;text-align:left;';
+      const btn = document.createElement('button');
+      btn.textContent = '继续对局';
+      btn.onclick = async () => {
+        btn.disabled = true;
+        const rr = await fetch('/api/resume', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name:s.name})});
+        const jj = await rr.json();
+        if (!jj.ok) { alert(jj.error); btn.disabled = false; return; }
+        $('resumeOverlay').classList.add('hidden');
+      };
+      const del = document.createElement('button');
+      del.textContent = '删除';
+      del.className = 'danger';
+      del.onclick = async () => {
+        if (!confirm(`确认删除存档「${desc}」？删除后不可恢复。`)) return;
+        const rr = await fetch('/api/delete_save', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name:s.name})});
+        const jj = await rr.json();
+        if (!jj.ok) { alert(jj.error); return; }
+        row.remove();
+        if (!box.children.length) $('resumeOverlay').classList.add('hidden');
+      };
+      row.appendChild(info);
+      row.appendChild(del);
+      row.appendChild(btn);
+      box.appendChild(row);
+    }
+    $('resumeOverlay').classList.remove('hidden');
+  } catch (e) {}
+})();
 $('dbg').onchange = () => renderHand1();
 $('modelInfo').textContent = '';
 </script>
