@@ -350,10 +350,6 @@ function renderAsk(a) {
     // 观星：一次性亮出全部牌，拖拽分配到 牌堆顶/牌堆底 两栏（栏内可换位调序），然后确认
     guanxingTop = (a.optionCards||[]).map(c => c.id);
     guanxingBottom = [];
-    const tip = document.createElement('span');
-    tip.textContent = '【观星】拖拽卡片到「牌堆顶/牌堆底」栏放入，拖到某张牌上交换位置；点击卡片也可切换，然后确认';
-    tip.style.cssText = 'color:#999;font-size:12px;align-self:center';
-    opts.appendChild(tip);
     const row = document.createElement('div');
     row.id = 'gxrow';
     row.style.cssText = 'display:flex;gap:12px;align-self:center;align-items:stretch';
