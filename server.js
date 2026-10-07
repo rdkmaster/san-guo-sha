@@ -141,6 +141,7 @@ async function startGame(resumeData = null) {
   });
   // 固定种子是存档/恢复的根基：牌堆洗牌、随机兜底全部由种子重现
   const seed = resumeData ? resumeData.seed : Math.floor(Math.random() * 0x7fffffff);
+  const aiTiming = {}; // 分决策类型耗时统计：{type: {n, totalMs}}
   game = new Game({
     seed,
     ...(resumeData ? {
@@ -151,8 +152,15 @@ async function startGame(resumeData = null) {
     } : {}),
     ask: async (d) => {
       if (d.playerIdx === 1) {
+        // 思考时间优化：低价值二元触发技不进LLM（确定性答案，AI/人类玩家询问逻辑不变）
+        if (d.type === 'skill_ask' && (d.skill === '英姿' || d.skill === '集智')) {
+          return { kind: 'activate', skill: d.skill };
+        }
         broadcast({ type: 'aiThinking', phase: d.type });
+        const t0 = Date.now();
         const action = await ai.decide(d.stateMd, m => broadcast({ type: 'ailog', msg: m }));
+        const st = (aiTiming[d.type] = aiTiming[d.type] || { n: 0, totalMs: 0 });
+        st.n++; st.totalMs += Date.now() - t0;
         return action; // 引擎负责映射+校验+兜底
       }
       return await askHuman(d);
@@ -183,6 +191,11 @@ async function startGame(resumeData = null) {
       return;
     }
     appendGameLog(`\n对局结束：${game.players[w] ? game.players[w].general + '（侧' + w + '）' : w} 获胜`);
+    // AI耗时统计：分决策类型的调用次数与平均耗时（定位思考时间大头）
+    const timingSummary = Object.entries(aiTiming)
+      .map(([t, s]) => `${t}=${s.n}次/平均${(s.totalMs / s.n / 1000).toFixed(1)}s`)
+      .join(' | ');
+    if (timingSummary) appendGameLog(`AI思考统计：${timingSummary}`);
     broadcast({ type: 'gameOver', winner: w, winnerName: game.players[w] ? game.players[w].general : null });
   }).catch(err => {
     if (gen !== gameGen) return;

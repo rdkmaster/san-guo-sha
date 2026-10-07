@@ -1208,6 +1208,11 @@ class Game {
 
   // ---------- 决策统一入口（AI动作映射 + 校验 + 重问 + 兜底） ----------
   async askPlayer(p, decision) {
+    // 思考时间优化：没有选择余地的决策不询问，本地直接执行（求闪无闪→不响应、无可出牌→结束等）
+    // 例外：discard（playable唯一但真实选择是"弃哪张"）、guanxing（唯一playable但真实选择是分配方案）
+    if (decision.playable.length === 1 && !['discard', 'guanxing'].includes(decision.playable[0].kind)) {
+      return decision.playable[0];
+    }
     const maxTry = 3;
     let lastAction = null;
     for (let i = 0; i < maxTry; i++) {
