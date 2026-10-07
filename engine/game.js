@@ -1083,15 +1083,23 @@ class Game {
 
   // ---------- 响应类询问 ----------
   async askDodge(user, target, attempt, need, reason) {
-    // 八卦阵（自动判定；青釭剑无视防具）
+    // 八卦阵（可选判定：先询问是否发动，拒绝则直接进入手牌【闪】询问；青釭剑无视防具）
     const pierce = user && user.equips.weapon && user.equips.weapon.name === '青釭剑';
-    if (!pierce && target.equips.armor && target.equips.armor.name === '八卦阵') {
-      const jc = this.drawOne();
-      if (jc) {
-        this.log(`${target.general} 发动【八卦阵】判定：${cardName(jc)}`);
-        this.toDiscard(jc);
-        if (isRed(jc)) { this.log('八卦阵判定成功，视为使用【闪】'); return true; }
-        this.log('八卦阵判定失败');
+    if (!pierce && target.equips.armor && target.equips.armor.name === '八卦阵' && this.drawPile.length + this.discardPile.length > 0) {
+      const decision = {
+        playerIdx: target.idx, type: 'skill_ask', skill: '八卦阵',
+        playable: [{ kind: 'activate', skill: '八卦阵' }, { kind: 'skip', skill: '八卦阵' }],
+        context: { question: `是否发动【八卦阵】进行判定（红色视为打出【闪】响应${reason}）？` },
+      };
+      const m = await this.askPlayer(target, decision);
+      if (m && m.kind === 'activate') {
+        const jc = this.drawOne();
+        if (jc) {
+          this.log(`${target.general} 发动【八卦阵】判定：${cardName(jc)}`);
+          this.toDiscard(jc);
+          if (isRed(jc)) { this.log('八卦阵判定成功，视为使用【闪】'); return true; }
+          this.log('八卦阵判定失败');
+        }
       }
     }
     const shans = target.hand.filter(c => c.name === '闪');

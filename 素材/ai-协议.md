@@ -74,10 +74,10 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 | `choose` | 五谷选牌 / 火攻展示手牌 / 拆桥·顺牵选区域 / 雌雄双股剑弃牌 | `choose`(card选牌 或 choice选区域hand/equip/judge) / `skip`(雌雄：让对方摸1) |
 | `guanxing` | 观星分配：一次亮出的牌必须逐张指定位置 | `guanxing`(tops=置于牌堆顶的编号数组, bottoms=置于牌堆底的编号数组，两数组恰好分完所有亮出的牌) |
 | `fanjian_suit` | 你是反间目标，选一种花色 | `fanjian_suit`(suit=♥/♠/♣/♦) |
-| `skill_ask` | 触发技/装备技询问：奸雄、集智、火攻烧牌、青龙偃月刀、寒冰剑、麒麟弓、贯石斧、观星 | `activate`(发动，可带card) / `skip` |
+| `skill_ask` | 触发技/装备技询问：奸雄、集智、火攻烧牌、青龙偃月刀、寒冰剑、麒麟弓、贯石斧、观星、八卦阵 | `activate`(发动，可带card) / `skip` |
 | `daodao` | 你是借刀杀人的目标（你有武器且有杀） | `daodao_sha`(出杀) / `daodao_give`(交武器) |
 
-引擎简化项（MVP，AI无需操心）：八卦阵需要闪时自动判定；无懈可击只询问被影响者一次；铁索连环不在牌堆中；方天画戟在1v1中无额外目标可指定（仅作为范围4武器生效）。
+引擎简化项（MVP，AI无需操心）：无懈可击只询问被影响者一次；铁索连环不在牌堆中；方天画戟在1v1中无额外目标可指定（仅作为范围4武器生效）。
 
 ## 3. 动作输出契约（AI必须输出的JSON）
 
