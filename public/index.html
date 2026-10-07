@@ -100,7 +100,8 @@
 const $ = id => document.getElementById(id);
 let state = null;
 let curAsk = null;
-let guanxingAssign = {}; // 观星：cardId -> 'top' | 'bottom'
+let guanxingTop = [];  // 观星：牌堆顶的牌id，数组顺序即最终叠放顺序（左侧最先被摸到）
+let guanxingBottom = []; // 观星：牌堆底的牌id，数组顺序即最终叠放顺序（左侧更靠近牌堆中段）
 let selected = new Set();
 
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
@@ -346,24 +347,20 @@ function renderAsk(a) {
       opts.appendChild(rb);
     }
   } else if (a.decisionType==='guanxing') {
-    // 观星：一次性亮出全部牌，逐张点选 置于牌堆顶/牌堆底，然后确认
-    guanxingAssign = {};
-    (a.optionCards||[]).forEach(c => { guanxingAssign[c.id] = 'top'; });
+    // 观星：一次性亮出全部牌，拖拽分配到 牌堆顶/牌堆底 两栏（栏内可换位调序），然后确认
+    guanxingTop = (a.optionCards||[]).map(c => c.id);
+    guanxingBottom = [];
     const tip = document.createElement('span');
-    tip.textContent = '【观星】点击卡片切换 置于牌堆顶/牌堆底，然后确认';
+    tip.textContent = '【观星】拖拽卡片到「牌堆顶/牌堆底」栏放入，拖到某张牌上交换位置；点击卡片也可切换，然后确认';
     tip.style.cssText = 'color:#999;font-size:12px;align-self:center';
     opts.appendChild(tip);
     const row = document.createElement('div');
     row.id = 'gxrow';
-    row.style.cssText = 'display:flex;gap:12px;align-self:center;';
+    row.style.cssText = 'display:flex;gap:12px;align-self:center;align-items:stretch';
     opts.appendChild(row);
     const btn = document.createElement('button');
     btn.textContent = '确认观星';
-    btn.onclick = () => {
-      const tops = [], bottoms = [];
-      for (const c of (a.optionCards||[])) (guanxingAssign[c.id]==='bottom' ? bottoms : tops).push(c.id);
-      submitMove({ kind: 'guanxing', tops, bottoms });
-    };
+    btn.onclick = () => submitMove({ kind: 'guanxing', tops: guanxingTop.slice(), bottoms: guanxingBottom.slice() });
     opts.appendChild(btn);
     renderGuanxingRow();
   } else if (!multi) {
@@ -382,21 +379,89 @@ function renderAsk(a) {
   }
   render(); renderPromptMulti();
 }
+function gxCardHtml(c, inBottom) {
+  if (!c) return '';
+  return `<div class="gxcard" draggable="true" data-cid="${c.id}" style="cursor:grab;text-align:center">`
+    + cardHtml(c, true, inBottom ? c.id : null)
+    + '</div>';
+}
 function renderGuanxingRow() {
   const row = $('gxrow'); if (!row || !curAsk) return;
-  row.innerHTML = (curAsk.optionCards||[]).map(c => {
-    const bottom = guanxingAssign[c.id]==='bottom';
-    return `<div class="gxcard" data-cid="${c.id}" style="cursor:pointer;text-align:center">`
-      + cardHtml(c, true, bottom ? c.id : null)
-      + `<div style="font-size:12px;margin-top:2px;color:${bottom?'#e6a23c':'#67c23a'}">${bottom?'牌堆底':'牌堆顶'}</div>`
-      + '</div>';
-  }).join('');
+  const byId = new Map((curAsk.optionCards||[]).map(c => [c.id, c]));
+  const zone = (z, title, ids, color, hint) => `
+    <div class="gxzone" data-zone="${z}" style="display:flex;flex-direction:column;gap:4px;padding:6px 8px;border:1.5px dashed ${color};border-radius:6px;min-height:168px">
+      <div style="font-size:12px;color:${color};text-align:center">${title}　<span style="color:#789">${hint}</span></div>
+      <div class="gxcards" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">${ids.map(id => gxCardHtml(byId.get(id), z==='bottom')).join('')}</div>
+    </div>`;
+  row.innerHTML = zone('top', '牌堆顶', guanxingTop, '#67c23a', '左→右＝先摸→后摸')
+    + zone('bottom', '牌堆底', guanxingBottom, '#e6a23c', '左→右＝靠上→贴底');
+  bindGuanxingDnD(row);
+}
+// 观星拖拽：拖到栏空白处＝移入该栏末尾；拖到某张牌上＝与目标交换位置（可跨栏）；点击＝切换栏
+function bindGuanxingDnD(row) {
+  let dragId = null;
+  const clearMarks = () => {
+    for (const z of row.querySelectorAll('.gxzone')) z.style.background = '';
+    for (const c of row.querySelectorAll('.gxcard')) c.style.outline = '';
+  };
   for (const el of row.querySelectorAll('.gxcard')) {
     el.onclick = () => {
       const id = +el.dataset.cid;
-      guanxingAssign[id] = guanxingAssign[id]==='top' ? 'bottom' : 'top';
+      const toBottom = el.closest('.gxzone').dataset.zone === 'top';
+      gxMove(id, toBottom ? 'bottom' : 'top');
       renderGuanxingRow();
     };
+    el.addEventListener('dragstart', e => {
+      dragId = +el.dataset.cid;
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', String(dragId)); } catch(_) {}
+    });
+    el.addEventListener('dragend', () => { dragId = null; clearMarks(); });
+    el.addEventListener('dragover', e => {
+      if (dragId === null || dragId === +el.dataset.cid) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      el.style.outline = '2px dashed #ffd700';
+    });
+    el.addEventListener('dragleave', () => { el.style.outline = ''; });
+    el.addEventListener('drop', e => {
+      e.preventDefault(); e.stopPropagation();
+      const targetId = +el.dataset.cid;
+      if (dragId !== null && dragId !== targetId) gxSwap(dragId, targetId);
+      dragId = null; clearMarks();
+      renderGuanxingRow();
+    });
+  }
+  for (const z of row.querySelectorAll('.gxzone')) {
+    z.addEventListener('dragover', e => {
+      if (dragId === null) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      z.style.background = 'rgba(255,215,0,.08)';
+    });
+    z.addEventListener('dragleave', () => { z.style.background = ''; });
+    z.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragId !== null) gxMove(dragId, z.dataset.zone);
+      dragId = null; clearMarks();
+      renderGuanxingRow();
+    });
+  }
+}
+function gxMove(id, zone) { // 移入指定栏末尾
+  guanxingTop = guanxingTop.filter(x => x !== id);
+  guanxingBottom = guanxingBottom.filter(x => x !== id);
+  (zone === 'bottom' ? guanxingBottom : guanxingTop).push(id);
+}
+function gxSwap(a, b) { // 交换两张牌的位置（可跨栏，各自留在原栏序位）
+  const ta = guanxingTop.includes(a) ? guanxingTop : guanxingBottom;
+  const tb = guanxingTop.includes(b) ? guanxingTop : guanxingBottom;
+  if (ta === tb) {
+    const i = ta.indexOf(a), j = ta.indexOf(b);
+    [ta[i], ta[j]] = [ta[j], ta[i]];
+  } else {
+    const i = ta.indexOf(a), j = tb.indexOf(b);
+    ta[i] = b; tb[j] = a;
   }
 }
 async function submitMove(move) {
