@@ -36,7 +36,7 @@ function check(logs) {
         const N = logs[j];
         if (/^白银狮子.*未受到伤害/.test(N)) { replaced = true; break; } // 白银减为0：本就无伤害行
         if (/^火杀\+藤甲/.test(N) || /^古锭刀/.test(N) || /^白银狮子/.test(N)
-          || N.includes('失去装备区的【白银狮子】')) { j++; continue; } // 伤害修正/白银狮子相关行：跳过
+          || N.includes('失去装备区的【白银狮子】') || /^【裸衣】/.test(N)) { j++; continue; } // 伤害修正/白银狮子/裸衣相关行：跳过
         if (/发动【寒冰剑】/.test(N)) { replaced = true; break; }
         break;
       }

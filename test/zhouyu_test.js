@@ -86,6 +86,7 @@ async function main() {
     opp.hp = 4;
     g.ask = async (dd) => {
       if (dd.type === 'fanjian_suit') return { kind: 'fanjian_suit', suit: '♥' };
+      if (dd.type === 'choose') return { kind: 'chooseCard', cardId: heartTao.id }; // 交给红桃
       return { kind: 'end' };
     };
     await g.executePlay(p0, { kind: 'skill_fanjian' });

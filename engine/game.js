@@ -14,6 +14,7 @@ const GENERALS = {
   '甘宁':   { hp: 4, kingdom: '吴', gender: 'm', skills: ['奇袭'] },
   '诸葛亮': { hp: 3, kingdom: '蜀', gender: 'm', skills: ['观星', '空城'] },
   '周瑜':   { hp: 3, kingdom: '吴', gender: 'm', skills: ['英姿', '反间'] },
+  '许褚':   { hp: 4, kingdom: '魏', gender: 'm', skills: ['裸衣'] },
 };
 
 const SKILL_TEXTS = {
@@ -30,6 +31,7 @@ const SKILL_TEXTS = {
   '空城': '锁定技。若你没有手牌，你不能成为【杀】或【决斗】的目标。',
   '英姿': '摸牌阶段，你可以多摸一张牌。',
   '反间': '出牌阶段限一次。你可以令一名其他角色选择一种花色，然后该角色获得你的一张手牌并展示之，若此牌花色与其所选不同，你对其造成1点伤害。',
+  '裸衣': '摸牌阶段，你可以少摸一张牌。若如此做，你本回合使用的【杀】和【决斗】造成的伤害+1。',
 };
 
 const DISCARD_MEMORY = 8; // 弃牌堆可见张数（模拟人类记忆上限）
@@ -122,7 +124,7 @@ class Game {
         idx, general: name, kingdom: g.kingdom, gender: g.gender, skills: g.skills,
         hp: g.hp, maxHp: g.hp,
         hand: [], equips: { weapon: null, armor: null, horsePlus: null, horseMinus: null },
-        judge: [], shaUsed: 0, jiuUsed: 0, zhihengUsed: false, fanjianUsed: false,
+        judge: [], shaUsed: 0, jiuUsed: 0, zhihengUsed: false, fanjianUsed: false, luoyi: false,
         skipPlay: false, skipDraw: false, drunken: false,
       };
     };
@@ -289,7 +291,7 @@ class Game {
     const p = this.players[idx];
     this.turnNo++;
     this.turnPlayer = p;
-    p.shaUsed = 0; p.jiuUsed = 0; p.zhihengUsed = false; p.fanjianUsed = false; p.drunken = false;
+    p.shaUsed = 0; p.jiuUsed = 0; p.zhihengUsed = false; p.fanjianUsed = false; p.luoyi = false; p.drunken = false;
     p.skipPlay = false; p.skipDraw = false;
     const isFirstTurn = (idx === this.first && this.turnNo === 1);
     this.log(`—— 第${this.turnNo}回合：${p.general}（${p.hp}/${p.maxHp}）——`);
@@ -319,14 +321,26 @@ class Game {
       const ym = await this.askPlayer(p, yd);
       if (ym && ym.kind === 'activate') yingziDraw = 1;
     }
+    let luoyiDraw = 0;
+    if (p.skills.includes('裸衣') && !p.skipDraw) {
+      // 裸衣是可选技：少摸一张换本回合杀/决斗伤害+1
+      const ld = {
+        playerIdx: p.idx, type: 'skill_ask', skill: '裸衣',
+        playable: [{ kind: 'activate', skill: '裸衣' }, { kind: 'skip', skill: '裸衣' }],
+        context: { question: '是否发动【裸衣】少摸一张牌（本回合【杀】和【决斗】伤害+1）？' },
+      };
+      const lm = await this.askPlayer(p, ld);
+      if (lm && lm.kind === 'activate') { luoyiDraw = -1; p.luoyi = true; }
+    }
     if (p.skipDraw) { this.log(`${p.general} 跳过摸牌阶段`); }
     else if (isFirstTurn) {
       // 官方1v1平衡规则：先手第一回合摸牌阶段少摸一张
-      const n = this.draw(p, 1 + yingziDraw);
+      const n = this.draw(p, 1 + yingziDraw + luoyiDraw);
       this.log(`${p.general} 先手第一回合，摸牌阶段少摸一张（摸${n}张）`);
     } else {
-      const n = this.draw(p, 2 + yingziDraw);
-      this.log(`${p.general} 摸${n}张牌${yingziDraw ? '（英姿：多摸一张）' : ''}`);
+      const n = this.draw(p, 2 + yingziDraw + luoyiDraw);
+      const why = yingziDraw ? '（英姿：多摸一张）' : (p.luoyi ? '（裸衣：少摸一张，本回合杀/决斗伤害+1）' : '');
+      this.log(`${p.general} 摸${n}张牌${why}`);
     }
     this.emitState();
 
@@ -748,6 +762,7 @@ class Game {
       }
       if (!dodged && !this.over) {
         let dmg = 1 + jiuBonus;
+        if (p.luoyi) { dmg += 1; this.log('【裸衣】：【杀】伤害+1'); }
         if (isFire && !pierce && opp.equips.armor && opp.equips.armor.name === '藤甲') { dmg += 1; this.log('火杀+藤甲：伤害+1'); }
         if (p.equips.weapon && p.equips.weapon.name === '古锭刀' && opp.hand.length === 0) { dmg += 1; this.log('古锭刀：目标无手牌，伤害+1'); }
         // 寒冰剑：防伤害改为弃两张牌
@@ -954,7 +969,9 @@ class Game {
             if (!ok) { out = false; break; }
           }
           if (!out) {
-            await this.dealDamage(asker, 1, { source: otherSide, card });
+            const d = otherSide.luoyi ? 2 : 1; // 裸衣：决斗伤害+1（伤害来源是决斗使用者）
+            if (otherSide.luoyi) this.log('【裸衣】：【决斗】伤害+1');
+            await this.dealDamage(asker, d, { source: otherSide, card });
             break;
           }
           [asker, otherSide] = [otherSide, asker];
@@ -1414,6 +1431,7 @@ class Game {
       const parts = [`杀 ${p.shaUsed}${this.shaUnlimited(p) ? '（无限制）' : '/1'}`, `酒 ${p.jiuUsed}/1`];
       if (p.skills.includes('制衡')) parts.push(`制衡 ${p.zhihengUsed ? '已用' : '未用'}`);
       if (p.skills.includes('反间')) parts.push(`反间 ${p.fanjianUsed ? '已用' : '未用'}`);
+      if (p.luoyi) L.push('- 你已发动【裸衣】：本回合你的【杀】/【决斗】伤害+1');
       L.push(`- 你本回合已用: ${parts.join(' | ')}`);
       if (p.drunken) L.push('- 你已使用【酒】：下一张【杀】伤害+1');
     }
