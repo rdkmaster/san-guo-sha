@@ -49,6 +49,24 @@ async function main() {
   check('黄月英手牌数正确（4-1无懈+1集智=4）', p1.hand.length === 4);
   check('牌数守恒154', g.invariant().ok);
 
+  // ── B. 官方规则：延时锦囊不是普通锦囊，使用乐不思蜀不触发集智 ──
+  {
+    const g2 = new Game({ seed: 22, generals: ['黄月英', '甘宁'], first: 0, ask: async d => d.playable[0] });
+    g2.setup();
+    const p0 = g2.players[0], opp = g2.players[1];
+    const les = (() => { const i = g2.drawPile.findIndex(c => c.name === '乐不思蜀'); return g2.drawPile.splice(i, 1)[0]; })();
+    p0.hand.push(les);
+    let jizhiAsked = false;
+    g2.ask = async (d) => {
+      if (d.type === 'skill_ask' && d.skill === '集智') { jizhiAsked = true; return { kind: 'activate', skill: '集智' }; }
+      return d.playable[0];
+    };
+    await g2.executePlay(p0, { kind: 'play', cardId: les.id, targets: [1] });
+    check('延时锦囊：使用乐不思蜀不询问集智', !jizhiAsked);
+    check('延时锦囊：乐不思蜀正常进入甘宁判定区', opp.judge.some(c => c.name === '乐不思蜀'));
+    check('延时锦囊：牌数守恒154', g2.invariant().ok);
+  }
+
   console.log(`结果：${pass} 通过 / ${fail} 失败`);
   process.exit(fail ? 1 : 0);
 }

@@ -24,7 +24,7 @@ const SKILL_TEXTS = {
   '无双': '锁定技。你使用【杀】指定目标后，目标需连续使用两张【闪】抵消；与你决斗的角色每次需先打出两张【杀】。',
   '奸雄': '当你受到伤害后，你可以获得造成此伤害的牌。',
   '制衡': '出牌阶段限一次。你可以弃置任意张手牌，然后摸等量的牌。',
-  '集智': '当你使用锦囊牌时，你可以摸一张牌。',
+  '集智': '当你使用普通锦囊牌时，你可以摸一张牌。注意：延时锦囊（乐不思蜀/闪电/兵粮寸断）不是普通锦囊，使用它们不触发集智。',
   '奇才': '锁定技。你使用锦囊牌无距离限制。',
   '奇袭': '你可以将一张黑色牌当【过河拆桥】使用。',
   '观星': '准备阶段开始时，你可以观看牌堆顶的两张牌（存活角色数），将其中任意张置于牌堆顶，其余置于牌堆底。',
@@ -883,8 +883,8 @@ class Game {
     const opp = this.other(p);
     const name = useAs;
     this.log(`${p.general} 使用【${name}】${useAs !== card.name ? `（${cardName(card)}转化）` : ''}`);
-    // 集智
-    if (p.skills.includes('集智')) {
+    // 集智：官方规则只在使用【普通锦囊牌】时触发，延时锦囊（乐不思蜀/闪电等）不算
+    if (p.skills.includes('集智') && card.category === '锦囊牌') {
       const decision = {
         playerIdx: p.idx, type: 'skill_ask', skill: '集智',
         playable: [{ kind: 'activate', skill: '集智' }, { kind: 'skip', skill: '集智' }],
