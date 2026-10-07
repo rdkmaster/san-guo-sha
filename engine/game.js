@@ -15,6 +15,7 @@ const GENERALS = {
   '诸葛亮': { hp: 3, kingdom: '蜀', gender: 'm', skills: ['观星', '空城'] },
   '周瑜':   { hp: 3, kingdom: '吴', gender: 'm', skills: ['英姿', '反间'] },
   '许褚':   { hp: 4, kingdom: '魏', gender: 'm', skills: ['裸衣'] },
+  '司马懿': { hp: 3, kingdom: '魏', gender: 'm', skills: ['反馈', '鬼才'] },
 };
 
 const SKILL_TEXTS = {
@@ -32,6 +33,8 @@ const SKILL_TEXTS = {
   '英姿': '摸牌阶段，你可以多摸一张牌。',
   '反间': '出牌阶段限一次。你可以令一名其他角色选择一种花色，然后该角色获得你的一张手牌并展示之，若此牌花色与其所选不同，你对其造成1点伤害。',
   '裸衣': '摸牌阶段，你可以少摸一张牌。若如此做，你本回合使用的【杀】和【决斗】造成的伤害+1。',
+  '反馈': '当你受到伤害后，你可以获得伤害来源的一张牌（手牌随机一张，或自选装备区一张）。',
+  '鬼才': '一名角色的判定牌生效前，你可以打出一张手牌代替之。',
 };
 
 const DISCARD_MEMORY = 8; // 弃牌堆可见张数（模拟人类记忆上限）
@@ -388,6 +391,28 @@ class Game {
   }
 
   // ---------- 判定区结算 ----------
+  // 鬼才：判定牌生效前，司马懿可打出手牌代替之（1v1至多一名司马懿，改判后原判定牌进弃牌堆）
+  async guicai(judgeOwner, jc) {
+    const sima = [judgeOwner, this.other(judgeOwner)].find(q => q.skills.includes('鬼才') && q.hand.length > 0);
+    if (!sima || this.over || this.aborted) return null;
+    const decision = {
+      playerIdx: sima.idx, type: 'skill_ask', skill: '鬼才',
+      playable: [{ kind: 'activate', skill: '鬼才' }, { kind: 'skip', skill: '鬼才' }],
+      context: { question: `【鬼才】判定牌为 ${cardName(jc)}，是否打出手牌代替之？` },
+    };
+    const m = await this.askPlayer(sima, decision);
+    if (m && m.kind === 'activate') {
+      const c = await this.askPick(sima, sima.hand, '【鬼才】打出一手牌作为新的判定牌');
+      if (c) {
+        sima.hand = sima.hand.filter(x => x !== c);
+        this.toDiscard(jc);
+        this.log(`${sima.general} 发动【鬼才】，用${cardName(c)}代替判定牌`);
+        return c;
+      }
+    }
+    return null;
+  }
+
   async resolveDelayed(p, card) {
     p.judge = p.judge.filter(c => c !== card);
     // 官方规则：判定区的延时锦囊在判定结算前，可被【无懈可击】抵消（抵消则无判定、无效果）
@@ -396,9 +421,11 @@ class Game {
       this.log(`${p.general} 判定区的【${card.name}】被抵消，无判定无效果`);
       return;
     }
-    const jc = this.drawOne();
-    if (!jc) { this.toDiscard(card); return; }
-    this.log(`${p.general} 判定【${card.name}】→ ${cardName(jc)}`);
+    const jc0 = this.drawOne();
+    if (!jc0) { this.toDiscard(card); return; }
+    this.log(`${p.general} 判定【${card.name}】→ ${cardName(jc0)}`);
+    const mod = await this.guicai(p, jc0);
+    const jc = mod || jc0;
     if (card.name === '乐不思蜀') {
       if (jc.suit !== '♥') { p.skipPlay = true; this.log('判定牌非红桃：跳过出牌阶段'); }
       else this.log('判定牌为红桃：无效果');
@@ -447,6 +474,34 @@ class Game {
         this.limbo.delete(card);
         target.hand.push(card);
         this.log(`${target.general} 发动【奸雄】获得${cardName(card)}`);
+      }
+    }
+    // 反馈：受到伤害后，可获得伤害来源的一张牌（手牌随机一张/装备区自选）
+    if (target.skills.includes('反馈') && source && source !== target && !this.over && !this.aborted && this.hasCards(source)) {
+      const decision = {
+        playerIdx: target.idx, type: 'skill_ask', skill: '反馈',
+        playable: [{ kind: 'activate', skill: '反馈' }, { kind: 'skip', skill: '反馈' }],
+        context: { question: `是否发动【反馈】获得${source.general}的一张牌？` },
+      };
+      const m = await this.askPlayer(target, decision);
+      if (m && m.kind === 'activate') {
+        const area = await this.askArea(target, source, '反馈');
+        if (area === 'equip') {
+          const equips = Object.values(source.equips).filter(Boolean);
+          const e = await this.askPick(target, equips, '【反馈】选择要获得的装备牌');
+          if (e) {
+            for (const [k, v] of Object.entries(source.equips)) if (v === e) source.equips[k] = null;
+            this.onLoseEquip(source, e);
+            target.hand.push(e);
+            this.log(`${target.general} 发动【反馈】，获得${source.general}装备区的${cardName(e)}`);
+          }
+        } else {
+          const c = source.hand[Math.floor(this.rng() * source.hand.length)]; // 手牌区：随机一张（正面朝下摸）
+          source.hand = source.hand.filter(x => x !== c);
+          target.hand.push(c);
+          this.log(`${target.general} 发动【反馈】，获得${source.general}的${cardName(c)}`);
+        }
+        this.emitState();
       }
     }
     if (target.hp <= 0) await this.dying(target);
@@ -1110,9 +1165,11 @@ class Game {
       };
       const m = await this.askPlayer(target, decision);
       if (m && m.kind === 'activate') {
-        const jc = this.drawOne();
-        if (jc) {
-          this.log(`${target.general} 发动【八卦阵】判定：${cardName(jc)}`);
+        const jc0 = this.drawOne();
+        if (jc0) {
+          this.log(`${target.general} 发动【八卦阵】判定：${cardName(jc0)}`);
+          const mod = await this.guicai(target, jc0);
+          const jc = mod || jc0;
           this.toDiscard(jc);
           if (isRed(jc)) { this.log('八卦阵判定成功，视为使用【闪】'); return true; }
           this.log('八卦阵判定失败');
