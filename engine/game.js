@@ -16,6 +16,7 @@ const GENERALS = {
   '周瑜':   { hp: 3, kingdom: '吴', gender: 'm', skills: ['英姿', '反间'] },
   '许褚':   { hp: 4, kingdom: '魏', gender: 'm', skills: ['裸衣'] },
   '司马懿': { hp: 3, kingdom: '魏', gender: 'm', skills: ['反馈', '鬼才'] },
+  '关银屏': { hp: 3, kingdom: '蜀', gender: 'f', skills: ['虎啸', '将门'] }, // 自创武将（标准版风格）
 };
 
 const SKILL_TEXTS = {
@@ -35,6 +36,8 @@ const SKILL_TEXTS = {
   '裸衣': '摸牌阶段，你可以少摸一张牌。若如此做，你本回合使用的【杀】和【决斗】造成的伤害+1。',
   '反馈': '当你受到伤害后，你可以获得伤害来源的一张牌（手牌随机一张，或自选装备区一张）。',
   '鬼才': '一名角色的判定牌生效前，你可以打出一张手牌代替之。',
+  '虎啸': '准备阶段，你可以展示牌堆顶的三张牌，获得其中的红色牌，将其余的牌置入弃牌堆。',
+  '将门': '锁定技。你的手牌上限+1。',
 };
 
 const DISCARD_MEMORY = 8; // 弃牌堆可见张数（模拟人类记忆上限）
@@ -276,6 +279,26 @@ class Game {
     this.emitState();
     this.log(`【观星】完毕（顶：${topCards.map(cardName).join('、') || '无'}｜底：${bottomCards.map(cardName).join('、') || '无'}）`);
   }
+  // 虎啸（自创）：准备阶段亮牌堆顶三张，拿走红色牌，其余进弃牌堆
+  async huxiao(p) {
+    if (this.over || this.aborted) return;
+    const n = Math.min(3, this.drawPile.length);
+    if (n === 0) return;
+    const decision = {
+      playerIdx: p.idx, type: 'skill_ask', skill: '虎啸',
+      playable: [{ kind: 'activate', skill: '虎啸' }, { kind: 'skip', skill: '虎啸' }],
+      context: { question: `是否发动【虎啸】展示牌堆顶${n}张牌，获得其中的红色牌？` },
+    };
+    const m = await this.askPlayer(p, decision);
+    if (!m || m.kind !== 'activate') return;
+    const viewed = this.drawPile.splice(0, n);
+    const red = viewed.filter(c => isRed(c));
+    const rest = viewed.filter(c => !isRed(c));
+    p.hand.push(...red);
+    this.toDiscard(rest);
+    this.emitState();
+    this.log(`${p.general} 发动【虎啸】，展示${viewed.map(cardName).join('、')}，获得${red.map(cardName).join('、') || '无'}，其余${rest.length}张进弃牌堆`);
+  }
   noTrickDistance(p) { return p.skills.includes('奇才'); }
 
   // ---------- 主循环 ----------
@@ -290,6 +313,7 @@ class Game {
     return this.winner;
   }
 
+  handLimit(p) { return p.hp + (p.skills.includes('将门') ? 1 : 0); } // 将门：手牌上限+1
   async turn(idx) {
     const p = this.players[idx];
     this.turnNo++;
@@ -302,6 +326,7 @@ class Game {
 
     this.phase = '准备';
     if (p.skills.includes('观星')) await this.guanxing(p);
+    if (p.skills.includes('虎啸')) await this.huxiao(p);
     this.emitState();
 
     this.phase = '判定';
@@ -365,9 +390,10 @@ class Game {
 
     this.phase = '弃牌';
     let discardGuard = 0;
-    while (p.hand.length > p.hp && !this.over && !this.aborted) {
+    const limit = this.handLimit(p);
+    while (p.hand.length > limit && !this.over && !this.aborted) {
       if (++discardGuard > 20) { this.log('弃牌阶段异常，自动随机弃置'); break; }
-      const n = p.hand.length - p.hp;
+      const n = p.hand.length - limit;
       const decision = this.discardDecision(p, n);
       const move = await this.askPlayer(p, decision);
       let cards = (move && move.kind === 'discard' && move.cardIds)
@@ -617,7 +643,7 @@ class Game {
     return {
       playerIdx: p.idx, type: 'discard', count: n,
       playable: [{ kind: 'discard' }],
-      context: { question: `弃牌阶段：手牌${p.hand.length}张，上限${p.hp}，需弃置${n}张（cards填编号）` },
+      context: { question: `弃牌阶段：手牌${p.hand.length}张，上限${this.handLimit(p)}，需弃置${n}张（cards填编号）` },
     };
   }
 
