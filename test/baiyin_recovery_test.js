@@ -92,10 +92,11 @@ async function main() {
       K('杀', '♠', '9'), K('杀', '♥', '10'), K('杀', '♦', '10'), K('杀', '♣', '10'),
     ];
     const script = (g) => ({
-      // t1: 装寒冰剑→杀→end；t2甘宁装狮子；t3: 杀→发动寒冰剑
+      // t1: 装寒冰剑→杀→end；t2甘宁装狮子；t3: 杀→发动寒冰剑（弃牌选择：指定装备区的狮子）
       '0:play': [play(g, 0, '寒冰剑'), play(g, 0, '杀', 1), { kind: 'end' }, play(g, 0, '杀', 1)],
       '1:play': [play(g, 1, '白银狮子'), { kind: 'end' }],
       '0:skill_ask': [{ kind: 'skip', skill: '寒冰剑' }, { kind: 'activate', skill: '寒冰剑' }],
+      '0:choose': [{ kind: 'chooseArea', area: 'equip' }],
     });
     const { g, logs } = await runGame(spec, script);
     const me = g.players[1];

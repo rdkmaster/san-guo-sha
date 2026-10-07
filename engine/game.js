@@ -855,26 +855,59 @@ class Game {
           };
           const m = await this.askPlayer(p, decision);
           if (m && m.kind === 'activate') {
-            const cards = this.takeFromOpp(opp, 2);
+            // 官方规则：由使用者选择弃置对手的两张牌（手牌暗抽一张，装备区可指定）
+            const cards = [];
+            while (cards.length < 2 && !this.over) {
+              const options = [];
+              if (opp.hand.length > 0) options.push('hand');
+              if (Object.values(opp.equips).some(Boolean)) options.push('equip');
+              if (options.length === 0) break;
+              let area = options[0];
+              if (options.length === 2) {
+                const am = await this.askPlayer(p, {
+                  playerIdx: p.idx, type: 'choose',
+                  playable: [{ kind: 'chooseArea', area: 'hand' }, { kind: 'chooseArea', area: 'equip' }],
+                  context: { question: `【寒冰剑】已发动：选择弃置${opp.general}的手牌（暗抽）或装备（第${cards.length + 1}张）？`, options: ['手牌', '装备'] },
+                });
+                if (am && am.kind === 'chooseArea' && options.includes(am.area)) area = am.area;
+              }
+              let picked = null;
+              if (area === 'hand') {
+                picked = opp.hand[Math.floor(this.rng() * opp.hand.length)];
+              } else {
+                picked = await this.askPick(p, Object.values(opp.equips).filter(Boolean), `【寒冰剑】：选择${opp.general}的装备（第${cards.length + 1}张）`);
+              }
+              if (!picked) break;
+              if (area === 'equip') {
+                for (const [k, v] of Object.entries(opp.equips)) if (v === picked) opp.equips[k] = null;
+                this.onLoseEquip(opp, picked);
+              } else {
+                opp.hand = opp.hand.filter(x => x !== picked);
+              }
+              cards.push(picked);
+            }
             this.toDiscard(cards);
-            this.log(`${p.general} 发动【寒冰剑】，弃置${opp.general}的${cards.map(cardName).join('、')}`);
+            this.log(cards.length > 0
+              ? `${p.general} 发动【寒冰剑】，弃置${opp.general}的${cards.map(cardName).join('、')}`
+              : `${p.general} 发动【寒冰剑】，但对手没有可弃置的牌`);
             this.discardSha(card, extras);
             this.emitState(); return;
           }
         }
         await this.dealDamage(opp, dmg, { source: p, card, pierceArmor: pierce, nature: isFire ? '火' : isThunder ? '雷' : '普通' });
-        // 麒麟弓：命中后可弃目标一匹马
+        // 麒麟弓：命中后可弃目标一匹坐骑（官方规则：由使用者选择弃哪匹）
         if (!this.over && p.equips.weapon && p.equips.weapon.name === '麒麟弓') {
           const horses = [opp.equips.horsePlus, opp.equips.horseMinus].filter(Boolean);
           if (horses.length > 0) {
             const decision = {
               playerIdx: p.idx, type: 'skill_ask', skill: '麒麟弓',
-              playable: [{ kind: 'activate', skill: '麒麟弓' }, { kind: 'skip', skill: '麒麟弓' }],
-              context: { question: '是否发动【麒麟弓】弃置目标的一匹坐骑？' },
+              playable: horses.map(h => ({ kind: 'activate', skill: '麒麟弓', cardId: h.id }))
+                .concat([{ kind: 'skip', skill: '麒麟弓' }]),
+              context: { question: '是否发动【麒麟弓】弃置目标的一匹坐骑？（选“发动”=弃置对应的坐骑）' },
             };
             const m = await this.askPlayer(p, decision);
             if (m && m.kind === 'activate') {
-              const horse = horses[0];
+              const horse = horses.find(h => h.id === m.cardId) || horses[0];
               if (opp.equips.horsePlus === horse) opp.equips.horsePlus = null; else opp.equips.horseMinus = null;
               this.toDiscard(horse);
               this.log(`${p.general} 发动【麒麟弓】弃置${horseName(horse)}`);
