@@ -10,8 +10,8 @@
 
 ## 项目结构速查
 
-- `engine/game.js` 1v1 规则引擎（状态机+技能+锦囊+濒死）；`engine/cards.js` 牌堆；`engine/ai.js` AI玩家封装
-- `server.js` 后端（默认端口3000，测试环境3001）；`public/index.html` 前端
-- `素材/规则-1v1.md` 规则教材（引擎与AI共用的事实来源，改规则必须同步它）
+- `engine/game.js` 规则引擎（状态机+技能+锦囊+濒死；支持 `mode:'1v1'` 与 `mode:'ddd'` 斗地主3人局——身份/跋扈/飞扬/农民互助/击杀奖励/环形距离）；`engine/cards.js` 牌堆；`engine/ai.js` AI玩家封装
+- `server.js` 后端（默认端口3000，测试环境3001；`/api/start` 传 `{mode:'ddd'}` 开斗地主；1v1人类=座0/AI=座1，斗地主AI=座1、2各自独立AIPlayer会话）；`public/index.html` 前端
+- `素材/规则-1v1.md` 1v1规则教材；`素材/规则-斗地主.md` 斗地主教材（引擎与AI共用的事实来源，改规则必须同步）
 - `test/` 引擎回归测试（`node test/xxx.js` 单文件直跑；`test/aitest/` 需要调droid）
 - `test/abort_test.js` 当前是历史遗留失败（"无选择短路"优化后未更新），与常规回归无关

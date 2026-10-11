@@ -59,6 +59,9 @@
   .overlay button { font-size: 16px; padding: 10px 24px; }
   .hidden { display: none !important; }
   .spin { color: var(--gold); }
+  .roletag { font-size: 10px; border-radius: 3px; padding: 1px 6px; color: #fff; font-weight: normal; }
+  .roletag.zhu { background: #a03030; }
+  .roletag.nong { background: #3a7a3a; }
   /* 开局选将：头像+信息选项卡（大字号大图，方便观看） */
   .xjrow { display: flex; gap: 14px; flex-wrap: wrap; }
   .xjcard { display: flex; gap: 12px; background: #1e2a1e; border: 2px solid #4a6a4a; border-radius: 10px; padding: 12px; cursor: pointer; width: 430px; transition: border-color .15s, box-shadow .15s; }
@@ -74,8 +77,9 @@
 </head>
 <body>
 <header>
-  <h1>三国杀 · 1v1人机</h1>
-  <button id="btnStart">开始对局</button>
+  <h1>三国杀 · 人机对战</h1>
+  <button id="btnStart">1v1对局</button>
+  <button id="btnStartDD">斗地主（1v2）</button>
   <button id="btnSave" disabled title="保存当前对局进度，之后可继续">存档退出</button>
   <span class="phase" id="phaseInfo">未开始</span>
   <span class="phase hidden" id="envBadge" style="background:#6a4a1a;border-color:#8a6a3a">测试环境</span>
@@ -86,6 +90,7 @@
 <main>
   <div class="playerbar" id="bar1"></div>
   <div class="hand" id="hand1" style="min-height:0"></div>
+  <div id="oppzone" style="display:flex;flex-direction:column;gap:6px;"></div>
   <div class="mid">
     <div class="logbox" id="log"></div>
     <div class="pilebox">
@@ -137,9 +142,27 @@ function render() {
   $('discN').textContent = state.discardTotal;
   $('discPile').textContent = state.discardPile.map(c=>c.name+c.suit+c.rank).join('、') || '空';
   renderPlayer(1, state.players[1], state.turnPlayer===1);
+  renderOpp2();
   renderPlayer(0, state.players[0], state.turnPlayer===0);
   renderHand();
   renderHand1();
+}
+// 第三名玩家（斗地主）：动态生成 bar2/hand2
+function renderOpp2() {
+  const zone = $('oppzone');
+  if (!zone) return;
+  if (!state || !state.players[2]) { zone.innerHTML = ''; return; }
+  if (!document.getElementById('bar2')) {
+    zone.innerHTML = '<div class="playerbar" id="bar2" style="min-height:70px"></div><div class="hand" id="hand2" style="min-height:0"></div>';
+  }
+  renderPlayer(2, state.players[2], state.turnPlayer===2);
+  const box = $('hand2');
+  const n = state.players[2].handCount || 0;
+  if ($('dbg').checked && state.aiHand2 && state.aiHand2.length) {
+    box.innerHTML = '<div class="hlabel">AI手牌（调试）:</div>' + state.aiHand2.map(c => cardHtml(c, false, false)).join('');
+  } else {
+    box.innerHTML = '<div class="hlabel">AI手牌:</div>' + Array.from({ length: n }, () => '<div class="card back"></div>').join('');
+  }
 }
 function renderPlayer(idx, p, active) {
   const bar = $('bar'+idx);
@@ -162,10 +185,12 @@ function renderPlayer(idx, p, active) {
   }).join('');
   const judge = p.judge.map(c=>`<span class="zone-chip" style="color:#e8a">${c.name}${c.suit}${c.rank}</span>`).join('');
   const skillStr = p.skills.map(s=>`【${s.name}】${s.text}`).join('　');
+  const roleTag = p.role ? `<span class="roletag ${p.role==='地主'?'zhu':'nong'}">${p.role}</span>` : '';
+  const deadTag = p.dead ? '<span style="font-size:11px;color:#777">（阵亡）</span>' : '';
   bar.innerHTML = `
-    <img class="avatar" src="${avatarUrl(p.general)}" alt="">
+    <img class="avatar" src="${avatarUrl(p.general)}" alt="" ${p.dead?'style="filter:grayscale(1);opacity:.5"':''}>
     <div class="pinfo">
-      <div class="pname">${esc(p.general)}${who} <span style="font-size:11px;color:#889">${p.kingdom}</span></div>
+      <div class="pname">${esc(p.general)}${roleTag}${who}${deadTag} <span style="font-size:11px;color:#889">${p.kingdom}</span></div>
       <div class="hp">${hp} <span style="font-size:11px;color:#99a">(${p.hp}/${p.maxHp})</span></div>
       <div class="pskills">${esc(skillStr)}</div>
     </div>
@@ -514,7 +539,7 @@ async function submitMove(move) {
 }
 
 const es = new EventSource('/api/events');
-$('dbg').onchange = () => renderHand1(); // 勾选调试立即生效，不等下次state
+$('dbg').onchange = () => { renderHand1(); renderOpp2(); }; // 勾选调试立即生效，不等下次state
 es.onmessage = (ev) => {
   const e = JSON.parse(ev.data);
   if (e.type==='hello') { $('btnSave').disabled = !e.running; $('envBadge').classList.toggle('hidden', e.env !== 'test'); }
@@ -524,7 +549,7 @@ es.onmessage = (ev) => {
   }
   else if (e.type==='ask') { if (e.playerIdx===0) renderAsk(e); }
   else if (e.type==='log') { addLog(e.msg); if (e.seq) lastLogSeq = Math.max(lastLogSeq, e.seq); }
-  else if (e.type==='aiThinking') { $('aiThinking').classList.remove('hidden'); }
+  else if (e.type==='aiThinking') { $('aiThinking').textContent = e.seat >= 2 ? 'AI(农民2)思考中…' : 'AI思考中…'; $('aiThinking').classList.remove('hidden'); }
   else if (e.type==='ailog') { addLog('⟦AI⟧ '+e.msg, true); $('aiThinking').classList.add('hidden'); }
   else if (e.type==='aidetail') {
     if ($('dbg').checked) {
@@ -548,9 +573,11 @@ es.onmessage = (ev) => {
   else if (e.type==='gameOver') {
     $('btnStart').disabled = false;
     $('btnSave').disabled = true;
-    $('btnStart').textContent = '开始对局';
+    $('btnStart').textContent = '1v1对局';
     $('overOverlay').classList.remove('hidden');
-    $('overText').textContent = e.winner===0 ? '🎉 你赢了！' : '💀 AI 获胜';
+    $('overText').textContent = e.winnerRole
+      ? (e.winnerRole === '农民' ? '🎉 农民阵营获胜！' : '💀 地主获胜')
+      : (e.winner===0 ? '🎉 你赢了！' : '💀 AI 获胜');
     if (state) render();
   }
   else if (e.type==='gameSaved') {
@@ -593,6 +620,13 @@ $('btnStart').onclick = async () => {
   const r = await fetch('/api/start', {method:'POST'});
   const j = await r.json();
   if (!j.ok) { alert(j.error); $('btnStart').disabled = false; }
+};
+$('btnStartDD').onclick = async () => {
+  $('btnStartDD').disabled = true;
+  const r = await fetch('/api/start', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({mode:'ddd'}) });
+  const j = await r.json();
+  if (!j.ok) { alert(j.error); $('btnStartDD').disabled = false; }
+  else $('btnStartDD').disabled = false;
 };
 $('btnSave').onclick = async () => {
   if (!confirm('保存当前对局并退出？之后可随时继续。')) return;

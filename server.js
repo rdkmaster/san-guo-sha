@@ -18,7 +18,6 @@ fs.mkdirSync(SAVE_DIR, { recursive: true });
 fs.mkdirSync(LOG_DIR, { recursive: true });
 
 let game = null;
-let ai = null;
 let running = false;
 let askSeq = 0;
 let pendingHumanAsk = null;
@@ -133,46 +132,58 @@ function abandonCurrentGame() {
   appendGameLog('（该对局被放弃：玩家点了重新开局）');
 }
 
-async function startGame(resumeData = null) {
+async function startGame(resumeData = null, mode = '1v1') {
   if (running) abandonCurrentGame();
   const gen = ++gameGen;
+  // 模式：新对局按请求参数；恢复按存档记录
+  const effMode = resumeData ? (resumeData.mode || '1v1') : mode;
+  const aiSeats = effMode === 'ddd' ? [1, 2] : [1]; // 斗地主：两个AI农民/农民队友；1v1：仅AI
   // 日志器绑定gen：文件名带gen防同秒重置碰撞，旧对局尾巴不漏写进新文件
   const logFile = path.join(LOG_DIR, `对局_${fmtTime(new Date())}_${gen}.log`);
   appendGameLog = (line) => {
     if (gen !== gameGen) return;
     try { fs.appendFileSync(logFile, line + '\n', 'utf8'); } catch (e) {}
   };
-  ai = new AIPlayer({
-    model: MODEL, reasoning: REASONING,
-    onDetail: (d) => {
-      // 完整记录每次AI决策（对局日志文件 + UI提示）
-      appendGameLog(`\n${'='.repeat(60)}\n【AI决策 #${d.n}】耗时 ${d.durSec}s  会话 ${d.sessionId}\n解析动作: ${JSON.stringify(d.action)}\n--- 发送给AI的局面 ---\n${d.prompt}\n--- AI回复 ---\n${d.reply}\n`);
-      broadcast({ type: 'aidetail', n: d.n, durSec: d.durSec, reply: d.reply });
-    },
-  });
+  // 每个AI座位独立AIPlayer实例（会话隔离，互不串记忆）
+  const aiBySeat = {};
+  for (const seat of aiSeats) {
+    aiBySeat[seat] = new AIPlayer({
+      model: MODEL, reasoning: REASONING,
+      onDetail: (d) => {
+        // 完整记录每次AI决策（对局日志文件 + UI提示）
+        appendGameLog(`\n${'='.repeat(60)}\n【AI${seat}决策 #${d.n}】耗时 ${d.durSec}s  会话 ${d.sessionId}\n解析动作: ${JSON.stringify(d.action)}\n--- 发送给AI的局面 ---\n${d.prompt}\n--- AI回复 ---\n${d.reply}\n`);
+        broadcast({ type: 'aidetail', seat, n: d.n, durSec: d.durSec, reply: d.reply });
+      },
+    });
+  }
   // 固定种子是存档/恢复的根基：牌堆洗牌、随机兜底全部由种子重现
   const seed = resumeData ? resumeData.seed : Math.floor(Math.random() * 0x7fffffff);
-  const aiTiming = {}; // 分决策类型耗时统计：{type: {n, totalMs}}
+  const aiTiming = {}; // 分决策类型耗时统计：{seat:type: {n, totalMs}}
   game = new Game({
     seed,
+    mode: effMode,
     selectGenerals: !resumeData, // 新对局：开局三选一选将（恢复时由重放对齐，不重选）
     ...(resumeData ? {
       generals: resumeData.generals,
       first: resumeData.first,
+      roles: resumeData.roles || null,
       deck: resumeData.deck || null,
       replay: resumeData.decisions || [], // 恢复：瞬间重放历史决策到存档点
       replayXuanjiang: !!resumeData.xuanjiang, // 存档含选将决策时重放之
     } : {}),
     ask: async (d) => {
-      if (d.playerIdx === 1) {
+      if (d.playerIdx >= 1) {
+        const seatAI = aiBySeat[d.playerIdx];
+        if (!seatAI) return { kind: 'refuse' };
         // 思考时间优化：低价值二元触发技不进LLM（确定性答案，AI/人类玩家询问逻辑不变）
         if (d.type === 'skill_ask' && (d.skill === '英姿' || d.skill === '集智' || d.skill === '连营')) {
           return { kind: 'activate', skill: d.skill };
         }
-        broadcast({ type: 'aiThinking', phase: d.type });
+        broadcast({ type: 'aiThinking', phase: d.type, seat: d.playerIdx });
         const t0 = Date.now();
-        const action = await ai.decide(d.stateMd, m => broadcast({ type: 'ailog', msg: m }));
-        const st = (aiTiming[d.type] = aiTiming[d.type] || { n: 0, totalMs: 0 });
+        const action = await seatAI.decide(d.stateMd, m => broadcast({ type: 'ailog', seat: d.playerIdx, msg: m }));
+        const key = `${d.playerIdx}:${d.type}`;
+        const st = (aiTiming[key] = aiTiming[key] || { n: 0, totalMs: 0 });
         st.n++; st.totalMs += Date.now() - t0;
         return action; // 引擎负责映射+校验+兜底
       }
@@ -203,13 +214,13 @@ async function startGame(resumeData = null) {
       broadcast({ type: 'gameAbandoned' });
       return;
     }
-    appendGameLog(`\n对局结束：${game.players[w] ? game.players[w].general + '（侧' + w + '）' : w} 获胜`);
+    appendGameLog(`\n对局结束：${game.winnerRole ? `【${game.winnerRole}阵营】获胜（${game.players[w] ? game.players[w].general : ''}…）` : (game.players[w] ? game.players[w].general + '（侧' + w + '）' : w)}`);
     // AI耗时统计：分决策类型的调用次数与平均耗时（定位思考时间大头）
     const timingSummary = Object.entries(aiTiming)
       .map(([t, s]) => `${t}=${s.n}次/平均${(s.totalMs / s.n / 1000).toFixed(1)}s`)
       .join(' | ');
     if (timingSummary) appendGameLog(`AI思考统计：${timingSummary}`);
-    broadcast({ type: 'gameOver', winner: w, winnerName: game.players[w] ? game.players[w].general : null });
+    broadcast({ type: 'gameOver', winner: w, winnerRole: game.winnerRole || null, winnerName: game.players[w] ? game.players[w].general : null });
   }).catch(err => {
     if (gen !== gameGen) return;
     running = false;
@@ -258,6 +269,7 @@ const server = http.createServer((req, res) => {
           const d = JSON.parse(fs.readFileSync(path.join(SAVE_DIR, f), 'utf8'));
           return {
             name: f, savedAt: d.savedAt, turnNo: d.turnNo,
+            mode: d.mode || '1v1', roles: d.roles || [],
             generals: d.generals || [], hp: d.hp || [], logs: d.logs || [],
           };
         } catch (e) { return { name: f, broken: true }; }
@@ -274,7 +286,7 @@ const server = http.createServer((req, res) => {
       let payload = {};
       try { payload = JSON.parse(body || '{}'); } catch (e) {}
       if (u.pathname === '/api/start') {
-        const r = await startGame();
+        const r = await startGame(null, payload.mode === 'ddd' ? 'ddd' : '1v1');
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(r));
       } else if (u.pathname === '/api/resume') {
