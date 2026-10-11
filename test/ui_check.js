@@ -191,6 +191,32 @@ renderHand1();
   const zhihengPickable = doc.querySelectorAll('#hand0 .card.selectable');
   ok(`制衡仍是全手牌多选 (实际${zhihengPickable.length}张)`, zhihengPickable.length === 6);
 
+  // ---------- 开局选将：头像+信息选项卡 ----------
+  w.submitMove = (m) => { w._picked = m; }; // 拦截提交，断言点卡动作
+  w.renderAsk({
+    type: 'ask', askId: 7, playerIdx: 0, decisionType: 'xuanjiang', skill: null,
+    question: '【选将】请从三名候选武将中选择一名出战：刘备 / 郭嘉 / 黄盖',
+    options: [
+      { kind: 'choice', value: '刘备', uiLabel: '刘备' },
+      { kind: 'choice', value: '郭嘉', uiLabel: '郭嘉' },
+      { kind: 'choice', value: '黄盖', uiLabel: '黄盖' },
+    ],
+    candidates: [
+      { name: '刘备', hp: 4, kingdom: '蜀', gender: '男', skills: [{ name: '仁德', text: '出牌阶段…' }, { name: '激将', text: '主公技…' }] },
+      { name: '郭嘉', hp: 3, kingdom: '魏', gender: '男', skills: [{ name: '天妒', text: '锁定技…' }, { name: '遗计', text: '每受到1点伤害…' }] },
+      { name: '黄盖', hp: 4, kingdom: '吴', gender: '男', skills: [{ name: '苦肉', text: '出牌阶段…' }] },
+    ],
+  });
+  const xj = doc.querySelectorAll('#promptbar .xjcard');
+  ok(`选将选项卡3张 (实际${xj.length})`, xj.length === 3);
+  ok('每张卡带头像（素材/武将/名-头像.png）', doc.querySelectorAll('#promptbar .xjavatar').length === 3
+    && [...doc.querySelectorAll('#promptbar .xjavatar')].every(i => i.getAttribute('src').includes('-头像.png')));
+  ok('显示体力/势力/技能全文', !!xj[0]
+    && xj[0].textContent.includes('❤❤❤❤') && xj[0].textContent.includes('蜀') && xj[0].textContent.includes('仁德')
+    && xj[1].textContent.includes('魏') && xj[1].textContent.includes('遗计'));
+  xj[1].click();
+  ok('点选将卡提交对应choice动作', w._picked && w._picked.kind === 'choice' && w._picked.value === '郭嘉');
+
   console.log(failed ? `${failed}项失败` : 'UI结构验证全部通过');
   process.exit(failed ? 1 : 0);
 })();

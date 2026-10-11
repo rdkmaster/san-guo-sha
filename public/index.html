@@ -59,6 +59,17 @@
   .overlay button { font-size: 16px; padding: 10px 24px; }
   .hidden { display: none !important; }
   .spin { color: var(--gold); }
+  /* 开局选将：头像+信息选项卡 */
+  .xjrow { display: flex; gap: 10px; flex-wrap: wrap; }
+  .xjcard { display: flex; gap: 8px; background: #1e2a1e; border: 2px solid #4a6a4a; border-radius: 8px; padding: 8px; cursor: pointer; width: 340px; transition: border-color .15s, box-shadow .15s; }
+  .xjcard:hover { border-color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,.4); }
+  .xjavatar { width: 92px; height: 92px; border-radius: 6px; object-fit: cover; border: 1px solid #555; flex: none; align-self: flex-start; background: #111; }
+  .xjinfo { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+  .xjname { font-size: 15px; font-weight: bold; color: #fff; display: flex; gap: 6px; align-items: center; }
+  .xjtag { font-size: 10px; font-weight: normal; background: #333; border-radius: 3px; padding: 1px 5px; color: #bcd; }
+  .xjhp { font-size: 12px; color: #e74c3c; margin-left: auto; font-weight: normal; letter-spacing: 1px; }
+  .xjskills { font-size: 11px; color: #9ab; line-height: 1.5; max-height: 78px; overflow-y: auto; }
+  .xjskills b { color: var(--gold); }
 </style>
 </head>
 <body>
@@ -371,6 +382,28 @@ function renderAsk(a) {
     btn.onclick = () => submitMove({ kind: 'guanxing', tops: guanxingTop.slice(), bottoms: guanxingBottom.slice() });
     opts.appendChild(btn);
     renderGuanxingRow();
+  } else if (a.decisionType==='xuanjiang') {
+    // 开局选将：每名候选渲染为 头像+武将信息 选项卡，点整卡即出战
+    const row = document.createElement('div');
+    row.className = 'xjrow';
+    for (const c of (a.candidates || [])) {
+      const card = document.createElement('div');
+      card.className = 'xjcard';
+      card.title = '点击选择【' + c.name + '】出战';
+      card.innerHTML = `<img class="xjavatar" src="${avatarUrl(c.name)}" onerror="this.style.visibility='hidden'">`
+        + `<div class="xjinfo">`
+        + `<div class="xjname">${esc(c.name)}`
+        + `<span class="xjtag">${esc(c.kingdom || '')}</span><span class="xjtag">${esc(c.gender || '')}</span>`
+        + `<span class="xjhp">${'❤'.repeat(Math.min(c.hp || 0, 9))}</span></div>`
+        + `<div class="xjskills">${(c.skills || []).map(s => `<div><b>${esc(s.name)}</b>：${esc(s.text)}</div>`).join('')}</div>`
+        + `</div>`;
+      card.onclick = () => {
+        const opt = (a.options || []).find(o => o.kind === 'choice' && o.value === c.name);
+        if (opt) submitMove(opt);
+      };
+      row.appendChild(card);
+    }
+    opts.appendChild(row);
   } else if (!multi) {
     for (const o of a.options) {
       const b = document.createElement('button');

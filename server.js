@@ -3,7 +3,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { Game } = require('./engine/game');
+const { Game, GENERALS, SKILL_TEXTS } = require('./engine/game');
 const { AIPlayer } = require('./engine/ai');
 
 const ROOT = __dirname;
@@ -102,6 +102,13 @@ function askHuman(d) {
       count: d.count || (d.context && d.context.count) || null,
       optionCards: d.optionCards || null,
       options: d.playable.map(m => ({ ...m, uiLabel: moveUiLabel(d, m) })),
+      // 选将：附候选武将详情（体力/势力/技能全文），前端渲染头像选项卡；头像路径前端按名字拼（素材/武将/名-头像.png）
+      candidates: (d.type === 'xuanjiang' && Array.isArray(d.context && d.context.candidates))
+        ? d.context.candidates.map(n => ({
+            name: n, hp: GENERALS[n].hp, kingdom: GENERALS[n].kingdom, gender: GENERALS[n].gender,
+            skills: GENERALS[n].skills.map(s => ({ name: s, text: SKILL_TEXTS[s] || '' })),
+          }))
+        : null,
     };
     // 人类决策也完整入日志（对称于AI决策，局后可完整复盘）
     appendGameLog(`\n【人类决策 #${askSeq}】类型: ${lastAskPayload.decisionType} | ${lastAskPayload.question}`);
