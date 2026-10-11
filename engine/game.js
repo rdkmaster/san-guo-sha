@@ -65,7 +65,7 @@ const SKILL_TEXTS = {
   '国色': '出牌阶段，你可以将一张方块牌（含装备区）当【乐不思蜀】使用。',
   '流离': '当你成为【杀】的目标时，你可以弃置一张牌并将此【杀】转移给你攻击范围内的一名其他角色（不能转移给使用者）。（1v1没有第三名角色，无法发动。）',
   '谦逊': '锁定技。你不能成为【顺手牵羊】或【乐不思蜀】的目标（包括国色转化的【乐不思蜀】）。',
-  '连营': '锁定技。当你失去最后的手牌时，你摸一张牌。',
+  '连营': '当你失去最后的手牌时，你可以摸一张牌（非锁定技，询问后发动）。',
   '结姻': '出牌阶段限一次。你可以弃置两张手牌，选择一名已受伤的男性角色，你与其各回复1点体力。',
   '枭姬': '当你失去装备区里的一张牌时，你可以摸两张牌。',
   '离间': '出牌阶段限一次。你可以弃置一张牌，令两名男性角色视为对彼此使用【决斗】。（1v1只有一名其他角色，无法发动。）',
@@ -390,12 +390,19 @@ class Game {
     }
   }
 
-  // 连营（锁定）：失去最后的手牌时摸一张（自动，在失去手牌的结算边界调用）
-  lianyingCheck(p) {
+  // 连营（可选技）：失去最后的手牌时可摸一张——询问是否发动（在失去手牌的结算边界调用）
+  async lianyingCheck(p) {
     if (this.over || this.aborted) return;
     if (p.skills && p.skills.includes('连营') && p.hand.length === 0) {
-      const n = this.draw(p, 1);
-      this.log(`${p.general} 【连营】失去最后的手牌，摸${n}张牌`);
+      const m = await this.askPlayer(p, {
+        playerIdx: p.idx, type: 'skill_ask', skill: '连营',
+        playable: [{ kind: 'activate', skill: '连营' }, { kind: 'skip', skill: '连营' }],
+        context: { question: '【连营】你已失去最后的手牌，是否摸一张牌？' },
+      });
+      if (m && m.kind === 'activate') {
+        const n = this.draw(p, 1);
+        this.log(`${p.general} 发动【连营】，摸${n}张牌`);
+      }
     }
   }
   // 枭姬（孙尚香）：失去装备区牌时摸两张——onLoseEquip是同步的，先入队，在结算边界统一询问
@@ -553,7 +560,7 @@ class Game {
         p.hand = p.hand.filter(c => !cards.includes(c));
         this.toDiscard(cards);
         this.log(`${p.general} 弃置 ${cards.map(cardName).join('、')}`);
-        this.lianyingCheck(p);
+        await this.lianyingCheck(p);
         this.emitState();
       }
     }
@@ -765,7 +772,7 @@ class Game {
                 source.hand = source.hand.filter(c => !cards.includes(c));
                 this.toDiscard(cards);
                 this.log(`${source.general} 弃置${cards.map(cardName).join('、')}（刚烈）`);
-                this.lianyingCheck(source);
+                await this.lianyingCheck(source);
                 done = true;
               }
             }
@@ -810,7 +817,7 @@ class Game {
             const before = target.hp;
             target.hp += 1;
             this.log(`${helper.general} 使用【桃】${card.name !== '桃' ? `（${cardName(card)}转化）` : `（${cardName(card)}）`}，${target.general} 体力 ${before}→${target.hp}/${target.maxHp}`);
-            this.lianyingCheck(helper);
+            await this.lianyingCheck(helper);
             this.emitState();
           }
         }
@@ -941,7 +948,7 @@ class Game {
       this.toDiscard(cards);
       const n = this.draw(p, cards.length);
       this.log(`${p.general} 发动【制衡】，弃${cards.length}张摸${n}张`);
-      this.lianyingCheck(p);
+      await this.lianyingCheck(p);
       await this.flushYingji();
       return;
     }
@@ -974,7 +981,7 @@ class Game {
           if (p.hp < p.maxHp) { const b = p.hp; p.hp++; this.log(`仁德累计给出两张牌，${p.general} 回复1点体力（${b}→${p.hp}/${p.maxHp}）`); }
           else this.log(`仁德累计给出两张牌，${p.general} 体力已满无回复`);
         }
-        this.lianyingCheck(p);
+        await this.lianyingCheck(p);
         this.emitState();
         return;
       }
@@ -987,7 +994,7 @@ class Game {
         if (this.over || this.aborted) return;
         const n = this.draw(p, 2); // 然后：摸两张牌
         this.log(`${p.general} 摸${n}张牌`);
-        this.lianyingCheck(p);
+        await this.lianyingCheck(p);
         this.emitState();
         return;
       }
@@ -1011,7 +1018,7 @@ class Game {
         const q = who === 'opp' ? opp : p;
         if (q.hp < q.maxHp) { const b = q.hp; q.hp++; this.log(`${p.general} 发动【青囊】，弃置${cardName(c)}，${q.general} 回复1点体力（${b}→${q.hp}/${q.maxHp}）`); }
         else this.log(`${q.general} 体力已满，青囊无回复`);
-        this.lianyingCheck(p);
+        await this.lianyingCheck(p);
         this.emitState();
         return;
       }
@@ -1035,7 +1042,7 @@ class Game {
         p.hand = p.hand.filter(c => !cards.includes(c));
         this.toDiscard(cards);
         this.log(`${p.general} 发动【结姻】，弃置${cards.map(cardName).join('、')}`);
-        this.lianyingCheck(p);
+        await this.lianyingCheck(p);
         for (const q of [opp, p]) {
           if (q.hp < q.maxHp) { const b = q.hp; q.hp++; this.log(`${q.general} 回复1点体力（${b}→${q.hp}/${q.maxHp}）`); }
           else this.log(`${q.general} 体力已满，无回复`);
@@ -1052,7 +1059,7 @@ class Game {
 
     if (useAs === '杀') { await this.resolveSha(p, opp, card, null); return; }
     await this.executeOtherPlay(p, move, card, useAs);
-    this.lianyingCheck(p);
+    await this.lianyingCheck(p);
   }
 
   // 反间：目标选一种花色 → 周瑜交一张手牌并展示 → 花色不同则目标受1点伤害（牌由目标获得）
@@ -1228,7 +1235,7 @@ class Game {
               this.removeOwnCards(p, cards);
               this.toDiscard(cards);
               this.log(`${p.general} 发动【贯石斧】，弃置${cards.map(cardName).join('、')}，强制造成伤害`);
-              this.lianyingCheck(p);
+              await this.lianyingCheck(p);
               dodged = false;
             }
           }
@@ -1283,9 +1290,9 @@ class Game {
             this.log(cards.length > 0
               ? `${p.general} 发动【寒冰剑】，弃置${opp.general}的${cards.map(cardName).join('、')}`
               : `${p.general} 发动【寒冰剑】，但对手没有可弃置的牌`);
-            this.lianyingCheck(opp);
+            await this.lianyingCheck(opp);
             await this.flushYingji();
-            this.lianyingCheck(p);
+            await this.lianyingCheck(p);
             this.discardSha(card, extras);
             this.emitState(); return;
           }
@@ -1655,7 +1662,7 @@ class Game {
         target.hand = target.hand.filter(c => c !== card);
         this.toDiscard(card);
         this.log(`${target.general} 使用${move.useAs && card.name !== move.useAs ? `【${move.useAs}】（${cardName(card)}转化）` : cardName(card)}抵消${reason}`);
-        this.lianyingCheck(target);
+        await this.lianyingCheck(target);
         return true;
       }
     }
@@ -1683,7 +1690,7 @@ class Game {
         this.toDiscard(card);
         responder.shaActed = true; // 克己：打出【杀】也计入
         this.log(`${responder.general} 打出【杀】${move.useAs && card.name !== '杀' ? `（${cardName(card)}${card.equip ? '（装备区）' : ''}转化）` : ''}响应${reason}`);
-        this.lianyingCheck(responder);
+        await this.lianyingCheck(responder);
         return true;
       }
     }
@@ -1705,7 +1712,7 @@ class Game {
         target.hand = target.hand.filter(c => c !== card);
         this.toDiscard(card);
         this.log(`${target.general} 使用【无懈可击】抵消【${trickName}】`);
-        this.lianyingCheck(target);
+        await this.lianyingCheck(target);
         // 官方规则：集智在使用普通锦囊牌时触发，无懈可击（含回合外响应）也算使用
         if (target.skills.includes('集智')) {
           const zj = {

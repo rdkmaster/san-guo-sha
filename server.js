@@ -164,7 +164,7 @@ async function startGame(resumeData = null) {
     ask: async (d) => {
       if (d.playerIdx === 1) {
         // 思考时间优化：低价值二元触发技不进LLM（确定性答案，AI/人类玩家询问逻辑不变）
-        if (d.type === 'skill_ask' && (d.skill === '英姿' || d.skill === '集智')) {
+        if (d.type === 'skill_ask' && (d.skill === '英姿' || d.skill === '集智' || d.skill === '连营')) {
           return { kind: 'activate', skill: d.skill };
         }
         broadcast({ type: 'aiThinking', phase: d.type });

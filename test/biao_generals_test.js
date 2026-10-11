@@ -216,7 +216,7 @@ async function main() {
     check('谦逊：顺手牵羊不可指定陆逊', shunOk === false);
   }
 
-  // ── I. 陆逊：连营 ──
+  // ── I. 陆逊：连营（可选技：询问后发动，可拒绝） ──
   {
     const g = new Game({ seed: 311, generals: ['陆逊', '甘宁'], first: 0, ask: async d => d.playable[0] });
     g.setup();
@@ -226,9 +226,23 @@ async function main() {
     g.drawPile.push(...p0.hand); // 原手牌移回牌堆底，保证守恒
     p0.hand = [tao];
     await g.executePlay(p0, { kind: 'play', cardId: tao.id, targets: [0] });
-    check('连营：失去最后的手牌自动摸一张', p0.hand.length === 1 && g.logLines.some(l => l.includes('【连营】失去最后的手牌')));
+    check('连营：询问后发动摸一张（默认应答=发动）', p0.hand.length === 1 && g.logLines.some(l => l.includes('发动【连营】')));
     const inv = g.invariant();
     check('连营：牌数守恒154', inv.ok);
+  }
+  // ── I2. 陆逊：连营拒绝 ──
+  {
+    const g = new Game({ seed: 311, generals: ['陆逊', '甘宁'], first: 0, ask: async d => (d.type === 'skill_ask' && d.skill === '连营' ? { kind: 'skip', skill: '连营' } : d.playable[0]) });
+    g.setup();
+    const p0 = g.players[0];
+    const tao = take(g, c => c.name === '桃');
+    p0.hp = 2;
+    g.drawPile.push(...p0.hand);
+    p0.hand = [tao];
+    await g.executePlay(p0, { kind: 'play', cardId: tao.id, targets: [0] });
+    check('连营：拒绝则不摸牌（手牌0）', p0.hand.length === 0 && !g.logLines.some(l => l.includes('发动【连营】')));
+    const inv = g.invariant();
+    check('连营拒绝：牌数守恒154', inv.ok);
   }
 
   // ── J. 孙尚香：枭姬 + 结姻 ──
