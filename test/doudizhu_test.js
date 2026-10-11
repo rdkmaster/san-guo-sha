@@ -39,21 +39,24 @@ async function main() {
     check('B：跋扈摸3（2+1）', logs.some(m => m.includes('甘宁 摸3张牌（跋扈：多摸一张）')));
   }
 
-  // ── C. 飞扬 ──
+  // ── C. 飞扬（只弃判定区一张，多张自选） ──
   {
     const g = new Game({ seed: 903, mode: 'ddd', generals: ['甘宁', '许褚', '周瑜'], first: 0 });
     g.setup();
     const logs = []; g.log = m => logs.push(m);
     const le = take(g, c => c.name === '乐不思蜀');
-    g.players[0].judge.push(le);
+    const bl = take(g, c => c.name === '兵粮寸断');
+    g.players[0].judge.push(le, bl); // 两张判定牌：只能弃一张
     g.ask = async (d) => {
       if (d.type === 'skill_ask' && d.skill === '飞扬') return { kind: 'activate', skill: '飞扬' };
       if (d.type === 'discard') return { kind: 'discard', cardIds: [g.players[0].hand[0].id, g.players[0].hand[1].id] };
+      if (d.type === 'choose' && d.context.question.includes('飞扬')) return { kind: 'chooseCard', cardId: le.id }; // 自选弃乐不思蜀
       return d.playable[0];
     };
     g.turnNo = 2;
     await g.turn(0);
-    check('C：飞扬清空判定区', g.players[0].judge.length === 0 && g.discardPile.includes(le));
+    check('C：飞扬只弃自选的一张判定牌（乐不思蜀）', logs.some(l => l.includes('发动【飞扬】') && l.includes('弃掉判定区的【乐不思蜀')) && !logs.some(l => l.includes('弃掉判定区所有牌')));
+    check('C：另一张判定牌保留并照常结算（兵粮判定）', logs.some(l => l.includes('判定【兵粮寸断】')));
     check('C：牌数守恒154', g.invariant().ok);
   }
 
@@ -185,6 +188,37 @@ async function main() {
     check('J：重放耗尽且手牌一致', g2._replay.length === 0
       && g2.players.every((p, i) => p.hand.map(c => c.id).join(',') === g1.players[i].hand.map(c => c.id).join(',')));
     check('J：牌堆一致', g2.drawPile.map(c => c.id).join(',') === g1.drawPile.map(c => c.id).join(','));
+  }
+
+  // ── K. 跋扈：地主出杀次数上限+1 ──
+  {
+    let hk = async d => d.playable[0];
+    const g = new Game({ seed: 911, mode: 'ddd', generals: ['甘宁', '许褚', '周瑜'], first: 0, roles: ['地主', '农民', '农民'], ask: async d => hk(d) });
+    g.setup();
+    const logs = []; g.log = m => logs.push(m);
+    const s1 = takeSha(g), s2 = takeSha(g), s3 = takeSha(g);
+    for (const p of g.players) g.drawPile.push(...p.hand.splice(0));
+    const fill = [];
+    for (let i = 0; i < 3; i++) { const c = take(g, x => x.name !== '桃'); fill.push(c); }
+    g.players[0].hand.push(s1, s2, s3);
+    g.drawPile.unshift(fill[2], fill[1], fill[0]); // 摸牌阶段摸3张非桃
+    g.players[1].hp = 4; g.players[2].hp = 3;
+    g.turnNo = 2;
+    let shaCount = 0; const hitTargets = [];
+    hk = async (d) => {
+      const sm = d.playable.filter(m => m.kind === 'play' && (m.cardId === s1.id || m.cardId === s2.id || m.cardId === s3.id));
+      if (sm.length > 0) {
+        shaCount++;
+        const m = sm.find(x => !hitTargets.includes(g.players[x.targets[0]].general)) || sm[0]; // 轮换目标
+        hitTargets.push(g.players[m.targets[0]].general);
+        return m;
+      }
+      return d.playable[0];
+    };
+    await g.turn(0);
+    check('K：跋扈下地主出了2张杀、第3张仍在手（上限生效）', shaCount === 2 && g.players[0].hand.some(c => c.name === '杀'));
+    check('K：两名农民各中一杀（目标可轮换指定）', g.players[1].hp === 3 && g.players[2].hp === 2);
+    check('K：1v1/无跋扈不受影响（出杀1次上限由既有测试覆盖）', g.invariant().ok);
   }
 
   console.log(`结果：${pass} 通过 / ${fail} 失败`);

@@ -70,8 +70,8 @@ const SKILL_TEXTS = {
   '枭姬': '当你失去装备区里的一张牌时，你可以摸两张牌。',
   '离间': '出牌阶段限一次。你可以弃置一张牌，令两名男性角色视为对彼此使用【决斗】。（1v1只有一名其他角色，无法发动。）',
   '闭月': '结束阶段开始时，你可以摸一张牌。',
-  '跋扈': '斗地主地主技（锁定）。摸牌阶段你多摸一张牌。',
-  '飞扬': '斗地主地主技。判定阶段开始时，若你的判定区有牌，你可以弃置两张手牌，弃掉判定区所有牌（每回合限一次）。',
+  '跋扈': '斗地主地主技（锁定）。摸牌阶段你多摸一张牌；你每回合使用【杀】的次数上限+1。',
+  '飞扬': '斗地主地主技。判定阶段开始时，若你的判定区有牌，你可以弃置两张手牌，弃掉判定区里的一张牌（多张时自选，每回合限一次）。',
   '急救': '你的回合外，你可以将一张红色牌（含装备区）当【桃】使用（含濒死救援）。',
   '青囊': '出牌阶段限一次。你可以弃置一张手牌，选择一名已受伤的角色，其回复1点体力（可自选自己或对手）。',
 };
@@ -509,12 +509,12 @@ class Game {
     this.emitState();
 
     this.phase = '判定';
-    // 飞扬（斗地主地主技）：判定阶段开始时，若判定区有牌，可弃置两张手牌弃掉判定区所有牌（每回合限一次）
+    // 飞扬（斗地主地主技）：判定阶段开始时，若判定区有牌，可弃置两张手牌弃掉判定区里的一张牌（多张自选，每回合限一次）
     if (p.role === '地主' && p.judge.length > 0 && p.hand.length >= 2 && !this.over && !this.aborted) {
       const fm = await this.askPlayer(p, {
         playerIdx: p.idx, type: 'skill_ask', skill: '飞扬',
         playable: [{ kind: 'activate', skill: '飞扬' }, { kind: 'skip', skill: '飞扬' }],
-        context: { question: `【飞扬】你的判定区有${p.judge.length}张牌，是否弃置两张手牌，弃掉判定区所有牌？` },
+        context: { question: `【飞扬】你的判定区有${p.judge.map(cardName).join('、')}，是否弃置两张手牌，弃掉其中一张？` },
       });
       if (fm && fm.kind === 'activate') {
         const sel = await this.askPlayer(p, {
@@ -527,9 +527,15 @@ class Game {
           : [];
         if (cards.length === 2) {
           p.hand = p.hand.filter(c => !cards.includes(c));
-          this.toDiscard([...cards, ...p.judge]);
-          this.log(`${p.general} 发动【飞扬】，弃置${cards.map(cardName).join('、')}，弃掉判定区所有牌（${p.judge.map(cardName).join('、')}）`);
-          p.judge = [];
+          // 弃掉判定区的一张牌（多张时自选，其余保留继续结算）
+          let jc = p.judge[0];
+          if (p.judge.length > 1) {
+            const picked = await this.askPick(p, p.judge, '【飞扬】选择判定区弃置的一张牌');
+            if (picked) jc = picked;
+          }
+          p.judge = p.judge.filter(c => c !== jc);
+          this.toDiscard([...cards, jc]);
+          this.log(`${p.general} 发动【飞扬】，弃置${cards.map(cardName).join('、')}，弃掉判定区的${cardName(jc)}`);
           await this.lianyingCheck(p);
         } else { this.log('【飞扬】弃牌不合法，取消发动'); }
       }
@@ -993,7 +999,9 @@ class Game {
   playDecision(p) {
     const targets = this.others(p); // 存活的其他角色（逐目标生成合法动作）
     const playable = [{ kind: 'end' }];
-    const canSha = this.shaUnlimited(p) || p.shaUsed === 0;
+    // 跋扈（斗地主地主技，锁定）：每回合使用【杀】的次数上限+1（1v1无身份，保持1次）
+    const shaLimit = 1 + (p.role === '地主' ? 1 : 0);
+    const canSha = this.shaUnlimited(p) || p.shaUsed < shaLimit;
     const range = this.attackRange(p);
     const shaTargets = canSha ? targets.filter(t => this.distance(p, t) <= range && !this.kongcheng(t)) : []; // 空城：无手牌的诸葛亮不能被杀指定
 
@@ -2073,7 +2081,9 @@ class Game {
         && (action.area === undefined || x.area === action.area)
         && (action.value === undefined || x.value === action.value)
         && (action.suit === undefined || x.suit === action.suit)
-        && (action.skill === undefined || (x.skill || null) === (action.skill || null)));
+        && (action.skill === undefined || (x.skill || null) === (action.skill || null))
+        // 多目标（斗地主）：指定了targets就必须精确到该目标，不得取第一个同牌动作
+        && (action.targets === undefined || (Array.isArray(x.targets) && JSON.stringify(x.targets) === JSON.stringify(action.targets.map(Number)))));
       if (!m) return null;
       if (m.kind === 'discard') return { kind: 'discard', cardIds: (action.cardIds || []).slice() };
       if (m.kind === 'skill_zhiheng') return { kind: 'skill_zhiheng', cardIds: (action.cardIds || []).slice() };
@@ -2082,7 +2092,7 @@ class Game {
         const ids = (action.cardIds || []).map(Number);
         const pool = m.cardIds || [];
         return (ids.length === 2 && ids[0] !== ids[1] && ids.every(id => pool.includes(id)))
-          ? { kind: 'sha_combo', cardIds: ids } : null;
+          ? { kind: 'sha_combo', cardIds: ids, targets: m.targets ? [...m.targets] : undefined } : null;
       }
       // 观星一次性分配：tops/bottoms 数组合法性由 guanxing() 校验
       if (m.kind === 'guanxing') return { kind: 'guanxing', tops: (action.tops || []).slice(), bottoms: (action.bottoms || []).slice() };

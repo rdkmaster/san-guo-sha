@@ -66,7 +66,10 @@ function moveUiLabel(d, m) {
     case 'end': return '结束出牌阶段';
     case 'play': {
       const base = m.useAs ? `${desc(m.cardId)} 当【${m.useAs}】` : desc(m.cardId);
-      return `使用 ${base}`;
+      // 多目标（斗地主）：按钮上标明该动作的目标角色，便于选择想要的目标
+      const t = (m.targets && m.targets.length && m.targets[0] !== 0 && game && game.players[m.targets[0]])
+        ? ` → ${game.players[m.targets[0]].general}${game.players[m.targets[0]].role ? `（${game.players[m.targets[0]].role}）` : ''}` : '';
+      return `使用 ${base}${t}`;
     }
     case 'respond': return `用 ${desc(m.cardId)}${m.useAs ? ` 当【${m.useAs}】` : ''}响应`;
     case 'refuse': return '不响应';
