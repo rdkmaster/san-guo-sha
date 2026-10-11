@@ -393,6 +393,7 @@ function renderAsk(a) {
       card.innerHTML = `<img class="xjavatar" src="${avatarUrl(c.name)}" onerror="this.style.visibility='hidden'">`
         + `<div class="xjinfo">`
         + `<div class="xjname">${esc(c.name)}`
+        + `<span class="xjtag" style="${a.isFirst ? 'background:#5a4a1a;color:#ffd700' : ''}">${a.isFirst ? '本局先手' : '本局后手'}</span>`
         + `<span class="xjtag">${esc(c.kingdom || '')}</span><span class="xjtag">${esc(c.gender || '')}</span>`
         + `<span class="xjhp">${'❤'.repeat(Math.min(c.hp || 0, 9))}</span></div>`
         + `<div class="xjskills">${(c.skills || []).map(s => `<div><b>${esc(s.name)}</b>：${esc(s.text)}</div>`).join('')}</div>`

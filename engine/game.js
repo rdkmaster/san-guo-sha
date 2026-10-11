@@ -204,7 +204,7 @@ class Game {
       const m = await this.askPlayer(this.players[idx], {
         playerIdx: idx, type: 'xuanjiang',
         playable: names3.map(n => ({ kind: 'choice', value: n })),
-        context: { question: `【选将】请从三名候选武将中选择一名出战：${names3.join(' / ')}`, candidates: names3 },
+        context: { question: `【选将】请从三名候选武将中选择一名出战：${names3.join(' / ')}`, candidates: names3, isFirst: idx === this.first },
       });
       const name = (m && m.kind === 'choice' && names3.includes(m.value))
         ? m.value
@@ -1916,6 +1916,7 @@ class Game {
       L.push('');
       L.push('## 选将阶段');
       L.push('对局尚未开始：请从你的三名候选武将中选择一名出战（`{"action":"choose","choice":"武将名"}`）。');
+      L.push(`本局你是**${this.first === p.idx ? '先手' : '后手'}**${this.first === p.idx ? '（先手第一回合摸牌阶段少摸一张）' : ''}。`);
       L.push('');
       L.push('## 候选武将');
       for (const n of (decision.context.candidates || [])) {

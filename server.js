@@ -103,6 +103,8 @@ function askHuman(d) {
       optionCards: d.optionCards || null,
       options: d.playable.map(m => ({ ...m, uiLabel: moveUiLabel(d, m) })),
       // 选将：附候选武将详情（体力/势力/技能全文），前端渲染头像选项卡；头像路径前端按名字拼（素材/武将/名-头像.png）
+      // isFirst：本局先手/后手（引擎在选将前已掷定），前端在选项卡上显示
+      isFirst: (d.type === 'xuanjiang' && d.context) ? !!d.context.isFirst : null,
       candidates: (d.type === 'xuanjiang' && Array.isArray(d.context && d.context.candidates))
         ? d.context.candidates.map(n => ({
             name: n, hp: GENERALS[n].hp, kingdom: GENERALS[n].kingdom, gender: GENERALS[n].gender,

@@ -65,7 +65,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 
 | 决策类型 | 时机 | 可用动作 |
 |---|---|---|
-| `xuanjiang` | 开局选将：从你的3名候选武将中选1名出战（局面文件列出候选与技能全文） | `choose`(choice=候选武将名) |
+| `xuanjiang` | 开局选将：从你的3名候选武将中选1名出战（局面文件列出候选与技能全文，并注明本局你是先手还是后手） | `choose`(choice=候选武将名) |
 | `play` | 出牌阶段（循环询问） | `play`(出牌/转化：武圣/龙胆/奇袭/国色) / `activate`(主动技：苦肉/结姻不带card，仁德/青囊带card) / `skill`(制衡) / `sha_combo`(丈八蛇矛两牌当杀) / `end` |
 | `respond_sha` | 你被【杀】或【万箭齐发】指定，求【闪】 | `respond`(出闪/龙胆杀/倾国黑色手牌转化) / `refuse`(掉血) |
 | `respond_nanman` | 南蛮入侵/决斗轮到你，求打出【杀】 | `respond`(杀/武圣红牌/龙胆闪转化) / `refuse` |

@@ -13,10 +13,11 @@ async function main() {
 
   // ── A. 新对局三选一 ──
   const seen = [];
+  const seenFirst = [];
   const g1 = new Game({
     seed: 421, selectGenerals: true, first: 0,
     ask: async (d) => {
-      if (d.type === 'xuanjiang') seen.push(d.context.candidates.slice());
+      if (d.type === 'xuanjiang') { seen.push(d.context.candidates.slice()); seenFirst.push(d.context.isFirst); }
       return d.playable[0];
     },
   });
@@ -28,6 +29,7 @@ async function main() {
   check('A：体力=武将体力上限', g1.players.every(p => p.hp === p.maxHp && p.maxHp === require('../engine/game').GENERALS[p.general].hp));
   check('A：技能与将池一致', g1.players.every(p => JSON.stringify(p.skills) === JSON.stringify(require('../engine/game').GENERALS[p.general].skills)));
   check('A：起手各4张', g1.players.every(p => p.hand.length === 4));
+  check('A：载荷注明先手（first=0 → 玩家true/AI false）', seenFirst[0] === true && seenFirst[1] === false);
   check('A：牌数守恒154', g1.invariant().ok);
   check('A：选将决策全记录', g1.decisionLog.length === 2 && g1.decisionLog.every(m => m.kind === 'choice'));
 
