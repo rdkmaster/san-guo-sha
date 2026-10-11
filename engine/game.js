@@ -54,7 +54,7 @@ const SKILL_TEXTS = {
   '激将': '主公技。（1v1没有其他蜀势力角色，无法发动。）',
   '马术': '锁定技。你计算与其他角色的距离-1。',
   '铁骑': '当你使用【杀】指定目标后，你可以进行判定，若结果为红色，此【杀】不可被【闪】响应（【八卦阵】也不可发动）。',
-  '天妒': '锁定技。你的判定牌生效后，你获得之。',
+  '天妒': '当你的判定牌生效后，你可以获得之（非锁定技，询问后发动）。',
   '遗计': '当你受到1点伤害后，你可以观看牌堆顶的两张牌，将其中至少一张交给对手，其余的牌置入你的手牌。',
   '刚烈': '当你受到伤害后，你可以进行判定，若结果不为红桃，伤害来源须选择一项：弃置两张手牌，或受到1点伤害（来源由你造成）。',
   '突袭': '摸牌阶段，你可以放弃摸牌，改为获得对手的一张手牌（1v1仅一名对手，只能拿一张）。',
@@ -733,10 +733,17 @@ class Game {
         if (next) next.judge.push(card); else this.toDiscard(card);
       }
     }
-    // 天妒（锁定）：郭嘉的判定牌生效后获得之
-    if (p.skills.includes('天妒')) {
-      p.hand.push(jc);
-      this.log(`${p.general} 【天妒】获得判定牌${cardName(jc)}`);
+    // 天妒（可选技）：郭嘉的判定牌生效后询问是否获得之
+    if (p.skills.includes('天妒') && !this.over && !this.aborted) {
+      const tm = await this.askPlayer(p, {
+        playerIdx: p.idx, type: 'skill_ask', skill: '天妒',
+        playable: [{ kind: 'activate', skill: '天妒' }, { kind: 'skip', skill: '天妒' }],
+        context: { question: `是否发动【天妒】获得判定牌${cardName(jc)}？` },
+      });
+      if (tm && tm.kind === 'activate') {
+        p.hand.push(jc);
+        this.log(`${p.general} 发动【天妒】，获得判定牌${cardName(jc)}`);
+      } else this.toDiscard(jc);
     } else this.toDiscard(jc);
     await this.flushYingji();
   }
@@ -1871,11 +1878,21 @@ class Game {
           this.log(`${target.general} 发动【八卦阵】判定：${cardName(jc0)}`);
           const mod = await this.guicai(target, jc0);
           const jc = mod || jc0;
-          // 天妒（锁定）：判定牌生效后获得之
-          if (target.skills.includes('天妒')) { target.hand.push(jc); this.log(`${target.general} 【天妒】获得判定牌${cardName(jc)}`); }
-          else this.toDiscard(jc);
-          if (isRed(jc)) { this.log('八卦阵判定成功，视为使用【闪】'); return true; }
-          this.log('八卦阵判定失败');
+          if (isRed(jc)) this.log('八卦阵判定成功，视为使用【闪】');
+          else this.log('八卦阵判定失败');
+          // 天妒（可选技）：判定牌生效后询问是否获得之
+          if (target.skills.includes('天妒') && !this.over && !this.aborted) {
+            const tm = await this.askPlayer(target, {
+              playerIdx: target.idx, type: 'skill_ask', skill: '天妒',
+              playable: [{ kind: 'activate', skill: '天妒' }, { kind: 'skip', skill: '天妒' }],
+              context: { question: `是否发动【天妒】获得判定牌${cardName(jc)}？` },
+            });
+            if (tm && tm.kind === 'activate') {
+              target.hand.push(jc);
+              this.log(`${target.general} 发动【天妒】，获得判定牌${cardName(jc)}`);
+            } else this.toDiscard(jc);
+          } else this.toDiscard(jc);
+          if (isRed(jc)) return true;
         }
       }
     }

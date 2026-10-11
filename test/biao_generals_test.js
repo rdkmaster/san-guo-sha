@@ -96,7 +96,7 @@ async function main() {
     check('刚烈：牌数守恒154（弃牌）', inv2.ok);
   }
 
-  // ── D. 郭嘉：天妒 + 遗计 ──
+  // ── D. 郭嘉：天妒（可选：询问后发动，可拒绝） + 遗计 ──
   {
     const g = new Game({ seed: 305, generals: ['郭嘉', '甘宁'], first: 0, ask: async d => d.playable[0] });
     g.setup();
@@ -106,7 +106,16 @@ async function main() {
     g.drawPile.unshift(jc);
     p0.judge.push(les);
     await g.resolveDelayed(p0, les);
-    check('天妒：判定后获得判定牌', p0.hand.some(c => c === jc) && p0.skipPlay === true);
+    check('天妒：询问后发动获得判定牌（默认应答=发动）', p0.hand.some(c => c === jc) && p0.skipPlay === true && g.logLines.some(l => l.includes('发动【天妒】')));
+    // 拒绝：判定牌进弃牌堆
+    const les2 = take(g, c => c.name === '乐不思蜀');
+    const jc2 = take(g, c => c.suit === '♠');
+    g.drawPile.unshift(jc2);
+    p0.judge.push(les2);
+    g.ask = async (d) => (d.type === 'skill_ask' && d.skill === '天妒' ? { kind: 'skip', skill: '天妒' } : d.playable[0]);
+    const discardBefore = g.discardPile.length;
+    await g.resolveDelayed(p0, les2);
+    check('天妒：拒绝则不获得（判定牌进弃牌堆）', !p0.hand.some(c => c === jc2) && g.discardPile.some(c => c === jc2) && g.discardPile.length === discardBefore + 2);
     // 遗计
     const v1 = take(g, c => c.name === '无懈可击');
     const v2 = take(g, c => c.name === '桃');
