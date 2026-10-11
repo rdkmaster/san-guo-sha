@@ -59,16 +59,16 @@
   .overlay button { font-size: 16px; padding: 10px 24px; }
   .hidden { display: none !important; }
   .spin { color: var(--gold); }
-  /* 开局选将：头像+信息选项卡 */
-  .xjrow { display: flex; gap: 10px; flex-wrap: wrap; }
-  .xjcard { display: flex; gap: 8px; background: #1e2a1e; border: 2px solid #4a6a4a; border-radius: 8px; padding: 8px; cursor: pointer; width: 340px; transition: border-color .15s, box-shadow .15s; }
-  .xjcard:hover { border-color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,.4); }
-  .xjavatar { width: 92px; height: 92px; border-radius: 6px; object-fit: cover; border: 1px solid #555; flex: none; align-self: flex-start; background: #111; }
-  .xjinfo { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
-  .xjname { font-size: 15px; font-weight: bold; color: #fff; display: flex; gap: 6px; align-items: center; }
-  .xjtag { font-size: 10px; font-weight: normal; background: #333; border-radius: 3px; padding: 1px 5px; color: #bcd; }
-  .xjhp { font-size: 12px; color: #e74c3c; margin-left: auto; font-weight: normal; letter-spacing: 1px; }
-  .xjskills { font-size: 11px; color: #9ab; line-height: 1.5; max-height: 78px; overflow-y: auto; }
+  /* 开局选将：头像+信息选项卡（大字号大图，方便观看） */
+  .xjrow { display: flex; gap: 14px; flex-wrap: wrap; }
+  .xjcard { display: flex; gap: 12px; background: #1e2a1e; border: 2px solid #4a6a4a; border-radius: 10px; padding: 12px; cursor: pointer; width: 430px; transition: border-color .15s, box-shadow .15s; }
+  .xjcard:hover { border-color: var(--gold); box-shadow: 0 0 12px rgba(212,175,55,.45); }
+  .xjavatar { width: 160px; height: 160px; border-radius: 8px; object-fit: cover; border: 1px solid #555; flex: none; align-self: flex-start; background: #111; }
+  .xjinfo { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
+  .xjname { font-size: 20px; font-weight: bold; color: #fff; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .xjtag { font-size: 13px; font-weight: normal; background: #333; border-radius: 3px; padding: 2px 7px; color: #bcd; }
+  .xjhp { font-size: 15px; color: #e74c3c; margin-left: auto; font-weight: normal; letter-spacing: 1px; }
+  .xjskills { font-size: 13px; color: #abc; line-height: 1.7; max-height: 250px; overflow-y: auto; }
   .xjskills b { color: var(--gold); }
 </style>
 </head>
