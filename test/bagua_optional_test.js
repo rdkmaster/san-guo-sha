@@ -100,6 +100,11 @@ function check(label, cond) {
       return {
         '0:play': [end, sha0],
         '1:play': [equipBagua, end],
+        // 弃牌阶段确定性弃牌：优先弃非【闪】手牌（随机流对随机弃牌不友好）
+        '1:discard': [(d) => {
+          const c = g.players[1].hand.find(x => x.name !== '闪') || g.players[1].hand[0];
+          return { kind: 'discard', cardIds: [c.id] };
+        }],
         '1:skill_ask': [(d) => { rigTop(g, true); return { kind: 'activate', skill: '八卦阵' }; }],
       };
     }, ['八卦阵判定成功']);

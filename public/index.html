@@ -256,6 +256,18 @@ function renderPlayConfirm() {
     b.onclick = () => submitMove(m);
     box.appendChild(b);
   }
+  // 主动技按钮（activate 形式）：仁德/苦肉/青囊/结姻/反间等，平铺为确认按钮
+  const usedKinds = new Set();
+  for (const o of ((curAsk && curAsk.options) || [])) {
+    if (o.kind === 'activate' || o.kind === 'skill_fanjian') {
+      const b = document.createElement('button');
+      b.textContent = o.uiLabel || `发动【${o.skill}】`;
+      b.classList.add('confirm');
+      b.onclick = () => submitMove(o);
+      box.appendChild(b);
+      usedKinds.add(o.kind);
+    }
+  }
   // 制衡：出牌阶段点选若干手牌后发动（与出牌确认并列，选1张时两种按钮都在）
   const zh = ((curAsk && curAsk.options) || []).find(m => m.kind === 'skill_zhiheng');
   if (zh && selected.size > 0) {

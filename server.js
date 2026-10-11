@@ -76,6 +76,7 @@ function moveUiLabel(d, m) {
     case 'chooseCard': return `选择 ${desc(m.cardId)}`;
     case 'sha_combo': return '丈八蛇矛：两手牌当杀';
     case 'chooseArea': return { hand: '拿手牌（随机）', equip: '拿装备', judge: '拿判定区牌', top: '置于牌堆顶', bottom: '置于牌堆底' }[m.area] || m.area;
+    case 'choice': return { self: '回复自己', opp: '回复对手', discard2: '弃两张手牌', hurt: '受1点伤害' }[m.value] || m.value;
     case 'skill_zhiheng': return `发动【制衡】（点选手牌后确认）`;
     case 'skill_fanjian': return '发动【反间】';
     case 'fanjian_suit': return `反间：选择花色 ${m.suit}`;
