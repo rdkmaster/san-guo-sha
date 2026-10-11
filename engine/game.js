@@ -1763,6 +1763,7 @@ class Game {
         && ((x.useAs || null) === (action.useAs || null))
         && (action.area === undefined || x.area === action.area)
         && (action.value === undefined || x.value === action.value)
+        && (action.suit === undefined || x.suit === action.suit)
         && (action.skill === undefined || (x.skill || null) === (action.skill || null)));
       if (!m) return null;
       if (m.kind === 'discard') return { kind: 'discard', cardIds: (action.cardIds || []).slice() };
