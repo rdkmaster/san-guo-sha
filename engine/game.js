@@ -145,7 +145,7 @@ class Game {
     return { ok: n === 154, total: n };
   }
 
-  setup() {
+  async setup() {
     // 牌堆：定向发牌（测试）或常规洗牌（铁索连环在1v1中不使用）
     this.drawPile = this.opts.deck
       ? makeRiggedDeck(this.opts.deck).filter(c => c.name !== '铁索连环')
@@ -154,11 +154,15 @@ class Game {
     // 无论是否外部指定武将/先手，都按同一顺序消耗随机数：
     // 保证"存档→恢复"（会带上generals/first）时牌堆顺序与原局完全一致
     const shuffledNames = shuffle(Object.keys(GENERALS), this.rng);
-    const names = (this.opts.generals && this.opts.generals.length === 2)
+    let names = (this.opts.generals && this.opts.generals.length === 2)
       ? this.opts.generals
       : shuffledNames;
     const firstRoll = this.rng();
     this.first = (this.opts.first != null) ? this.opts.first : (firstRoll < 0.5 ? 0 : 1);
+    // 开局选将（三选一）：新对局实时询问；恢复带选将的存档时重放选将决策以对齐决策流，
+    // 最终武将一律以选将结果为准（与存档generals一致）。选将不额外消耗随机数，牌堆顺序不受影响。
+    this._xuanjiang = !!(this.opts.selectGenerals || (this.opts.replay && this.opts.replayXuanjiang));
+    if (this._xuanjiang) names = await this.xuanjiangPhase(shuffledNames);
     const mk = (idx, name) => {
       const g = GENERALS[name];
       return {
@@ -178,18 +182,54 @@ class Game {
     this.emitState();
   }
 
+  // 开局选将（手游版规则）：每名玩家从3名随机候选武将中选1名出战。
+  // 候选取自同一种子的全将池洗牌前6名（双方不重叠），不额外消耗随机数，牌堆顺序与不选将对局完全一致。
+  // 选将期间双方候选互相保密：快照显示"选将中"，renderState对xuanjiang类型只渲染自己的候选。
+  async xuanjiangPhase(shuffledNames) {
+    const cand = [shuffledNames.slice(0, 3), shuffledNames.slice(3, 6)];
+    const mkBlank = (idx) => ({
+      idx, general: '选将中', kingdom: null, gender: null, skills: [],
+      hp: 0, maxHp: 0,
+      hand: [], equips: { weapon: null, armor: null, horsePlus: null, horseMinus: null },
+      judge: [], shaUsed: 0, jiuUsed: 0, zhihengUsed: false, fanjianUsed: false, luoyi: false,
+      skipPlay: false, skipDraw: false, drunken: false,
+      jieyinUsed: false, qingnangUsed: false, shaActed: false, rendeGiven: 0, rendeHealed: false,
+    });
+    this.players = [mkBlank(0), mkBlank(1)];
+    this.selecting = true;
+    this.emitState();
+    const picks = [];
+    for (let idx = 0; idx < 2; idx++) {
+      const names3 = cand[idx];
+      const m = await this.askPlayer(this.players[idx], {
+        playerIdx: idx, type: 'xuanjiang',
+        playable: names3.map(n => ({ kind: 'choice', value: n })),
+        context: { question: `【选将】请从三名候选武将中选择一名出战：${names3.join(' / ')}`, candidates: names3 },
+      });
+      const name = (m && m.kind === 'choice' && names3.includes(m.value))
+        ? m.value
+        : names3[Math.floor(this.rng() * 3)];
+      picks.push(name);
+      if (!this.silent) this.log(`${idx === 0 ? '玩家' : 'AI'}选择了【${name}】`);
+    }
+    this.selecting = false;
+    if (!this.silent) this.log(`选将完毕：${picks[0]} vs ${picks[1]}`);
+    return picks;
+  }
+
   // 存档快照：种子+武将+先手+定向牌堆+全部已做决策 ⇒ 恢复时重放即可精确续局
   saveData() {
     return {
       version: 1,
       savedAt: new Date().toISOString(),
       seed: this.opts.seed != null ? this.opts.seed : null,
-      generals: this.players.map(p => p.general),
+      generals: (this.players || []).map(p => p.general),
       first: this.first,
+      xuanjiang: !!this._xuanjiang, // 选将对局：恢复时须重放选将决策对齐决策流
       deck: this.opts.deck || null, // 定向发牌序列（测试用），常规对局为null（由seed重建）
       turnNo: this.turnNo,
       phase: this.phase || null,
-      hp: this.players.map(p => p.hp),
+      hp: (this.players || []).map(p => p.hp),
       decisions: this.decisionLog.map(m => JSON.parse(JSON.stringify(m))),
       logs: this.logLines.slice(),
     };
@@ -382,7 +422,7 @@ class Game {
 
   // ---------- 主循环 ----------
   async run() {
-    if (!this.setupDone) this.setup();
+    if (!this.setupDone) await this.setup();
     let cur = this.first;
     while (!this.over && !this.aborted) {
       await this.turn(cur);
@@ -1865,6 +1905,20 @@ class Game {
     const opp = this.other(p);
     const L = [];
     L.push(`# 决策请求 #${++this.decisionNo}`);
+    // 选将：局面尚未成立，只渲染自己的候选武将（对方候选保密）
+    if (decision.type === 'xuanjiang') {
+      L.push('**决策类型**: xuanjiang');
+      L.push('');
+      L.push('## 选将阶段');
+      L.push('对局尚未开始：请从你的三名候选武将中选择一名出战（`{"action":"choose","choice":"武将名"}`）。');
+      L.push('');
+      L.push('## 候选武将');
+      for (const n of (decision.context.candidates || [])) {
+        const g = GENERALS[n];
+        L.push(`- **${n}**（${g.hp}体力）：${g.skills.map(s => `${s}（${SKILL_TEXTS[s] || ''}）`).join('；')}`);
+      }
+      return L.join('\n');
+    }
     L.push(`**决策类型**: ${decision.type}`);
     L.push('');
     L.push('## 你的状态');

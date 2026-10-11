@@ -65,6 +65,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 
 | 决策类型 | 时机 | 可用动作 |
 |---|---|---|
+| `xuanjiang` | 开局选将：从你的3名候选武将中选1名出战（局面文件列出候选与技能全文） | `choose`(choice=候选武将名) |
 | `play` | 出牌阶段（循环询问） | `play`(出牌/转化：武圣/龙胆/奇袭/国色) / `activate`(主动技：苦肉/仁德/青囊带card、结姻不带) / `skill`(制衡) / `sha_combo`(丈八蛇矛两牌当杀) / `end` |
 | `respond_sha` | 你被【杀】或【万箭齐发】指定，求【闪】 | `respond`(出闪/龙胆杀/倾国黑色手牌转化) / `refuse`(掉血) |
 | `respond_nanman` | 南蛮入侵/决斗轮到你，求打出【杀】 | `respond`(杀/武圣红牌/龙胆闪转化) / `refuse` |
@@ -84,6 +85,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 每次回复的**最后一行**必须是且仅是一个JSON对象：
 
 ```json
+{"action": "choose", "choice": "郭嘉"}
 {"action": "play", "card": "#1", "targets": ["对手"]}
 {"action": "play", "card": "#4", "targets": ["自己"]}
 {"action": "play", "card": "#2", "useAs": "杀", "targets": ["对手"]}
@@ -116,7 +118,7 @@ droid exec -m glm-5.3-flash -r high -o json -s <sessionId> -f 局面文件.md
 - `card` / `cards`：局面表格中的编号（`#N`，含"候选牌"区的编号）。
 - `useAs`：转化技使用（如武圣红牌当杀、龙胆杀闪互转、国色方块当乐不思蜀），引擎校验转化合法性。
 - `skill`：技能名（制衡/奸雄/集智/火攻/苦肉/仁德/青囊/结姻等）。
-- `choice`：区域选择（hand/equip/judge）或选项（self/opp=青囊目标、discard2/hurt=刚烈选项），按局面下发使用。
+- `choice`：区域选择（hand/equip/judge）、选项（self/opp=青囊目标、discard2/hurt=刚烈选项）或选将武将名（xuanjiang），按局面下发使用。
 - `guanxing`：`tops`/`bottoms` 填"候选牌"区的编号数组，两数组必须恰好分完亮出的牌（重复或遗漏→重问，3次失败后全部置于牌堆顶）。
 - `targets`：合法目标名（1v1只有`自己`/`对手`，引擎已按局面列出，通常可省略）。
 - **可出列**：手牌表的"可出"列是引擎根据技能/手牌/装备/距离确定性计算的结果（✓=合法动作已包含，—=当前不可出）。`sha_combo` 组合的两张牌必须互不相同且都在引擎下发的合法池内，引擎校验不通过会重问。

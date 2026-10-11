@@ -42,6 +42,7 @@ function decorate(state) {
 
 function defaultQuestion(d) {
   switch (d.type) {
+    case 'xuanjiang': return (d.context && d.context.question) || '开局选将：请选择武将';
     case 'play': return '你的出牌阶段：请选择要执行的动作';
     case 'respond_sha': return `需要响应【${(d.context && d.context.reason) || '杀'}】`;
     case 'respond_nanman': return `需要打出【杀】响应${(d.context && d.context.reason) || ''}`;
@@ -145,11 +146,13 @@ async function startGame(resumeData = null) {
   const aiTiming = {}; // 分决策类型耗时统计：{type: {n, totalMs}}
   game = new Game({
     seed,
+    selectGenerals: !resumeData, // 新对局：开局三选一选将（恢复时由重放对齐，不重选）
     ...(resumeData ? {
       generals: resumeData.generals,
       first: resumeData.first,
       deck: resumeData.deck || null,
       replay: resumeData.decisions || [], // 恢复：瞬间重放历史决策到存档点
+      replayXuanjiang: !!resumeData.xuanjiang, // 存档含选将决策时重放之
     } : {}),
     ask: async (d) => {
       if (d.playerIdx === 1) {

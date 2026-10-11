@@ -14,6 +14,7 @@ _logs-test/
 __pycache__/
 workspace/_game/
 _progress.jsonl
+saves/
 saves-test/
 .omc/
 
