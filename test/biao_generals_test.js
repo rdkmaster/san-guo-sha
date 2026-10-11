@@ -182,10 +182,10 @@ async function main() {
     g.setup();
     const p0 = g.players[0];
     const hp0 = p0.hp, n0 = p0.hand.length;
-    await g.executePlay(p0, { kind: 'activate', skill: '苦肉', cardId: p0.hand[0].id });
-    check('苦肉：弃1牌失1体力（非伤害）', p0.hp === hp0 - 1 && p0.hand.length === n0 - 1);
-    await g.executePlay(p0, { kind: 'activate', skill: '苦肉', cardId: p0.hand[0].id });
-    check('苦肉：无次数限制', p0.hp === hp0 - 2);
+    await g.executePlay(p0, { kind: 'activate', skill: '苦肉' });
+    check('苦肉：失1体力摸2张（非伤害，不弃牌）', p0.hp === hp0 - 1 && p0.hand.length === n0 + 2);
+    await g.executePlay(p0, { kind: 'activate', skill: '苦肉' });
+    check('苦肉：无次数限制（4→2体力，手牌+4）', p0.hp === hp0 - 2 && p0.hand.length === n0 + 4);
     const inv = g.invariant();
     check('苦肉：牌数守恒154', inv.ok);
   }

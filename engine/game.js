@@ -61,7 +61,7 @@ const SKILL_TEXTS = {
   '洛神': '准备阶段开始时，你可以进行判定，若结果为黑色，你获得此判定牌，然后可以再次发动【洛神】。',
   '倾国': '你可以将一张黑色手牌当【闪】使用（响应【杀】/【万箭齐发】）。',
   '克己': '锁定技。若你在出牌阶段内未使用或打出过【杀】，你的弃牌阶段跳过。',
-  '苦肉': '出牌阶段，你可以弃置一张牌（含装备区），然后失去1点体力（无次数限制；失去体力不是伤害，不触发受伤后技能）。',
+  '苦肉': '出牌阶段，你可以失去1点体力，然后摸两张牌（无次数限制；失去体力不是伤害，不触发受伤后技能）。',
   '国色': '出牌阶段，你可以将一张方块牌（含装备区）当【乐不思蜀】使用。',
   '流离': '当你成为【杀】的目标时，你可以弃置一张牌并将此【杀】转移给你距离1以内的一名其他角色（不能转移给使用者）。（1v1没有第三名角色，无法发动。）',
   '谦逊': '锁定技。你不能成为【顺手牵羊】或【乐不思蜀】的目标（包括国色转化的【乐不思蜀】）。',
@@ -887,10 +887,9 @@ class Game {
       for (const c of p.hand) if (c.suit === '♦' && c.name !== '乐不思蜀') playable.push({ kind: 'play', cardId: c.id, useAs: '乐不思蜀', targets: [opp.idx] });
       for (const c of Object.values(p.equips)) if (c && c.suit === '♦') playable.push({ kind: 'play', cardId: c.id, useAs: '乐不思蜀', targets: [opp.idx] });
     }
-    // 苦肉（黄盖）：出牌阶段可弃一张牌（含装备区）失去1点体力，无次数限制
-    if (p.skills.includes('苦肉')) {
-      for (const c of p.hand) playable.push({ kind: 'activate', skill: '苦肉', cardId: c.id });
-      for (const c of Object.values(p.equips)) if (c) playable.push({ kind: 'activate', skill: '苦肉', cardId: c.id });
+    // 苦肉（黄盖）：出牌阶段可失去1点体力摸两张牌，无次数限制（体力至少1才能发动）
+    if (p.skills.includes('苦肉') && p.hp >= 1) {
+      playable.push({ kind: 'activate', skill: '苦肉' });
     }
     // 仁德（刘备）：逐张将手牌交给对手，累计首次达两张回复1点体力
     if (p.skills.includes('仁德')) {
@@ -980,17 +979,16 @@ class Game {
         return;
       }
       if (move.skill === '苦肉') {
-        const c = this.takeCard(p, move.cardId);
-        if (!c) { this.log('苦肉：找不到该牌'); return; }
-        this.toDiscard(c);
-        this.log(`${p.general} 发动【苦肉】，弃置${cardName(c)}，失去1点体力`);
-        await this.flushYingji(); // 弃的是装备区牌时枭姬先询问（失去体力前）
         const b = p.hp;
         p.hp -= 1; // 失去体力不是伤害：不触发奸雄/反馈/刚烈/遗计，白银狮子无效
-        this.log(`${p.general} 体力 ${b}→${p.hp}/${p.maxHp}`);
-        this.lianyingCheck(p);
+        this.log(`${p.general} 发动【苦肉】，失去1点体力（${b}→${p.hp}/${p.maxHp}）`);
         this.emitState();
         if (p.hp <= 0) await this.dying(p);
+        if (this.over || this.aborted) return;
+        const n = this.draw(p, 2); // 然后：摸两张牌
+        this.log(`${p.general} 摸${n}张牌`);
+        this.lianyingCheck(p);
+        this.emitState();
         return;
       }
       if (move.skill === '青囊') {
